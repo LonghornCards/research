@@ -1,11 +1,14 @@
 import React from 'react';
-import './App.css';
 
 const Page1 = () => {
     return (
         <div>
-            <h1>Page 1</h1>
-            <p>This is Page 1 content.</p>
+            <h1>Longhorn Cards Scoreboard</h1>
+            <iframe
+                src="http://127.0.0.1:8050"
+                style={{ width: '100%', height: '100vh', border: 'none' }}
+                title="Longhorn Cards Scoreboard"
+            />
         </div>
     );
 };
