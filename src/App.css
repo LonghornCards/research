@@ -120,3 +120,27 @@ p {
             margin: 5px 0;
         }
 }
+
+/* App.css */
+
+.dropdown-container {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.dropdown-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.dropdown-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
