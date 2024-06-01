@@ -1,0 +1,36 @@
+/* App.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: peru; /* Use 'peru' for text color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.app-container {
+    text-align: center;
+}
+
+.app-header {
+    background-color: peru; /* Use 'peru' for background color */
+    padding: 20px;
+    width: 100%;
+}
+
+.app-title {
+    color: white;
+    margin: 0;
+    font-size: 2em;
+}
+
+.logo {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 20px 0;
+}
