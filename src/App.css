@@ -121,26 +121,34 @@ p {
         }
 }
 
-/* App.css */
-
-.dropdown-container {
-    margin: 10px 0;
+/* Dropdown and Radio Container Styles */
+.dropdown-container, .radio-container {
+    margin: 10px 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f9f9f9;
 }
 
-.dropdown-label {
+.dropdown-label, .radio-label {
     font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
+    color: peru;
 }
 
-.dropdown-select {
+.dropdown-select, .radio-items {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* Iframe Styles */
+iframe {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
+    height: 600px;
+    border: none;
+    margin-top: 20px;
+}
+
+/* Page Container */
+.page-container {
+    padding: 20px;
 }
