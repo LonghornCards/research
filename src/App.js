@@ -1,29 +1,21 @@
 import React from 'react';
 import './App.css';
-// import Home from './Home';
 
-
-function App() {
+const App = () => {
     return (
-        <div className="app-container">
-            <header className="app-header">
-                <h1 className="app-title">Welcome to Longhorn Cards Research!</h1>
-            </header>
-            <img src="https://github.com/LonghornCards/research/raw/main/LogoSimple.jpg" alt="Logo" className="logo" />
-            <p>
-                This page is under construction. Please visit our shop at: {' '}
-                <a href="https://www.longhorncardsatx.com" target="_blank" rel="noopener noreferrer">
-                    Longhorn Cards & Collectibles
-                </a>.
-            </p>
-            <p>
-                Read our current Blog for research & analytics for the sports card market: {' '} 
-                <a href="https://longhorncardsatx.com/blogs/news" target="_blank" rel="noopener noreferrer">
-                    Blog
-                </a>.
-            </p>
+        <div className="App">
+            <div className="container">
+                <h1>Welcome to Longhorn Cards Research</h1>
+                <p>This website is under construction</p>
+                <p>
+                    Visit our blog & store at <a href="https://longhorncardsatx.com/blogs/news">Longhorn Cards & Collectibles</a> for more information.
+                </p>
+                <img src="https://github.com/LonghornCards/research/raw/main/LogoSimple.jpg" alt="Simple Logo" />
+            </div>
         </div>
     );
-}
+};
 
 export default App;
+
+
