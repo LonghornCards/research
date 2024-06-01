@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3websiteappstoragefdb68492",
+  "bucketName": "websiteapp-storage-fdb68492",
+  "policyUUID": "df1d559b",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
