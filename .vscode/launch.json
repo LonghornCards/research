@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Longhorn_Cards_Scoreboard",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/Longhorn_Cards_Scoreboard.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
