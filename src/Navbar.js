@@ -17,7 +17,7 @@ const Navbar = () => {
             <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
                 <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
                 <li><Link to="/page_scoreboard" onClick={toggleMenu}>Player Scoreboard</Link></li>
-                <li><Link to="/page2" onClick={toggleMenu}>Page 2</Link></li>
+                <li><Link to="/page_blog" onClick={toggleMenu}>Research Blog</Link></li>
                 <li><Link to="/page3" onClick={toggleMenu}>Page 3</Link></li>
                 <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
             </ul>
