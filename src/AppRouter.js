@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from './Navbar'; // Ensure the import matches the file name
 import Home from './App';
 import Page_Scoreboard from './Page_Scoreboard';
 import Page_Blog from './Page_Blog';

@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './App.css';
 
-const Page2 = () => {
+const Page_Blog = () => {
     const [blogPosts, setBlogPosts] = useState([]);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const Page2 = () => {
     }, []);
 
     return (
-        <div className="Page2">
+        <div className="page-container">
             <h1>All Blog Posts</h1>
             <div className="blog-list">
                 {blogPosts.map((post, index) => (
@@ -45,4 +45,4 @@ const Page2 = () => {
     );
 };
 
-export default Page2;
+export default Page_Blog;

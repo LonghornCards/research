@@ -1,27 +1,62 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './App.css';
+import styled from 'styled-components';
+
+const Nav = styled.nav`
+  background: peru;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px; /* Increase padding to ensure all items fit within the viewport */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: top 0.3s;
+`;
+
+const NavMenu = styled.div`
+  display: flex;
+  gap: 20px; /* Add spacing between the menu items */
+`;
+
+const NavLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 14px 16px;
+  text-align: left;
+
+  &:hover {
+    color: black; /* Change the text color only on hover */
+  }
+`;
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+    const [visible, setVisible] = useState(true);
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
+    const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+        setPrevScrollPos(currentScrollPos);
     };
 
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [prevScrollPos, visible, handleScroll]);
+
     return (
-        <nav className="navbar">
-            <div className="menu-icon" onClick={toggleMenu}>
-                ☰
-            </div>
-            <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-                <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
-                <li><Link to="/page_scoreboard" onClick={toggleMenu}>Player Scoreboard</Link></li>
-                <li><Link to="/page_blog" onClick={toggleMenu}>Research Blog</Link></li>
-                <li><Link to="/page3" onClick={toggleMenu}>Page 3</Link></li>
-                <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
-            </ul>
-        </nav>
+        <Nav style={{ top: visible ? '0' : '-60px' }}>
+            <NavMenu>
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/page_scoreboard">Scoreboard</NavLink>
+                <NavLink to="/page_blog">Blog</NavLink>
+                <NavLink to="/page3">Page 3</NavLink>
+                <NavLink to="/about">About</NavLink>
+            </NavMenu>
+        </Nav>
     );
 };
 

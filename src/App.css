@@ -1,195 +1,98 @@
-/* App.css */
-
-/* General styles for the whole application */
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: #ffffff;
-    color: #333;
+.page-container {
+    padding: 40px;
+    margin-top: 100px; /* Adjust as needed to prevent content from being hidden by the navbar */
 }
 
-.App {
-    text-align: center;
-    padding: 20px;
+.filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-/* Container styles */
-.container {
-    border: 2px solid Peru;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 800px;
-    background-color: #ffffff;
-    color: Peru;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.center-filters .filter {
+    margin-right: 20px;
 }
 
-/* Navbar styles */
-.navbar {
+.scatterplot-container {
+    margin-bottom: 40px;
+}
+
+.table-title-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
-    border-bottom: 2px solid Peru;
-    padding: 10px 20px;
-    position: relative;
 }
 
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: Peru;
+.center-text {
+    text-align: center;
 }
 
-.nav-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: none; /* Initially hide the menu */
-    flex-direction: column;
-    position: absolute;
-    top: 50px;
-    left: 10px;
-    background-color: white;
-    border: 2px solid Peru;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-    .nav-links.open {
-        display: flex; /* Show the menu when isOpen is true */
-    }
-
-    .nav-links li {
-        margin: 10px 0;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        color: Peru;
-        font-weight: bold;
-        transition: color 0.3s ease;
-    }
-
-        .nav-links a:hover {
-            color: #333;
-        }
-
-/* Image styles */
-img {
+.table-container {
     margin-top: 20px;
-    max-width: 100%;
-    height: auto;
-    border: 2px solid Peru;
-    border-radius: 8px;
+    overflow: auto;
 }
 
-/* Additional styling for headers and paragraphs */
-h1 {
-    color: Peru;
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin: 10px 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        margin: 10px auto;
-    }
-
-    .navbar {
-        flex-direction: column;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
-        .nav-links li {
-            margin: 5px 0;
-        }
-}
-
-/* Dropdown and Radio Container Styles */
-.dropdown-container, .radio-container {
-    margin: 10px 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-}
-
-.dropdown-label, .radio-label {
-    font-weight: bold;
-    color: peru;
-}
-
-.dropdown-select, .radio-items {
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-/* Iframe Styles */
-iframe {
+.table {
+    display: table;
     width: 100%;
-    height: 600px;
-    border: none;
-    margin-top: 20px;
+    border-collapse: collapse;
 }
 
-/* Page Container */
-.page-container {
-    padding: 20px;
+.tr {
+    display: table-row;
 }
 
-.blog-container {
-    text-align: left;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    width: 80%;
-    max-width: 800px;
+.th, .td {
+    display: table-cell;
+    border: 1px solid #ddd;
+    padding: 8px;
+    min-width: 150px; /* Adjust as needed */
 }
 
-.blog-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10px 0;
-}
-
-.welcome-message {
-    font-size: 2em;
+.th {
+    background-color: peru;
+    color: white;
     font-weight: bold;
-    color: peru;
 }
 
-.Page_Blog {
-    padding: 20px;
+.td {
+    background-color: white;
 }
 
-.blog-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.sticky {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    left: 0;
+    background-color: white; /* Adjust as needed */
+    z-index: 1; /* Adjust as needed */
+    border-right: 1px solid #ddd; /* Adjust as needed */
 }
 
-.blog-post {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #f9f9f9;
+tr:hover .td {
+    background-color: #f1f1f1; /* Light gray background color on hover */
 }
+
+/* Navigation Menu Styles */
+.navbar {
+    overflow: hidden;
+    background-color: peru; /* Changed to Peru */
+    position: fixed; /* Make the navbar fixed to the top */
+    top: 0;
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays on top */
+    transition: top 0.3s; /* Smooth transition */
+}
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .navbar a:hover {
+        color: peru; /* Change the text color only on hover */
+    }
