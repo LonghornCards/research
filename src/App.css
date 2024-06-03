@@ -319,63 +319,62 @@ tr:hover .td {
 }
 
 .about-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
 }
 
 .about-video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 50%;
+    height: auto;
     overflow: hidden;
 }
 
 .about-background-video {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 
 .about-content {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 50%;
-    text-align: center;
-    color: white;
     padding: 20px;
-    background: peru;
-    dispay: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.content h1 {
-    margin: 0;
-    font-size: 3rem;
-}
-
-.content p {
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
-}
-
-.text-section {
-    margin-top: 20px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-    .text-section p {
-        font-size: 16px;
-        line-height: 1.5;
-        color: #333;
+    .about-content h1 {
+        color: #cd853f; /* Peru color */
+        font-size: 2.5em;
+        margin-bottom: 20px;
     }
+
+    .about-content p {
+        color: #333;
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+.contact-information {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+    .contact-information a {
+        color: #cd853f; /* Peru color */
+        text-decoration: none;
+    }
+
+        .contact-information a:hover {
+            text-decoration: underline;
+        }
 
 .google-container {
     display: flex;
