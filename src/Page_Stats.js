@@ -223,9 +223,8 @@ const Page_Stats = () => {
                     <strong>ORB --</strong> Offensive Rebounds Per Game<br />
                     <strong>PA --</strong> Plate Appearances<br />
                     <strong>PF --</strong> Personal Fouls Per Game<br />
-                    <strong>Pos --</strong> Position<br />
                     <strong>PTS --</strong> Points Per Game<br />
-                    <strong>QBR --</strong> QBR<br />
+                    <strong>QBR --</strong> NFL Quarterback Rating<br />
                     <strong>QBrec --</strong> Team record in games started by this QB (regular season)<br />
                     <strong>R --</strong> Runs Scored/Allowed<br />
                     <strong>RBI --</strong> Runs Batted In<br />
