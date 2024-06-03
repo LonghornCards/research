@@ -51,9 +51,9 @@ const Navbar = () => {
         <Nav style={{ top: visible ? '0' : '-60px' }}>
             <NavMenu>
                 <NavLink to="/">Home</NavLink>
-                <NavLink to="/page_scoreboard">Scoreboard</NavLink>
+                <NavLink to="/page_store">Store</NavLink>
+                <NavLink to="/page_scoreboard">Research</NavLink>
                 <NavLink to="/page_blog">Blog</NavLink>
-                <NavLink to="/page3">Page 3</NavLink>
                 <NavLink to="/about">About</NavLink>
             </NavMenu>
         </Nav>

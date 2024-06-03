@@ -328,7 +328,7 @@ const Player_Scoreboard = () => {
                     <p>Loading data...</p>
                 )}
             </div>
-            <h2 className="center-text">Composite Ranks Table</h2>
+            <h2 className="center-text">Filter by Player, Sport, and Trend:</h2>
             <div className="filters center-filters">
                 <div className="filter">
                     <label>Player</label>
