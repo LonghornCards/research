@@ -396,6 +396,12 @@ const Player_Scoreboard = () => {
                     </div>
                 </div>
             </div>
+            {/* Add your text section here */}
+            <div className="text-section">
+                <p>The Longhorn Cards Player Scoreboard incorporates historical player card prices (Technical Rank), player career statistics aggregated for all seasons played (Fundamental Rank), and Google Trends interest/popularity (Sentiment Rank.)</p>
+                <p>(Player Scatterplot:  Size of Bubble = Fundamental Rank; Color of Bubble = Composite Rank | Player Table: Active = Active Player or Retired; Trend = Current technical trend is based on short- and long-term historical card prices; Percentages reflect current card price levels relative to high, low, and different average price levels; Dates shown are for the Sentiment Rank based on Google Trends for that month)</p>
+
+            </div>
         </div>
     );
 };

@@ -14,7 +14,7 @@ const About = () => {
                 <h1>About Us</h1>
                 <p>Welcome!  Our focus is on providing high-quality sports cards and cutting-edge research & analytics for the sports card market.</p>
 
-                <p>Please subscribe to our newsletters and bookmark our page for updated research and new products.</p>
+                <p>Please subscribe to our newsletters and bookmark our page for updated research & new products.</p>
 
                 <p>This website is still under construction, please check back soon for updates!</p>
 
