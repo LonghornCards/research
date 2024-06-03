@@ -1,3 +1,5 @@
+/* Existing styles remain unchanged */
+
 /* Ensure vertical alignment for table cells */
 .top-align {
     vertical-align: top;
@@ -5,15 +7,28 @@
 
 /* Page Container Styles */
 .scoreboard-page-container {
-    padding: 40px;
+    padding: 20px; /* Adjusted for mobile */
     margin-top: 100px; /* Adjust as needed to prevent content from being hidden by the navbar */
+}
+
+/* New styles for the introductory paragraph on Page_Stats */
+.stats-intro-paragraph {
+    background-color: peru;
+    font-size: 32px; /* Adjust as needed */
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 /* Filter Styles */
 .scoreboard-filters {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .scoreboard-center-filters .filter {
@@ -22,8 +37,26 @@
 
 /* Scatterplot Container Styles */
 .scoreboard-scatterplot-container {
-    margin-bottom: 40px;
+    margin-bottom: 10px; /* Adjusted for mobile */
+    width: 100%;
+    overflow-x: auto;
 }
+
+/* Responsive Chart */
+.responsive-chart {
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    position: relative;
+}
+
+    .responsive-chart canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 
 /* Table Title Container Styles */
 .scoreboard-table-title-container {
@@ -37,10 +70,20 @@
     text-align: center;
 }
 
+.scoreboard-info-section {
+    background-color: peru;
+    text-align: center;
+    padding: 10px 0;
+    margin: 10px 0; /* Added margin */
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+}
+
 /* Table Container Styles */
 .scoreboard-table-container {
-    margin-top: 20px;
-    overflow: auto;
+    margin-top: 10px;
+    overflow-x: auto;
 }
 
 /* Table Styles */
@@ -234,6 +277,43 @@ tr:hover .td {
     .page-blog h1 {
         font-size: 2rem;
     }
+
+    /* Responsive Blog Table */
+    .blog-table th, .blog-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .blog-table thead {
+        display: none;
+    }
+
+    .blog-table tr {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .blog-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+        .blog-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            width: 50%;
+            padding-left: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+    .blog-image {
+        max-width: 50px;
+        height: auto;
+    }
 }
 
 /* Home Page Video Background Container */
@@ -254,6 +334,7 @@ tr:hover .td {
     z-index: -1;
     filter: brightness(100%);
     transform: translate(-50%, -50%);
+    pointer-events: none; /* Prevent interaction */
 }
 
 /* Store Video Background Container */
@@ -272,6 +353,7 @@ tr:hover .td {
     height: 100%;
     object-fit: cover;
     transform: translate(-50%, -50%);
+    pointer-events: none; /* Prevent interaction */
 }
 
 .store-content {
@@ -338,6 +420,7 @@ tr:hover .td {
     width: 100%;
     height: auto;
     object-fit: cover;
+    pointer-events: none; /* Prevent interaction */
 }
 
 .about-content {
@@ -409,7 +492,11 @@ tr:hover .td {
 /* Card Search Page Styles */
 .page-card-search {
     position: relative;
+    width: 100%;
+    display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     color: white;
     overflow: hidden;
     height: 100vh;
@@ -428,25 +515,28 @@ tr:hover .td {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none; /* Prevent interaction */
 }
 
 .content {
     position: relative;
     z-index: 2;
-    padding-top: 20%;
+    padding-top: 10%; /* Adjusted to move the content upwards */
 }
 
     .content h1 {
         font-size: 3rem;
-        margin-bottom: 40px;
+        margin-bottom: 20px; /* Adjusted margin */
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
 .search-box {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Adjusted gap */
+    margin-bottom: 20px; /* Adjusted margin */
 }
 
     .search-box input {
@@ -477,4 +567,284 @@ tr:hover .td {
     border: none;
     width: 100%;
     height: 600px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjusted gap */
+    margin-bottom: 10px;
+}
+
+    .form-row input {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+        .form-row input:last-child {
+            margin-right: 0;
+        }
+
+button {
+    width: 25%;
+    padding: 12px 20px;
+    background-color: peru;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    align-self: safe center; /* Ensures the button is only as wide as needed */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .scoreboard-filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .scoreboard-filter {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .scoreboard-scatterplot-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .tr, .th, .td {
+        display: block;
+        text-align: left;
+    }
+
+    .scoreboard-table {
+        display: block;
+    }
+
+    .scoreboard-page-container {
+        padding: 10px;
+    }
+
+    .scoreboard-text-section p {
+        font-size: 32px;
+    }
+
+    .scoreboard-top-paragraph {
+        background-color: peru;
+        font-size: 32px; /* Adjust as needed */
+        font-weight: bold;
+        color: white;
+    }
+
+    .stats-intro-paragraph {
+        background-color: peru;
+        font-size: 32px; /* Adjust as needed */
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+        .form-row input {
+            margin-right: 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+    .search-box button {
+        width: 100%;
+    }
+}
+
+/* TrendsChart styles for mobile responsiveness */
+.trends-chart {
+    padding-top: 50px;
+    padding: 20px;
+}
+
+    .trends-chart h2 {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    .trends-chart p {
+        font-size: 1em;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    .trends-chart .checkbox-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .trends-chart .checkbox-item {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .trends-chart .chart-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+@media (max-width: 768px) {
+    .trends-chart h2 {
+        font-size: 1.2em;
+    }
+
+    .trends-chart p {
+        font-size: 0.9em;
+    }
+
+    .trends-chart {
+        padding: 10px;
+    }
+}
+
+/* Dropdown styles for TrendsChart */
+.dropdown-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .dropdown-select {
+        max-width: 100%;
+        font-size: 0.9em;
+    }
+}
+
+/* Reset button styles */
+.reset-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: peru;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+    .reset-button:hover {
+        background-color: #a8642d;
+    }
+
+@media (max-width: 600px) {
+    .blog-table th, .blog-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .blog-table thead {
+        display: none;
+    }
+
+    .blog-table tr {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .blog-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+        .blog-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            width: 50%;
+            padding-left: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+    .blog-image {
+        max-width: 50px;
+        height: auto;
+    }
+}
+
+/* About Page Styles */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 10px;
+    }
+
+    .about-content {
+        padding: 10px;
+    }
+
+        .about-content h1 {
+            font-size: 2em;
+        }
+
+        .about-content p {
+            font-size: 1em;
+        }
+
+    .contact-information {
+        font-size: 1em;
+    }
+
+    .about-video-container {
+        height: 30vh;
+    }
+
+    .about-background-video {
+        height: 30vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-content h1 {
+        font-size: 1.5em;
+    }
+
+    .about-content p {
+        font-size: 0.9em;
+    }
+
+    .contact-information {
+        font-size: 0.9em;
+    }
+
+    .about-video-container {
+        height: 20vh;
+    }
+
+    .about-background-video {
+        height: 20vh;
+    }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { Scatter } from 'react-chartjs-2';
@@ -18,32 +18,36 @@ const columnOptions = [
     { value: 'Sentiment Rank', label: 'Sentiment Rank' }
 ];
 
-const Option = (props) => {
-    return (
-        <components.Option {...props}>
-            <input type="checkbox" checked={props.isSelected} onChange={() => null} />{' '}
-            <label>{props.label}</label>
-        </components.Option>
-    );
-};
+const sportOptions = [
+    { value: 'All Sports', label: 'All Sports' },
+    { value: 'Football', label: 'Football' },
+    { value: 'Basketball', label: 'Basketball' },
+    { value: 'Baseball', label: 'Baseball' }
+];
 
-const MultiValue = (props) => {
-    return (
-        <components.MultiValue {...props}>
-            <span>{props.children}</span>
-        </components.MultiValue>
-    );
-};
+const Option = (props) => (
+    <components.Option {...props}>
+        <input type="checkbox" checked={props.isSelected} onChange={() => null} />{' '}
+        <label>{props.label}</label>
+    </components.Option>
+);
+
+const MultiValue = (props) => (
+    <components.MultiValue {...props}>
+        <span>{props.children}</span>
+    </components.MultiValue>
+);
 
 const Player_Scoreboard = () => {
     const [data, setData] = useState([]);
     const [chartData, setChartData] = useState(null);
     const [xAxis, setXAxis] = useState(columnOptions[2]); // Default to Technical Rank
     const [yAxis, setYAxis] = useState(columnOptions[3]); // Default to Sentiment Rank
+    const [selectedSport, setSelectedSport] = useState(sportOptions[0]); // Default to All Sports
     const [filteredData, setFilteredData] = useState([]);
-    const [selectedName, setSelectedName] = useState([]);
-    const [selectedSport, setSelectedSport] = useState([]);
-    const [selectedTrend, setSelectedTrend] = useState([]);
+    const [selectedName, setSelectedName] = useState([{ value: 'All Players', label: 'All Players' }]);
+    const [selectedTrend, setSelectedTrend] = useState([{ value: 'All Trends', label: 'All Trends' }]);
+    const chartRef = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,8 +62,8 @@ const Player_Scoreboard = () => {
                 const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
                 setData(worksheet);
-                setFilteredData(worksheet);
-                updateChartData(worksheet, xAxis.value, yAxis.value);
+                filterTableData(worksheet, selectedName, selectedSport, selectedTrend);
+                updateChartData(worksheet, xAxis.value, yAxis.value, selectedSport.value);
             } catch (error) {
                 console.error('Error fetching the data:', error);
             }
@@ -75,19 +79,20 @@ const Player_Scoreboard = () => {
         return `rgb(${r}, ${g}, 0)`;
     };
 
-    const updateChartData = (data, xAxis, yAxis) => {
-        const maxCompositeRank = Math.max(...data.map(row => row['Composite Rank']));
-        const maxFundamentalRank = Math.max(...data.map(row => row['Fundamental Rank']));
+    const updateChartData = (data, xAxis, yAxis, sport) => {
+        const filteredData = filterDataBySport(data, sport);
+        const maxCompositeRank = Math.max(...filteredData.map(row => row['Composite Rank']));
+        const maxFundamentalRank = Math.max(...filteredData.map(row => row['Fundamental Rank']));
         const scalingFactor = 50 / maxFundamentalRank; // Adjust scaling factor as needed
 
         const chartData = {
             datasets: [
                 {
-                    label: `${yAxis} vs ${xAxis}`,
-                    data: data.map(row => ({
+                    label: "Scoreboard Scatterplot",
+                    data: filteredData.map(row => ({
                         x: row[xAxis],
                         y: row[yAxis],
-                        r: row['Fundamental Rank'] * scalingFactor, // Scale the bubble size
+                        r: row['Fundamental Rank'] ? row['Fundamental Rank'] * scalingFactor : 5, // Scale the bubble size
                         backgroundColor: getColor(row['Composite Rank'], maxCompositeRank),
                         compositeRank: row['Composite Rank'], // Store Composite Rank for tooltip
                         fundamentalRank: row['Fundamental Rank'], // Store Fundamental Rank for tooltip
@@ -102,14 +107,32 @@ const Player_Scoreboard = () => {
         setChartData(chartData);
     };
 
+    const filterDataBySport = (data, sport) => {
+        if (sport === 'All Sports') {
+            return data.filter(row => ['Football', 'Basketball', 'Baseball'].includes(row.Sport));
+        }
+        return data.filter(row => row.Sport === sport);
+    };
+
     const handleXAxisChange = selectedOption => {
-        setXAxis(selectedOption);
-        updateChartData(data, selectedOption.value, yAxis.value);
+        if (selectedOption) {
+            setXAxis(selectedOption);
+            updateChartData(data, selectedOption.value, yAxis.value, selectedSport.value);
+        }
     };
 
     const handleYAxisChange = selectedOption => {
-        setYAxis(selectedOption);
-        updateChartData(data, xAxis.value, selectedOption.value);
+        if (selectedOption) {
+            setYAxis(selectedOption);
+            updateChartData(data, xAxis.value, selectedOption.value, selectedSport.value);
+        }
+    };
+
+    const handleSportChange = selectedOption => {
+        if (selectedOption) {
+            setSelectedSport(selectedOption);
+            updateChartData(data, xAxis.value, yAxis.value, selectedOption.value);
+        }
     };
 
     const handleNameChange = selectedOptions => {
@@ -117,28 +140,23 @@ const Player_Scoreboard = () => {
         filterTableData(selectedOptions, selectedSport, selectedTrend);
     };
 
-    const handleSportChange = selectedOptions => {
-        setSelectedSport(selectedOptions);
-        filterTableData(selectedName, selectedOptions, selectedTrend);
-    };
-
     const handleTrendChange = selectedOptions => {
         setSelectedTrend(selectedOptions);
         filterTableData(selectedName, selectedSport, selectedOptions);
     };
 
-    const filterTableData = (names, sports, trends) => {
-        let filtered = data;
+    const filterTableData = (names, sport, trends) => {
+        let filtered = filterDataBySport(data, sport.value);
 
-        if (names.length > 0) {
+        if (names.some(option => option.value === 'All Players')) {
+            filtered = filtered.filter(row => true);
+        } else if (names.length > 0) {
             filtered = filtered.filter(row => names.some(option => option.value === row.Name));
         }
 
-        if (sports.length > 0) {
-            filtered = filtered.filter(row => sports.some(option => option.value === row.Sport));
-        }
-
-        if (trends.length > 0) {
+        if (trends.some(option => option.value === 'All Trends')) {
+            filtered = filtered.filter(row => true);
+        } else if (trends.length > 0) {
             filtered = filtered.filter(row => trends.some(option => option.value === row.Trend));
         }
 
@@ -150,6 +168,16 @@ const Player_Scoreboard = () => {
         const options = data.map(row => row[key]);
         const uniqueOptions = [...new Set(options)];
         return uniqueOptions.map(option => ({ value: option, label: option }));
+    };
+
+    const getUniquePlayerOptions = () => {
+        const uniqueOptions = getUniqueOptions('Name');
+        return [{ value: 'All Players', label: 'All Players' }, ...uniqueOptions];
+    };
+
+    const getUniqueTrendOptions = () => {
+        const uniqueOptions = getUniqueOptions('Trend');
+        return [{ value: 'All Trends', label: 'All Trends' }, ...uniqueOptions];
     };
 
     const columns = React.useMemo(
@@ -174,7 +202,15 @@ const Player_Scoreboard = () => {
 
     return (
         <div className="scoreboard-page-container">
-            <h1>Longhorn Cards Player Scoreboard</h1>
+            <div className="scoreboard-summary">
+                <p className="scoreboard-top-paragraph">The Longhorn Cards Player Scoreboard provides a comprehensive analysis of player scores using historical card prices, career statistics, and Google Trends data.</p>
+
+                <p>The Composite Rank is calculated from historical card sale prices (Technical Rank), player career statistics for every season (Fundamental Rank), and Google Trends search interest (Sentiment Rank).</p>
+
+                <p>Included in the Scoreboard are key active players across Football, Basketball, and Baseball.  Use the filters to display & explore different player metrics.</p>
+
+            </div>
+            <h1 style={{ color: 'peru', fontWeight: 'bold' }}>Longhorn Cards Player Scoreboard</h1>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
                     <label>X-Axis</label>
@@ -184,149 +220,159 @@ const Player_Scoreboard = () => {
                     <label>Y-Axis</label>
                     <Select options={columnOptions} value={yAxis} onChange={handleYAxisChange} />
                 </div>
+                <div className="scoreboard-filter">
+                    <label>Sport</label>
+                    <Select options={sportOptions} value={selectedSport} onChange={handleSportChange} />
+                </div>
             </div>
             <div className="scoreboard-scatterplot-container">
                 {chartData ? (
-                    <Scatter
-                        data={chartData}
-                        options={{
-                            layout: {
-                                padding: {
-                                    left: 40, // Increased padding to prevent labels from being cut off
-                                    right: 40, // Increased padding to prevent labels from being cut off
-                                    top: 40, // Increased padding to prevent labels from being cut off
-                                    bottom: 40 // Increased padding to prevent labels from being cut off
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    type: 'linear',
-                                    title: {
-                                        display: true,
-                                        text: xAxis.label,
-                                        color: 'peru',
-                                        font: {
-                                            size: 16,
-                                            weight: 'bold'
-                                        }
+                    <div className="responsive-chart">
+                        <Scatter
+                            data={chartData}
+                            options={{
+                                layout: {
+                                    padding: {
+                                        left: 20, // Adjusted padding
+                                        right: 20, // Adjusted padding
+                                        top: 20, // Adjusted padding
+                                        bottom: 20 // Adjusted padding
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        type: 'linear',
+                                        title: {
+                                            display: true,
+                                            text: xAxis ? xAxis.label : '',
+                                            color: 'peru',
+                                            font: {
+                                                size: 16,
+                                                weight: 'bold'
+                                            }
+                                        },
+                                        grid: {
+                                            display: false
+                                        },
+                                        min: -10, // Added buffer to the min value to prevent labels from being cut off
+                                        max: 110 // Added buffer to the max value to prevent labels from being cut off
                                     },
-                                    grid: {
+                                    y: {
+                                        type: 'linear',
+                                        title: {
+                                            display: true,
+                                            text: yAxis ? yAxis.label : '',
+                                            color: 'peru',
+                                            font: {
+                                                size: 16,
+                                                weight: 'bold'
+                                            }
+                                        },
+                                        grid: {
+                                            display: false
+                                        },
+                                        min: -10, // Added buffer to the min value to prevent labels from being cut off
+                                        max: 110 // Added buffer to the max value to prevent labels from being cut off
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
                                         display: false
                                     },
-                                    min: -10, // Added buffer to the min value to prevent labels from being cut off
-                                    max: 110 // Added buffer to the max value to prevent labels from being cut off
-                                },
-                                y: {
-                                    type: 'linear',
-                                    title: {
-                                        display: true,
-                                        text: yAxis.label,
-                                        color: 'peru',
-                                        font: {
-                                            size: 16,
-                                            weight: 'bold'
+                                    annotation: {
+                                        annotations: {
+                                            upperRight: {
+                                                type: 'box',
+                                                xMin: 50,
+                                                xMax: 100,
+                                                yMin: 50,
+                                                yMax: 100,
+                                                backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light green
+                                                borderWidth: 0
+                                            },
+                                            upperLeft: {
+                                                type: 'box',
+                                                xMin: 0,
+                                                xMax: 50,
+                                                yMin: 50,
+                                                yMax: 100,
+                                                backgroundColor: 'rgba(255, 255, 224, 0.2)', // Light yellow
+                                                borderWidth: 0
+                                            },
+                                            lowerLeft: {
+                                                type: 'box',
+                                                xMin: 0,
+                                                xMax: 50,
+                                                yMin: 0,
+                                                yMax: 50,
+                                                backgroundColor: 'rgba(240, 128, 128, 0.2)', // Light coral
+                                                borderWidth: 0
+                                            },
+                                            lowerRight: {
+                                                type: 'box',
+                                                xMin: 50,
+                                                xMax: 100,
+                                                yMin: 0,
+                                                yMax: 50,
+                                                backgroundColor: 'rgba(173, 216, 230, 0.2)', // Light blue
+                                                borderWidth: 0
+                                            }
                                         }
                                     },
-                                    grid: {
-                                        display: false
+                                    datalabels: {
+                                        align: 'end',
+                                        anchor: 'end',
+                                        formatter: function (value, context) {
+                                            return context.dataset.data[context.dataIndex].name;
+                                        },
+                                        color: 'peru'
                                     },
-                                    min: -10, // Added buffer to the min value to prevent labels from being cut off
-                                    max: 110 // Added buffer to the max value to prevent labels from being cut off
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                annotation: {
-                                    annotations: {
-                                        upperRight: {
-                                            type: 'box',
-                                            xMin: 50,
-                                            xMax: 100,
-                                            yMin: 50,
-                                            yMax: 100,
-                                            backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light green
-                                            borderWidth: 0
-                                        },
-                                        upperLeft: {
-                                            type: 'box',
-                                            xMin: 0,
-                                            xMax: 50,
-                                            yMin: 50,
-                                            yMax: 100,
-                                            backgroundColor: 'rgba(255, 255, 224, 0.2)', // Light yellow
-                                            borderWidth: 0
-                                        },
-                                        lowerLeft: {
-                                            type: 'box',
-                                            xMin: 0,
-                                            xMax: 50,
-                                            yMin: 0,
-                                            yMax: 50,
-                                            backgroundColor: 'rgba(240, 128, 128, 0.2)', // Light coral
-                                            borderWidth: 0
-                                        },
-                                        lowerRight: {
-                                            type: 'box',
-                                            xMin: 50,
-                                            xMax: 100,
-                                            yMin: 0,
-                                            yMax: 50,
-                                            backgroundColor: 'rgba(173, 216, 230, 0.2)', // Light blue
-                                            borderWidth: 0
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                const name = context.raw.name;
+                                                const xValue = context.raw.x;
+                                                const yValue = context.raw.y;
+                                                const compositeRank = context.raw.compositeRank;
+                                                const fundamentalRank = context.raw.fundamentalRank;
+                                                const sentimentRank = context.raw.sentimentRank;
+                                                const technicalRank = context.raw.technicalRank;
+                                                return [
+                                                    `Name: ${name}`,
+                                                    `${context.dataset.label}:`,
+                                                    `X: ${xValue}`,
+                                                    `Y: ${yValue}`,
+                                                    `Composite Rank: ${compositeRank}`,
+                                                    `Fundamental Rank: ${fundamentalRank}`,
+                                                    `Sentiment Rank: ${sentimentRank}`,
+                                                    `Technical Rank: ${technicalRank}`
+                                                ];
+                                            }
                                         }
                                     }
                                 },
-                                datalabels: {
-                                    align: 'end',
-                                    anchor: 'end',
-                                    formatter: function (value, context) {
-                                        return context.dataset.data[context.dataIndex].name;
-                                    },
-                                    color: 'peru'
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function (context) {
-                                            const name = context.raw.name;
-                                            const xValue = context.raw.x;
-                                            const yValue = context.raw.y;
+                                elements: {
+                                    point: {
+                                        backgroundColor: function (context) {
                                             const compositeRank = context.raw.compositeRank;
-                                            const fundamentalRank = context.raw.fundamentalRank;
-                                            const sentimentRank = context.raw.sentimentRank;
-                                            const technicalRank = context.raw.technicalRank;
-                                            return [
-                                                `Name: ${name}`,
-                                                `${context.dataset.label}:`,
-                                                `X: ${xValue}`,
-                                                `Y: ${yValue}`,
-                                                `Composite Rank: ${compositeRank}`,
-                                                `Fundamental Rank: ${fundamentalRank}`,
-                                                `Sentiment Rank: ${sentimentRank}`,
-                                                `Technical Rank: ${technicalRank}`
-                                            ];
+                                            const maxCompositeRank = Math.max(...data.map(row => row['Composite Rank']));
+                                            return getColor(compositeRank, maxCompositeRank);
+                                        },
+                                        radius: function (context) {
+                                            return context.raw.r || 5;
                                         }
                                     }
                                 }
-                            },
-                            elements: {
-                                point: {
-                                    backgroundColor: function (context) {
-                                        const compositeRank = context.raw.compositeRank;
-                                        const maxCompositeRank = Math.max(...data.map(row => row['Composite Rank']));
-                                        return getColor(compositeRank, maxCompositeRank);
-                                    },
-                                    radius: function (context) {
-                                        return context.raw.r;
-                                    }
-                                }
-                            }
-                        }}
-                    />
+                            }}
+                            ref={chartRef}
+                        />
+                    </div>
                 ) : (
                     <p>Loading data...</p>
                 )}
+            </div>
+            <div className="scoreboard-info-section">
+                <p>Detailed Player Scoreboard Information</p>
             </div>
             <h2 className="scoreboard-center-text">Filter by Player, Sport, and Trend:</h2>
             <div className="scoreboard-filters center-filters">
@@ -334,7 +380,7 @@ const Player_Scoreboard = () => {
                     <label>Player</label>
                     <Select
                         isMulti
-                        options={getUniqueOptions('Name')}
+                        options={[{ value: 'All Players', label: 'All Players' }, ...getUniquePlayerOptions()]}
                         value={selectedName}
                         onChange={handleNameChange}
                         closeMenuOnSelect={false}
@@ -346,7 +392,7 @@ const Player_Scoreboard = () => {
                     <label>Sport</label>
                     <Select
                         isMulti
-                        options={getUniqueOptions('Sport')}
+                        options={sportOptions}
                         value={selectedSport}
                         onChange={handleSportChange}
                         closeMenuOnSelect={false}
@@ -358,7 +404,7 @@ const Player_Scoreboard = () => {
                     <label>Trend</label>
                     <Select
                         isMulti
-                        options={getUniqueOptions('Trend')}
+                        options={[{ value: 'All Trends', label: 'All Trends' }, ...getUniqueTrendOptions()]}
                         value={selectedTrend}
                         onChange={handleTrendChange}
                         closeMenuOnSelect={false}
@@ -396,11 +442,9 @@ const Player_Scoreboard = () => {
                     </div>
                 </div>
             </div>
-            {/* Add your text section here */}
             <div className="scoreboard-text-section">
                 <p>The Longhorn Cards Player Scoreboard incorporates historical player card prices (Technical Rank), player career statistics aggregated for all seasons played (Fundamental Rank), and Google Trends interest/popularity (Sentiment Rank.)</p>
-                <p>(Player Scatterplot:  Size of Bubble = Fundamental Rank; Color of Bubble = Composite Rank | Player Table: Active = Active Player or Retired; Trend = Current technical trend is based on short- and long-term historical card prices; Percentages reflect current card price levels relative to high, low, and different average price levels; Dates shown are for the Sentiment Rank based on Google Trends for that month)</p>
-
+                <p>(Player Scatterplot: Size of Bubble = Fundamental Rank; Color of Bubble = Composite Rank | Player Table: Active = Active Player or Retired; Trend = Current technical trend is based on short- and long-term historical card prices; Percentages reflect current card price levels relative to high, low, and different average price levels; Dates shown are for the Sentiment Rank based on Google Trends for that month)</p>
             </div>
         </div>
     );

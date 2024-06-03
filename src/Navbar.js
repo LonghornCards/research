@@ -35,6 +35,7 @@ const NavMenu = styled.div`
     width: 100%;
     background: peru;
     padding: 10px 0;
+    align-items: center; /* Center items */
   }
 `;
 

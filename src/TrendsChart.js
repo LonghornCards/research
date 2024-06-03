@@ -62,12 +62,12 @@ const TrendsChart = ({ fileUrl, title }) => {
     }, [selectedPlayers, data]);
 
     const handlePlayerSelection = event => {
-        const value = event.target.value;
-        setSelectedPlayers(
-            event.target.checked
-                ? [...selectedPlayers, value]
-                : selectedPlayers.filter(player => player !== value)
-        );
+        const value = Array.from(event.target.selectedOptions, option => option.value);
+        setSelectedPlayers(value);
+    };
+
+    const handleReset = () => {
+        setSelectedPlayers([]);
     };
 
     function getRandomColor() {
@@ -80,32 +80,27 @@ const TrendsChart = ({ fileUrl, title }) => {
     }
 
     return (
-        <div style={{ paddingTop: '200px', padding: '20px' }}>
+        <div className="trends-chart">
             <h2>{title}</h2>
             <div style={{ marginBottom: '20px' }}>
                 <p>Google Trends score reflects monthly search interest for the respective player</p>
             </div>
-            <div style={{ marginBottom: '20px' }}>
+            <div className="dropdown-container">
                 <label>Select Players:</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <select multiple value={selectedPlayers} onChange={handlePlayerSelection} className="dropdown-select">
                     {players.length > 0 ? (
                         players.map(player => (
-                            <div key={player} style={{ marginRight: '10px' }}>
-                                <input
-                                    type="checkbox"
-                                    value={player}
-                                    checked={selectedPlayers.includes(player)}
-                                    onChange={handlePlayerSelection}
-                                />
+                            <option key={player} value={player}>
                                 {player}
-                            </div>
+                            </option>
                         ))
                     ) : (
-                        <p>Loading players...</p>
+                        <option>Loading players...</option>
                     )}
-                </div>
+                </select>
             </div>
-            <div>
+            <button onClick={handleReset} className="reset-button">Reset Selection</button>
+            <div className="chart-container">
                 {selectedPlayers.length > 0 ? (
                     <Line data={chartData} />
                 ) : (
