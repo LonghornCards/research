@@ -7,39 +7,104 @@ const Nav = styled.nav`
   height: 60px;
   display: flex;
   align-items: center;
-  padding: 0 40px; /* Increase padding to ensure all items fit within the viewport */
+  justify-content: space-between;
+  padding: 0 10px;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
   transition: top 0.3s;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
 `;
 
 const NavMenu = styled.div`
   display: flex;
-  gap: 20px; /* Add spacing between the menu items */
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: peru;
+    padding: 10px 0;
+  }
 `;
 
 const NavLink = styled(Link)`
   color: white;
   text-decoration: none;
   font-size: 1rem;
-  padding: 14px 16px;
-  text-align: left;
+  padding: 10px 15px;
+  text-align: center;
+  font-weight: bold; /* Make the text bold */
 
   &:hover {
-    color: black; /* Change the text color only on hover */
+    color: black;
+  }
+`;
+
+const Hamburger = styled.div`
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+
+  div {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 4px 0;
+    transition: all 0.3s ease;
+  }
+`;
+
+const Logo = styled.img`
+  height: 40px;
+  cursor: pointer;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+`;
+
+const LoginLink = styled(Link)`
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 10px 15px;
+
+  &:hover {
+    color: black;
   }
 `;
 
 const Navbar = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
     const [visible, setVisible] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
         setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
         setPrevScrollPos(currentScrollPos);
+    };
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
     };
 
     useEffect(() => {
@@ -49,13 +114,24 @@ const Navbar = () => {
 
     return (
         <Nav style={{ top: visible ? '0' : '-60px' }}>
-            <NavMenu>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/page_store">Store</NavLink>
-                <NavLink to="/page_scoreboard">Research</NavLink>
-                <NavLink to="/page_blog">Blog</NavLink>
-                <NavLink to="/about">About</NavLink>
+            <LogoContainer>
+                <Link to="/">
+                    <Logo src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo_Simple.png" alt="Logo" />
+                </Link>
+            </LogoContainer>
+            <Hamburger onClick={toggleMenu}>
+                <div />
+                <div />
+                <div />
+            </Hamburger>
+            <NavMenu isOpen={isOpen}>
+                <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+                <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
+                <NavLink to="/page_scoreboard" onClick={() => setIsOpen(false)}>Research</NavLink>
+                <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
+                <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
             </NavMenu>
+            <LoginLink to="#">Log-in/Subscribe</LoginLink> {/* Placeholder link to be configured */}
         </Nav>
     );
 };
