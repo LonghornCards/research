@@ -166,6 +166,7 @@ const Navbar = () => {
                     <DropdownContent className="dropdown-content">
                         <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>Scoreboard</Link>
                         <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>Google Trends</Link>
+                        <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>Card Search</Link>
                     </DropdownContent>
                 </Dropdown>
                 <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>

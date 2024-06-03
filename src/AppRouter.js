@@ -7,6 +7,7 @@ import Page_Blog from './Page_Blog';
 import Page_Store from './Page_Store';
 import About from './About';
 import Page_GoogleTrends from './Page_GoogleTrends';
+import Page_CardSearch from './Page_CardSearch';
 import './App.css';
 
 const AppRouter = () => {
@@ -17,6 +18,7 @@ const AppRouter = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/page_scoreboard" element={<Page_Scoreboard />} />
                 <Route path="/page_googletrends" element={<Page_GoogleTrends />} />
+                <Route path="/page_cardsearch" element={<Page_CardSearch/>} />
                 <Route path="/page_blog" element={<Page_Blog />} />
                 <Route path="/page_store" element={<Page_Store />} />
                 <Route path="/about" element={<About />} />

@@ -405,3 +405,76 @@ tr:hover .td {
 .google-multi-select {
     width: 100%;
 }
+
+/* Card Search Page Styles */
+.page-card-search {
+    position: relative;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.video-background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.video-background {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    padding-top: 20%;
+}
+
+    .content h1 {
+        font-size: 3rem;
+        margin-bottom: 40px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+    .search-box input {
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #333;
+    }
+
+    .search-box button {
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: peru;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+        .search-box button:hover {
+            background-color: #a8642d;
+        }
+
+.results iframe {
+    border: none;
+    width: 100%;
+    height: 600px;
+}

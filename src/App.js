@@ -11,27 +11,21 @@ const App = () => {
     }, []);
 
     return (
-        <div>
-            <div className="video-background-container">
-                <video
-                    ref={videoRef}
-                    className="video-background"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                >
-                    <source
-                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/longhorn_background.mp4"
-                        type="video/mp4"
-                    />
-                </video>
-                <div className="welcome-message">Welcome to Longhorn Cards Research!</div>
-            </div>
-            <div className="page-content">
-                <h1>Under Construction</h1>
-                <p>Please check out our research & store - don't mind the construction.  Thank you!</p>
-            </div>
+        <div className="video-background-container">
+            <video
+                ref={videoRef}
+                className="video-background"
+                autoPlay
+                loop
+                muted
+                playsInline
+            >
+                <source
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/longhorn_background.mp4"
+                    type="video/mp4"
+                />
+            </video>
+            <div className="welcome-message">Welcome to Longhorn Cards Research!</div>
         </div>
     );
 };
