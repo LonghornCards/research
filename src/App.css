@@ -330,7 +330,7 @@ tr:hover .td {
 
 .about-video-container {
     width: 100%;
-    height: auto;
+    height: 50vh;
     overflow: hidden;
 }
 
