@@ -173,19 +173,19 @@ const Player_Scoreboard = () => {
     );
 
     return (
-        <div className="page-container">
+        <div className="scoreboard-page-container">
             <h1>Longhorn Cards Player Scoreboard</h1>
-            <div className="filters center-filters">
-                <div className="filter">
+            <div className="scoreboard-filters center-filters">
+                <div className="scoreboard-filter">
                     <label>X-Axis</label>
                     <Select options={columnOptions} value={xAxis} onChange={handleXAxisChange} />
                 </div>
-                <div className="filter">
+                <div className="scoreboard-filter">
                     <label>Y-Axis</label>
                     <Select options={columnOptions} value={yAxis} onChange={handleYAxisChange} />
                 </div>
             </div>
-            <div className="scatterplot-container">
+            <div className="scoreboard-scatterplot-container">
                 {chartData ? (
                     <Scatter
                         data={chartData}
@@ -328,9 +328,9 @@ const Player_Scoreboard = () => {
                     <p>Loading data...</p>
                 )}
             </div>
-            <h2 className="center-text">Filter by Player, Sport, and Trend:</h2>
-            <div className="filters center-filters">
-                <div className="filter">
+            <h2 className="scoreboard-center-text">Filter by Player, Sport, and Trend:</h2>
+            <div className="scoreboard-filters center-filters">
+                <div className="scoreboard-filter">
                     <label>Player</label>
                     <Select
                         isMulti
@@ -342,7 +342,7 @@ const Player_Scoreboard = () => {
                         components={{ Option, MultiValue }}
                     />
                 </div>
-                <div className="filter">
+                <div className="scoreboard-filter">
                     <label>Sport</label>
                     <Select
                         isMulti
@@ -354,7 +354,7 @@ const Player_Scoreboard = () => {
                         components={{ Option, MultiValue }}
                     />
                 </div>
-                <div className="filter">
+                <div className="scoreboard-filter">
                     <label>Trend</label>
                     <Select
                         isMulti
@@ -367,8 +367,8 @@ const Player_Scoreboard = () => {
                     />
                 </div>
             </div>
-            <div className="table-container">
-                <div {...getTableProps()} className="table">
+            <div className="scoreboard-table-container">
+                <div {...getTableProps()} className="scoreboard-table">
                     <div>
                         {headerGroups.map(headerGroup => (
                             <div {...headerGroup.getHeaderGroupProps()} className="tr">
@@ -397,7 +397,7 @@ const Player_Scoreboard = () => {
                 </div>
             </div>
             {/* Add your text section here */}
-            <div className="text-section">
+            <div className="scoreboard-text-section">
                 <p>The Longhorn Cards Player Scoreboard incorporates historical player card prices (Technical Rank), player career statistics aggregated for all seasons played (Fundamental Rank), and Google Trends interest/popularity (Sentiment Rank.)</p>
                 <p>(Player Scatterplot:  Size of Bubble = Fundamental Rank; Color of Bubble = Composite Rank | Player Table: Active = Active Player or Retired; Trend = Current technical trend is based on short- and long-term historical card prices; Percentages reflect current card price levels relative to high, low, and different average price levels; Dates shown are for the Sentiment Rank based on Google Trends for that month)</p>
 

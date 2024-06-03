@@ -44,7 +44,7 @@ const NavLink = styled(Link)`
   font-size: 1rem;
   padding: 10px 15px;
   text-align: center;
-  font-weight: bold; /* Make the text bold */
+  font-weight: bold;
 
   &:hover {
     color: black;
@@ -92,6 +92,40 @@ const LoginLink = styled(Link)`
   }
 `;
 
+const Dropdown = styled.div`
+  position: relative;
+  display: inline-block;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  cursor: pointer;
+
+  &:hover .dropdown-content {
+    display: block;
+  }
+`;
+
+const DropdownContent = styled.div`
+  display: none;
+  position: absolute;
+  background-color: peru;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+  a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+
+    &:hover {
+      background-color: #111;
+    }
+  }
+`;
+
 const Navbar = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
     const [visible, setVisible] = useState(true);
@@ -127,11 +161,17 @@ const Navbar = () => {
             <NavMenu isOpen={isOpen}>
                 <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
                 <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
-                <NavLink to="/page_scoreboard" onClick={() => setIsOpen(false)}>Research</NavLink>
+                <Dropdown>
+                    <span>Research</span>
+                    <DropdownContent className="dropdown-content">
+                        <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>Scoreboard</Link>
+                        <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>Google Trends</Link>
+                    </DropdownContent>
+                </Dropdown>
                 <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
                 <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
             </NavMenu>
-            <LoginLink to="#">Log-in/Subscribe</LoginLink> {/* Placeholder link to be configured */}
+            <LoginLink to="#">Log-in/Subscribe</LoginLink>
         </Nav>
     );
 };
