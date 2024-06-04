@@ -174,7 +174,7 @@ const Navbar = () => {
                 <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
                 <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
             </NavMenu>
-            <LoginLink to="#">Log-in/Subscribe</LoginLink>
+            <LoginLink to="/login">Log-in/Subscribe</LoginLink>
         </Nav>
     );
 };
