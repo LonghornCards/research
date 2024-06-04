@@ -20,6 +20,7 @@ const About = () => {
             <div className="contact-information">
                 <p>Contact us for more information: <a href="mailto:info@longhorncardsatx.com">info@longhorncardsatx.com</a></p>
             </div>
+            <div className="footer-bar"></div>
         </div>
     );
 }

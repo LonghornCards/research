@@ -17,7 +17,8 @@ const Nav = styled.nav`
   transition: top 0.3s;
 
   @media (max-width: 768px) {
-    padding: 0 10px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
@@ -36,7 +37,7 @@ const NavMenu = styled.div`
     width: 100%;
     background: peru;
     padding: 10px 0;
-    align-items: center; /* Center items */
+    align-items: center;
   }
 `;
 
@@ -92,6 +93,11 @@ const LoginLink = styled(Link)`
   &:hover {
     color: black;
   }
+
+  @media (max-width: 768px) {
+    margin-top: 10px;
+    align-self: flex-end;
+  }
 `;
 
 const Dropdown = styled.div`
@@ -138,6 +144,8 @@ const SearchBar = styled.form`
     font-size: 16px;
     border: none;
     border-radius: 4px 0 0 4px;
+    flex: 1;
+    margin-right: 5px;
   }
 
   button {
@@ -153,6 +161,11 @@ const SearchBar = styled.form`
     &:hover {
       background-color: lightgray;
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 10px 0;
   }
 `;
 
@@ -220,7 +233,7 @@ const Navbar = () => {
                     <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
                     <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
                 </NavMenu>
-                <SearchBar onSubmit={handleSearchSubmit}>
+                <SearchBar onSubmit={handleSearchSubmit} className="search-bar">
                     <input
                         type="text"
                         value={searchQuery}
@@ -229,7 +242,7 @@ const Navbar = () => {
                     />
                     <button type="submit">Search</button>
                 </SearchBar>
-                <LoginLink to="/login">Log-in/Subscribe</LoginLink>
+                <LoginLink to="/login" className="login-link">Log-in/Subscribe</LoginLink>
             </Nav>
             {showSearchResults && (
                 <SearchResults query={searchQuery} onClose={handleCloseSearch} />

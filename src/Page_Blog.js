@@ -120,6 +120,11 @@ const Page_Blog = () => {
     return (
         <div className="page-blog">
             <h1>Longhorn Cards Research Blog</h1>
+            <a href="/login" style={{ textDecoration: 'none' }}>
+                <h2 style={{ color: 'peru', fontWeight: 'bold' }}>
+                    Subscribe to our newsletter for updates
+                </h2>
+            </a>
             <div className="blog-table-container">
                 <table className="blog-table">
                     <thead>
