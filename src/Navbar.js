@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import SearchResults from './SearchResults';
 
 const Nav = styled.nav`
   background: peru;
@@ -127,10 +128,40 @@ const DropdownContent = styled.div`
   }
 `;
 
+const SearchBar = styled.form`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+  input {
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+  }
+
+  button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: white;
+    color: peru;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+`;
+
 const Navbar = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
     const [visible, setVisible] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showSearchResults, setShowSearchResults] = useState(false);
 
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
@@ -142,40 +173,68 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        setShowSearchResults(true);
+    };
+
+    const handleCloseSearch = () => {
+        setShowSearchResults(false);
+        setSearchQuery('');
+    };
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [prevScrollPos, visible, handleScroll]);
 
     return (
-        <Nav style={{ top: visible ? '0' : '-60px' }}>
-            <LogoContainer>
-                <Link to="/">
-                    <Logo src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo_Simple.png" alt="Logo" />
-                </Link>
-            </LogoContainer>
-            <Hamburger onClick={toggleMenu}>
-                <div />
-                <div />
-                <div />
-            </Hamburger>
-            <NavMenu isOpen={isOpen}>
-                <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
-                <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
-                <Dropdown>
-                    <span>Research</span>
-                    <DropdownContent className="dropdown-content">
-                        <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>Scoreboard</Link>
-                        <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>Google Trends</Link>
-                        <Link to="/page_stats" onClick={() => setIsOpen(false)}>Player Statistics</Link>
-                        <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>eBay Card Sales</Link>
-                    </DropdownContent>
-                </Dropdown>
-                <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
-                <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
-            </NavMenu>
-            <LoginLink to="/login">Log-in/Subscribe</LoginLink>
-        </Nav>
+        <>
+            <Nav style={{ top: visible ? '0' : '-60px' }}>
+                <LogoContainer>
+                    <Link to="/">
+                        <Logo src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo_Simple.png" alt="Logo" />
+                    </Link>
+                </LogoContainer>
+                <Hamburger onClick={toggleMenu}>
+                    <div />
+                    <div />
+                    <div />
+                </Hamburger>
+                <NavMenu isOpen={isOpen}>
+                    <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+                    <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
+                    <Dropdown>
+                        <span>Research</span>
+                        <DropdownContent className="dropdown-content">
+                            <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>Scoreboard</Link>
+                            <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>Google Trends</Link>
+                            <Link to="/page_stats" onClick={() => setIsOpen(false)}>Player Statistics</Link>
+                            <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>eBay Card Sales</Link>
+                        </DropdownContent>
+                    </Dropdown>
+                    <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
+                    <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
+                </NavMenu>
+                <SearchBar onSubmit={handleSearchSubmit}>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        placeholder="Search..."
+                    />
+                    <button type="submit">Search</button>
+                </SearchBar>
+                <LoginLink to="/login">Log-in/Subscribe</LoginLink>
+            </Nav>
+            {showSearchResults && (
+                <SearchResults query={searchQuery} onClose={handleCloseSearch} />
+            )}
+        </>
     );
 };
 

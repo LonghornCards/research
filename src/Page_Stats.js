@@ -60,7 +60,7 @@ const DataTable = ({ data, selectedNames }) => {
                     {rows.map(row => {
                         prepareRow(row);
                         return (
-                            <div {...row.getRowProps()} className="tr">
+                            <div {...row.getRowProps()} className="tr" id={`row-${row.original.Name.replace(/\s+/g, '-').toLowerCase()}`}>
                                 {row.cells.map(cell => (
                                     <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
                                         {cell.render('Cell')}

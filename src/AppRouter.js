@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './Navbar'; // Ensure the import matches the file name
+import Navbar from './Navbar';
 import Home from './App';
 import Page_Scoreboard from './Page_Scoreboard';
 import Page_Blog from './Page_Blog';
@@ -9,7 +9,7 @@ import About from './About';
 import Page_GoogleTrends from './Page_GoogleTrends';
 import Page_CardSearch from './Page_CardSearch';
 import Page_Stats from './Page_Stats';
-import Login from './Login'; // Add this import
+import Login from './Login';
 
 import './App.css';
 
@@ -26,7 +26,7 @@ const AppRouter = () => {
                 <Route path="/page_blog" element={<Page_Blog />} />
                 <Route path="/page_store" element={<Page_Store />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/login" element={<Login />} /> {/* Add this route */}
+                <Route path="/login" element={<Login />} />
             </Routes>
         </Router>
     );

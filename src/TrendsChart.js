@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
-const TrendsChart = ({ fileUrl, title }) => {
+const TrendsChart = ({ fileUrl, title, idPrefix }) => {
     const [data, setData] = useState([]);
     const [players, setPlayers] = useState([]);
     const [selectedPlayers, setSelectedPlayers] = useState([]);
