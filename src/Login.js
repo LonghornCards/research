@@ -15,14 +15,22 @@ function Login() {
                     <main>
                         <header className='App-header'>
                             <h1>Welcome, {user ? user.username : 'Guest'}</h1>
-                            {/* Sign Out Button */}
+                            {/* Modern Sign Out Button */}
                             <button
-                                onClick={signOut}
+                                onClick={() => {
+                                    signOut();
+                                    window.location.href = '/'; // Redirect to home page
+                                }}
                                 style={{
                                     margin: '20px',
-                                    fontSize: '0.8rem',
-                                    padding: '5px 10px',
-                                    marginTop: '20px'
+                                    fontSize: '1rem',
+                                    padding: '10px 20px',
+                                    backgroundColor: '#007bff',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.3s'
                                 }}
                             >
                                 Sign Out

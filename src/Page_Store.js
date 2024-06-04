@@ -18,6 +18,7 @@ const PageStore = () => {
                 autoPlay
                 loop
                 muted
+                playsInline
             >
                 <source
                     src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/homepage_background.mp4"

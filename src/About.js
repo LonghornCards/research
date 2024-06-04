@@ -5,7 +5,7 @@ const About = () => {
     return (
         <div className="about-container">
             <div className="about-video-container">
-                <video autoPlay muted loop className="about-background-video">
+                <video autoPlay muted loop playsInline className="about-background-video">
                     <source src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/about_background.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
