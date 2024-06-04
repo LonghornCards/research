@@ -848,3 +848,17 @@ button {
         height: 20vh;
     }
 }
+
+/* Add these styles to your CSS file for Cognito Log-in*/
+.peru-text {
+    color: peru;
+}
+
+.peru-button {
+    background-color: peru;
+    color: white; /* Change button text color to white */
+    margin: 20px;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    margin-top: 20px;
+}
