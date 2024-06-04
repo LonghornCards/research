@@ -25,7 +25,7 @@ const App = () => {
                     type="video/mp4"
                 />
             </video>
-            <div className="welcome-message">Welcome to Longhorn Cards Research!</div>
+            <div className="welcome-message">Welcome to Longhorn Cards!</div>
         </div>
     );
 };

@@ -628,8 +628,9 @@ button {
         padding: 10px;
     }
 
-    .scoreboard-text-section p {
-        font-size: 32px;
+    .scoreboard-text-section {
+        font-size: 12px;
+        font-style: italic;
     }
 
     .scoreboard-top-paragraph {
@@ -647,6 +648,11 @@ button {
         text-align: center;
         padding: 10px;
         margin-bottom: 20px;
+    }
+
+    .stats-paragraph-section {
+        font-size: 12px;
+        font-style: italic;
     }
 
     .search-box {
@@ -862,3 +868,38 @@ button {
     padding: 5px 10px;
     margin-top: 20px;
 }
+
+/* Existing styles for Page_CardSearch remain unchanged */
+
+/* Adjustments for mobile visibility */
+@media (max-width: 768px) {
+    .content {
+        padding-top: 5%; /* Reduce top padding for mobile */
+    }
+
+        .content h1 {
+            font-size: 2rem; /* Smaller font size for mobile */
+            margin-bottom: 10px; /* Reduce margin for mobile */
+        }
+
+    .search-box {
+        gap: 5px; /* Reduce gap between inputs */
+        margin-bottom: 10px; /* Reduce margin for mobile */
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 5px; /* Reduce gap between inputs */
+    }
+
+        .form-row input {
+            margin-bottom: 5px; /* Reduce margin for mobile */
+        }
+
+    .glossary {
+        padding: 10px; /* Add padding for mobile */
+        font-size: 0.9rem; /* Smaller font size for mobile */
+        text-align: left; /* Left align for readability */
+    }
+}
+

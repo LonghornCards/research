@@ -13,7 +13,7 @@ const About = () => {
             <div className="about-content">
                 <h1>About Us</h1>
                 <p>Welcome! Our focus is on providing high-quality sports cards and cutting-edge research & analytics for the sports card market.</p>
-                <p>Create an account to subscribe to our newsletters and bookmark our page for updated research & new products.</p>
+                <p>Create a free account to subscribe to our newsletters and bookmark our page for updated research & new products.</p>
                 <p>This website is still under construction, please check back soon for updates!</p>
                 <p>Based in Austin, TX and Founded in 2023.</p>
             </div>

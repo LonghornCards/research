@@ -203,7 +203,7 @@ const Player_Scoreboard = () => {
     return (
         <div className="scoreboard-page-container">
             <div className="scoreboard-summary">
-                <p className="scoreboard-top-paragraph">The Longhorn Cards Player Scoreboard provides a comprehensive analysis of player scores using historical card prices, career statistics, and Google Trends data.</p>
+                <p className="scoreboard-top-paragraph">The Longhorn Cards Player Scoreboard provides a comprehensive analysis of player rankings using historical card prices, player career statistics, and Google Trends search interest.</p>
 
                 <p>The Composite Rank is calculated from historical card sale prices (Technical Rank), player career statistics for every season (Fundamental Rank), and Google Trends search interest (Sentiment Rank).</p>
 
