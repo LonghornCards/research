@@ -43,7 +43,7 @@ const Page_CardSearch = () => {
     return (
         <div className="page-card-search">
             <div className="video-background-container">
-                <video className="video-background" autoPlay muted loop>
+                <video className="video-background" autoPlay muted loop playsInline>
                     <source src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/background_cardsearch.mp4" type="video/mp4" />
                 </video>
             </div>
