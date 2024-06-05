@@ -1,0 +1,21 @@
+{
+    "appName": "LonghornCards",
+    "roleName": "pinpointLambdaRoleed57c9fe",
+    "cloudformationPolicyName": "cloudformationPolicyed57c9fe",
+    "cloudWatchPolicyName": "cloudWatchPolicyed57c9fe",
+    "pinpointPolicyName": "pinpointPolicyed57c9fe",
+    "authPolicyName": "pinpoint_amplify_ed57c9fe",
+    "unauthPolicyName": "pinpoint_amplify_ed57c9fe",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

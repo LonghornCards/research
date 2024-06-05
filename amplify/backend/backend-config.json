@@ -1,4 +1,10 @@
 {
+  "analytics": {
+    "LonghornCards": {
+      "providerPlugin": "awscloudformation",
+      "service": "Pinpoint"
+    }
+  },
   "api": {},
   "auth": {
     "websiteappe1216b0b": {
