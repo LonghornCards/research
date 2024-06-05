@@ -1029,3 +1029,22 @@ button {
     bottom: 0;
     left: 0;
 }
+
+/* App.css */
+
+.privacy-policy-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px; /* Add large space at the top */
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.privacy-policy-container {
+    max-width: 800px; /* Set a max width to center the content */
+    width: 100%;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

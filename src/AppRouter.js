@@ -10,6 +10,7 @@ import Page_GoogleTrends from './Page_GoogleTrends';
 import Page_CardSearch from './Page_CardSearch';
 import Page_Stats from './Page_Stats';
 import Login from './Login';
+import PrivacyPolicy from './PrivacyPolicy'; // Import the PrivacyPolicy component
 
 import './App.css';
 
@@ -26,6 +27,7 @@ const AppRouter = () => {
                 <Route path="/page_blog" element={<Page_Blog />} />
                 <Route path="/page_store" element={<Page_Store />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} /> {/* Add the PrivacyPolicy route */}
                 <Route path="/login" element={<Login />} />
             </Routes>
         </Router>

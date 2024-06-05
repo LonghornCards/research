@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './App.css';
 
 const About = () => {
@@ -19,6 +20,7 @@ const About = () => {
             </div>
             <div className="contact-information">
                 <p>Contact us for more information: <a href="mailto:longhorncardsatx@gmail.com">longhorncardsatx@gmail.com</a></p>
+                <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
             <div className="footer-bar"></div>
         </div>
