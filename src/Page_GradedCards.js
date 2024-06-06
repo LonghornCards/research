@@ -63,7 +63,7 @@ const PageGradedCards = () => {
 
     return (
         <div className="products-page">
-            <h1 className="products-title">Current Graded Card Inventory:  Subscribe & Check Back For Updates!</h1>
+            <h1 className="products-title">Current Graded Card Inventory: Subscribe & Check Back For Updates!</h1>
             <div className="tag-filter">
                 <Select
                     isMulti
