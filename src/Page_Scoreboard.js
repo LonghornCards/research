@@ -8,6 +8,7 @@ import datalabels from 'chartjs-plugin-datalabels';
 import Select, { components } from 'react-select';
 import { useTable, useBlockLayout } from 'react-table';
 import './App.css';
+import { useLocation } from 'react-router-dom';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend, Title, annotationPlugin, datalabels, CategoryScale);
 
@@ -48,6 +49,7 @@ const Player_Scoreboard = () => {
     const [selectedName, setSelectedName] = useState([{ value: 'All Players', label: 'All Players' }]);
     const [selectedTrend, setSelectedTrend] = useState([{ value: 'All Trends', label: 'All Trends' }]);
     const chartRef = useRef(null);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -71,6 +73,18 @@ const Player_Scoreboard = () => {
 
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 0);
+            }
+        }
+    }, [location]);
 
     const getColor = (compositeRank, maxRank) => {
         const ratio = compositeRank / maxRank;

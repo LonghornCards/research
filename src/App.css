@@ -1032,19 +1032,117 @@ button {
 
 /* App.css */
 
-.privacy-policy-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 100px; /* Add large space at the top */
-    padding-left: 20px;
-    padding-right: 20px;
+.products-page {
+    padding: 20px;
+    padding-top: 100px; /* Ensure space under the navigation bar */
 }
 
-.privacy-policy-container {
-    max-width: 800px; /* Set a max width to center the content */
+.products-title {
+    font-size: 32px;
+    color: peru;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.products-subscribe {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.subscribe-link {
+    color: peru;
+    text-decoration: underline;
+}
+
+.products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.product-card {
+    flex: 1 1 calc(25% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    height: 400px;
+    justify-content: space-between;
+    transition: transform 0.3s ease; /* Add transition for smooth scaling */
+}
+
+    .product-card.highlight {
+        border: 2px solid red; /* Highlight border color */
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* Highlight shadow */
+        transform: scale(1.05); /* Slightly scale up the highlighted product */
+        animation: highlight-animation 1s ease-in-out infinite alternate;
+    }
+
+@keyframes highlight-animation {
+    0% {
+        background-color: white;
+    }
+
+    100% {
+        background-color: #ffeb3b;
+    }
+}
+
+.product-image {
     width: 100%;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.product-title {
+    font-size: 1.2em;
+    margin: 10px 0;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.product-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.product-price {
+    font-size: 1em;
+    color: #888;
+    margin: 0;
+}
+
+.product-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    margin-top: 10px;
+    word-break: break-word;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .product-card {
+        flex: 1 1 calc(50% - 20px); /* 2 products per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card {
+        flex: 1 1 calc(100% - 20px); /* 1 product per row */
+    }
 }

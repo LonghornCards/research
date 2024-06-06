@@ -43,6 +43,16 @@ const fetchData = async (url) => {
     }
 };
 
+const fetchProducts = async () => {
+    try {
+        const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching product data:', error);
+        return [];
+    }
+};
+
 const SearchResults = ({ query, onClose }) => {
     const [data, setData] = useState([]);
 
@@ -55,6 +65,7 @@ const SearchResults = ({ query, onClose }) => {
             const nflTrends = await fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_NFL.xlsx');
             const nbaTrends = await fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_NBA.xlsx');
             const mlbTrends = await fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_MLB.xlsx');
+            const products = await fetchProducts();
             const blogEntries = [
                 {
                     title: 'Player Scoreboard - Top 25',
@@ -89,7 +100,8 @@ const SearchResults = ({ query, onClose }) => {
                 ...nflTrends.map(trend => ({ ...trend, type: 'NFL Trend', id: `nfl-trend-${trend.PLAYER.replace(/\s+/g, '-').toLowerCase()}` })),
                 ...nbaTrends.map(trend => ({ ...trend, type: 'NBA Trend', id: `nba-trend-${trend.PLAYER.replace(/\s+/g, '-').toLowerCase()}` })),
                 ...mlbTrends.map(trend => ({ ...trend, type: 'MLB Trend', id: `mlb-trend-${trend.PLAYER.replace(/\s+/g, '-').toLowerCase()}` })),
-                ...blogEntries
+                ...products.map(product => ({ title: product.Title, type: 'Product', id: `product-${product.Title.replace(/\s+/g, '-').toLowerCase()}`, url: `/page_products#product-${product.Title.replace(/\s+/g, '-').toLowerCase()}` })),
+                ...blogEntries.map(entry => ({ ...entry, type: 'Blog', id: `blog-${entry.title.replace(/\s+/g, '-').toLowerCase()}` }))
             ];
 
             setData(combinedData);
@@ -119,9 +131,17 @@ const SearchResults = ({ query, onClose }) => {
                                 <Link to={`/page_googletrends#${result.id}`} onClick={onClose} style={{ color: 'white' }}>
                                     {result.PLAYER} ({result.type})
                                 </Link>
-                            ) : (
+                            ) : result.type === 'Product' ? (
+                                <Link to={`/page_products#${result.id}`} onClick={onClose} style={{ color: 'white' }}>
+                                    {result.title} ({result.type})
+                                </Link>
+                            ) : result.type === 'Player Statistics' ? (
                                 <Link to={`/page_stats#${result.id}`} onClick={onClose} style={{ color: 'white' }}>
                                     {result.Name} ({result.type})
+                                </Link>
+                            ) : (
+                                <Link to={`/page_blog#${result.id}`} onClick={onClose} style={{ color: 'white' }}>
+                                    {result.title} ({result.type})
                                 </Link>
                             )}
                         </li>

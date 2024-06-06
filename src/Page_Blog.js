@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
+import { useLocation } from 'react-router-dom';
 
 const Page_Blog = () => {
     const blogEntries = [
@@ -116,6 +117,20 @@ const Page_Blog = () => {
             imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_5.9.24.png'
         }
     ];
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 0);
+            }
+        }
+    }, [location]);
 
     return (
         <div className="page-blog">

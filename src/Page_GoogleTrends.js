@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TrendsChart from './TrendsChart';
+import { useLocation } from 'react-router-dom';
 
 const Page_GoogleTrends = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 0);
+            }
+        }
+    }, [location]);
+
     return (
         <div style={{ paddingTop: '50px', padding: '20px' }}> {/* Increased paddingTop for larger space */}
             <TrendsChart

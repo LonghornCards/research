@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { useTable, useBlockLayout } from 'react-table';
 import Select, { components } from 'react-select';
 import './App.css';
+import { useLocation } from 'react-router-dom';
 
 const fetchData = async (url) => {
     try {
@@ -75,22 +76,18 @@ const DataTable = ({ data, selectedNames }) => {
     );
 };
 
-const Option = (props) => {
-    return (
-        <components.Option {...props}>
-            <input type="checkbox" checked={props.isSelected} onChange={() => null} />{' '}
-            <label>{props.label}</label>
-        </components.Option>
-    );
-};
+const Option = (props) => (
+    <components.Option {...props}>
+        <input type="checkbox" checked={props.isSelected} onChange={() => null} />{' '}
+        <label>{props.label}</label>
+    </components.Option>
+);
 
-const MultiValue = (props) => {
-    return (
-        <components.MultiValue {...props}>
-            <span>{props.children}</span>
-        </components.MultiValue>
-    );
-};
+const MultiValue = (props) => (
+    <components.MultiValue {...props}>
+        <span>{props.children}</span>
+    </components.MultiValue>
+);
 
 const Page_Stats = () => {
     const [nflData, setNflData] = useState([]);
@@ -99,6 +96,7 @@ const Page_Stats = () => {
     const [selectedNflNames, setSelectedNflNames] = useState([]);
     const [selectedNbaNames, setSelectedNbaNames] = useState([]);
     const [selectedMlbNames, setSelectedMlbNames] = useState([]);
+    const location = useLocation();
 
     useEffect(() => {
         const loadStats = async () => {
@@ -113,6 +111,18 @@ const Page_Stats = () => {
         loadStats();
     }, []);
 
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 0);
+            }
+        }
+    }, [location]);
+
     const getUniqueOptions = (data, key) => {
         const options = data.map(row => row[key]);
         const uniqueOptions = [...new Set(options)];
@@ -125,7 +135,7 @@ const Page_Stats = () => {
             <p className="scoreboard-intro-paragraph">
                 Welcome to the Sports Statistics page! Here, you will find comprehensive statistics for key NFL, NBA, and MLB players.
 
-                Use the filters below to narrow down the data based on your player selections.  Data as of May 2024 and sourced from Sports-Reference.com.
+                Use the filters below to narrow down the data based on your player selections. Data as of May 2024 and sourced from Sports-Reference.com.
 
                 See the bottom of the page for a full glossary of the different statistics provided.
             </p>

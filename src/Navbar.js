@@ -1,7 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchResults from './SearchResults';
+import axios from 'axios';
 
 const Nav = styled.nav`
   background: peru;
@@ -175,6 +176,21 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearchResults, setShowSearchResults] = useState(false);
+    const [products, setProducts] = useState([]);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Fetch product data from JSON file
+        axios
+            .get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json')
+            .then((response) => {
+                setProducts(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching product data:', error);
+            });
+    }, []);
 
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
@@ -205,6 +221,15 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [prevScrollPos, visible, handleScroll]);
 
+    const filterProducts = (query) => {
+        if (!query) return [];
+        return products.filter(product =>
+            product.Title.toLowerCase().includes(query.toLowerCase())
+        );
+    };
+
+    const searchResults = filterProducts(searchQuery);
+
     return (
         <>
             <Nav style={{ top: visible ? '0' : '-60px' }}>
@@ -220,7 +245,15 @@ const Navbar = () => {
                 </Hamburger>
                 <NavMenu isOpen={isOpen}>
                     <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
-                    <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
+                    <Dropdown>
+                        <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
+                        <DropdownContent className="dropdown-content">
+                            <Link to="/page_store" onClick={() => setIsOpen(false)}>Main Store</Link>
+                            <Link to="/page_products" onClick={() => setIsOpen(false)}>All Products</Link>
+                            <Link to="/page_gradedcards" onClick={() => setIsOpen(false)}>Graded Cards</Link>
+                            <Link to="/page_rawcards" onClick={() => setIsOpen(false)}>Raw Cards</Link> {/* Add the Page_RawCards link */}
+                        </DropdownContent>
+                    </Dropdown>
                     <Dropdown>
                         <span>Research</span>
                         <DropdownContent className="dropdown-content">
@@ -245,7 +278,7 @@ const Navbar = () => {
                 <LoginLink to="/login" className="login-link">Log-in/Subscribe</LoginLink>
             </Nav>
             {showSearchResults && (
-                <SearchResults query={searchQuery} onClose={handleCloseSearch} />
+                <SearchResults query={searchQuery} products={searchResults} onClose={handleCloseSearch} />
             )}
         </>
     );
