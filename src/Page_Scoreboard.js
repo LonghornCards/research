@@ -48,6 +48,7 @@ const Player_Scoreboard = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [selectedName, setSelectedName] = useState([{ value: 'All Players', label: 'All Players' }]);
     const [selectedTrend, setSelectedTrend] = useState([{ value: 'All Trends', label: 'All Trends' }]);
+    const [bubbleSize, setBubbleSize] = useState(columnOptions[1]); // Default to Fundamental Rank
     const chartRef = useRef(null);
     const location = useLocation();
 
@@ -65,7 +66,7 @@ const Player_Scoreboard = () => {
 
                 setData(worksheet);
                 filterTableData(worksheet, selectedName, selectedSport, selectedTrend);
-                updateChartData(worksheet, xAxis.value, yAxis.value, selectedSport.value);
+                updateChartData(worksheet, xAxis.value, yAxis.value, selectedSport.value, bubbleSize.value);
             } catch (error) {
                 console.error('Error fetching the data:', error);
             }
@@ -93,11 +94,11 @@ const Player_Scoreboard = () => {
         return `rgb(${r}, ${g}, 0)`;
     };
 
-    const updateChartData = (data, xAxis, yAxis, sport) => {
+    const updateChartData = (data, xAxis, yAxis, sport, bubbleSize) => {
         const filteredData = filterDataBySport(data, sport);
         const maxCompositeRank = Math.max(...filteredData.map(row => row['Composite Rank']));
-        const maxFundamentalRank = Math.max(...filteredData.map(row => row['Fundamental Rank']));
-        const scalingFactor = 50 / maxFundamentalRank; // Adjust scaling factor as needed
+        const maxSizeRank = Math.max(...filteredData.map(row => row[bubbleSize]));
+        const scalingFactor = 50 / maxSizeRank; // Adjust scaling factor as needed
 
         const chartData = {
             datasets: [
@@ -106,13 +107,13 @@ const Player_Scoreboard = () => {
                     data: filteredData.map(row => ({
                         x: row[xAxis],
                         y: row[yAxis],
-                        r: row['Fundamental Rank'] ? row['Fundamental Rank'] * scalingFactor : 5, // Scale the bubble size
+                        r: row[bubbleSize] ? row[bubbleSize] * scalingFactor : 5, // Scale the bubble size
                         backgroundColor: getColor(row['Composite Rank'], maxCompositeRank),
-                        compositeRank: row['Composite Rank'], // Store Composite Rank for tooltip
-                        fundamentalRank: row['Fundamental Rank'], // Store Fundamental Rank for tooltip
-                        sentimentRank: row['Sentiment Rank'], // Store Sentiment Rank for tooltip
-                        technicalRank: row['Technical Rank'], // Store Technical Rank for tooltip
-                        name: row['Name'] // Add name for the data label
+                        compositeRank: row['Composite Rank'],
+                        fundamentalRank: row['Fundamental Rank'],
+                        sentimentRank: row['Sentiment Rank'],
+                        technicalRank: row['Technical Rank'],
+                        name: row['Name']
                     }))
                 }
             ]
@@ -131,21 +132,28 @@ const Player_Scoreboard = () => {
     const handleXAxisChange = selectedOption => {
         if (selectedOption) {
             setXAxis(selectedOption);
-            updateChartData(data, selectedOption.value, yAxis.value, selectedSport.value);
+            updateChartData(data, selectedOption.value, yAxis.value, selectedSport.value, bubbleSize.value);
         }
     };
 
     const handleYAxisChange = selectedOption => {
         if (selectedOption) {
             setYAxis(selectedOption);
-            updateChartData(data, xAxis.value, selectedOption.value, selectedSport.value);
+            updateChartData(data, xAxis.value, selectedOption.value, selectedSport.value, bubbleSize.value);
         }
     };
 
     const handleSportChange = selectedOption => {
         if (selectedOption) {
             setSelectedSport(selectedOption);
-            updateChartData(data, xAxis.value, yAxis.value, selectedOption.value);
+            updateChartData(data, xAxis.value, yAxis.value, selectedOption.value, bubbleSize.value);
+        }
+    };
+
+    const handleBubbleSizeChange = selectedOption => {
+        if (selectedOption) {
+            setBubbleSize(selectedOption);
+            updateChartData(data, xAxis.value, yAxis.value, selectedSport.value, selectedOption.value);
         }
     };
 
@@ -177,7 +185,6 @@ const Player_Scoreboard = () => {
         setFilteredData(filtered);
     };
 
-    // Get unique options for filters
     const getUniqueOptions = key => {
         const options = data.map(row => row[key]);
         const uniqueOptions = [...new Set(options)];
@@ -222,7 +229,7 @@ const Player_Scoreboard = () => {
 
                 <p>The Composite Rank is calculated from historical card sale prices (Technical Rank), player career statistics for every season (Fundamental Rank), and Google Trends search interest (Sentiment Rank).</p>
 
-                <p>Included in the Scoreboard are key active players across Football, Basketball, and Baseball.  Use the filters to display & explore different player metrics.</p>
+                <p>Included in the Scoreboard are key active players across Football, Basketball, and Baseball. Use the filters to display & explore different player metrics.</p>
 
             </div>
             <h1 style={{ color: 'peru', fontWeight: 'bold' }}>Longhorn Cards Player Scoreboard</h1>
@@ -238,6 +245,10 @@ const Player_Scoreboard = () => {
                 <div className="scoreboard-filter">
                     <label>Sport</label>
                     <Select options={sportOptions} value={selectedSport} onChange={handleSportChange} />
+                </div>
+                <div className="scoreboard-filter">
+                    <label>Bubble Size</label>
+                    <Select options={columnOptions} value={bubbleSize} onChange={handleBubbleSizeChange} />
                 </div>
             </div>
             <div className="scoreboard-scatterplot-container">
@@ -459,7 +470,7 @@ const Player_Scoreboard = () => {
             </div>
             <div className="scoreboard-text-section">
                 <p>The Longhorn Cards Player Scoreboard incorporates historical player card prices (Technical Rank), player career statistics aggregated for all seasons played (Fundamental Rank), and Google Trends interest/popularity (Sentiment Rank.)</p>
-                <p>(Player Scatterplot: Size of Bubble = Fundamental Rank; Color of Bubble = Composite Rank | Player Table: Active = Active Player or Retired; Trend = Current technical trend is based on short- and long-term historical card prices; Percentages reflect current card price levels relative to high, low, and different average price levels; Dates shown are for the Sentiment Rank based on Google Trends for that month)</p>
+                <p>(Player Scatterplot: Color of Bubble = Composite Rank | Player Table: Active = Active Player or Retired; Trend = Current technical trend is based on short- and long-term historical card prices; Percentages reflect current card price levels relative to high, low, and different average price levels; Dates shown are for the Sentiment Rank based on Google Trends for that month)</p>
             </div>
         </div>
     );

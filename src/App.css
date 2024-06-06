@@ -1201,3 +1201,100 @@ button {
         flex: 1 1 calc(100% - 20px); /* 1 product per row */
     }
 }
+
+.page-returns {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 100px; /* Ensure space under the navigation bar */
+}
+
+.returns-title {
+    color: peru;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dropdown-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.dropdown-select {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Add gap to prevent overlapping */
+}
+
+.chart-subplot {
+    height: 450px; /* Increased height */
+}
+
+.chart-title {
+    text-align: center;
+    color: peru;
+    margin-bottom: 10px;
+}
+
+.performance-container {
+    margin-top: 150px; /* Add margin to prevent overlapping */
+}
+
+.info-paragraph {
+    color: peru;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+    .chart-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .chart-subplot {
+        flex: 1;
+        margin-right: 10px;
+        height: 500px; /* Increased height for larger screens */
+    }
+
+        .chart-subplot:last-child {
+            margin-right: 0;
+        }
+}
+
+@media (max-width: 768px) {
+    .page-returns {
+        padding: 10px;
+    }
+
+    .returns-title {
+        font-size: 1.5em;
+    }
+
+    .dropdown-select {
+        width: 100%;
+    }
+
+    .chart-subplot {
+        height: 300px; /* Decreased height for mobile */
+    }
+
+    .performance-container {
+        margin-top: 50px; /* Adjust margin for mobile */
+    }
+
+    .info-paragraph {
+        font-size: 0.9em;
+        margin-top: 10px;
+    }
+}

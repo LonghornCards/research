@@ -260,6 +260,7 @@ const Navbar = () => {
                             <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>Scoreboard</Link>
                             <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>Google Trends</Link>
                             <Link to="/page_stats" onClick={() => setIsOpen(false)}>Player Statistics</Link>
+                            <Link to="/page_returns" onClick={() => setIsOpen(false)}>Player Returns</Link> {/* Add the Page_Returns link */}
                             <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>eBay Card Sales</Link>
                         </DropdownContent>
                     </Dropdown>
