@@ -1,71 +1,109 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Select from 'react-select';
 import './App.css';
-import { useLocation } from 'react-router-dom';
 
-const Page_Products = () => {
+const tagOptions = [
+    { value: 'Football', label: 'Football' },
+    { value: 'Baseball', label: 'Baseball' },
+    { value: 'Basketball', label: 'Basketball' },
+    { value: 'graded', label: 'graded' },
+    { value: 'raw', label: 'raw' },
+    { value: 'rookie', label: 'rookie' },
+    { value: 'auto', label: 'auto' },
+    { value: 'patch', label: 'patch' },
+    { value: 'rpa', label: 'rpa' },
+];
+
+const PageProducts = () => { // Component name must be in PascalCase
     const [products, setProducts] = useState([]);
-    const location = useLocation();
-    const productRefs = useRef({});
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
-        // Fetch product data from JSON file
-        axios
-            .get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json')
-            .then((response) => {
-                setProducts(response.data);
-            })
-            .catch((error) => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json');
+                console.log('Full response data:', response);
+                if (response.data) {
+                    console.log('Product data fetched successfully:', response.data);
+                    setProducts(response.data);
+                    setFilteredProducts(response.data);
+                } else {
+                    console.error('No data in response:', response);
+                }
+            } catch (error) {
                 console.error('Error fetching product data:', error);
-            });
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }, []);
 
     useEffect(() => {
-        if (location.hash) {
-            const id = location.hash.replace('#', '');
-            if (productRefs.current[id]) {
-                setTimeout(() => {
-                    productRefs.current[id].scrollIntoView({ behavior: 'smooth' });
-                    productRefs.current[id].classList.add('highlight');
-                }, 0);
-                setTimeout(() => {
-                    if (productRefs.current[id]) {
-                        productRefs.current[id].classList.remove('highlight');
-                    }
-                }, 3000); // Remove highlight after 3 seconds
-            }
+        if (selectedTags.length === 0) {
+            setFilteredProducts(products);
+        } else {
+            const filtered = products.filter(product =>
+                selectedTags.every(tag => product.Tags.includes(tag.value))
+            );
+            setFilteredProducts(filtered);
         }
-    }, [location]);
+    }, [selectedTags, products]);
+
+    const handleTagChange = (selectedOptions) => {
+        setSelectedTags(selectedOptions || []);
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="products-page">
-            <h1 className="products-title">Current Products: Please Check Back & Subscribe for New Product Updates</h1>
-            <p className="products-subscribe">
-                <a href="/login" className="subscribe-link">Subscribe</a> to our newsletter for updates
-            </p>
-            <div className="products-grid">
-                {products.map((product, index) => {
-                    const ebayUrl = product.ebay_link;
-                    const productId = `product-${product.Title.replace(/\s+/g, '-').toLowerCase()}`;
-
-                    return (
-                        <div
-                            key={index}
-                            id={productId}
-                            className="product-card"
-                            ref={(el) => (productRefs.current[productId] = el)}
-                        >
-                            <h2 className="product-title">{product.Title}</h2>
-                            <div className="product-footer">
-                                <p className="product-price">${parseFloat(product.Price).toFixed(2)}</p>
-                                <a href={ebayUrl} className="product-link" target="_blank" rel="noopener noreferrer">View on eBay</a>
-                            </div>
-                        </div>
-                    );
-                })}
+            <h1 className="products-title">Current Inventory:  Subscribe & Check Back For Updates!</h1>
+            <div className="tag-filter">
+                <Select
+                    isMulti
+                    name="tags"
+                    options={tagOptions}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    onChange={handleTagChange}
+                    placeholder="Select tags to filter products"
+                />
             </div>
+            <div className="products-grid">
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product, index) => (
+                        <div key={index} className="product-card">
+                            <img
+                                src={product.Image_url}
+                                alt={product.Title}
+                                className="product-image"
+                                onClick={() => setSelectedImage(product.Image_url)}
+                            />
+                            <h2 className="product-title">{product.Title || 'No Title'}</h2>
+                            <p className="product-price">${parseFloat(product.Price).toFixed(2)}</p>
+                            <a href={product.ebay_link} className="product-link" target="_blank" rel="noopener noreferrer">View on eBay</a>
+                        </div>
+                    ))
+                ) : (
+                    <p>No products available.</p>
+                )}
+            </div>
+            {selectedImage && (
+                <div className="modal" onClick={() => setSelectedImage(null)}>
+                    <span className="close">&times;</span>
+                    <img className="modal-content" src={selectedImage} alt="Product" />
+                </div>
+            )}
         </div>
     );
 };
 
-export default Page_Products;
+export default PageProducts;
