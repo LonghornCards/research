@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import LazyLoad from 'react-lazyload';
 import './App.css';
 
 const tagOptions = [
@@ -15,7 +16,7 @@ const tagOptions = [
     { value: 'rpa', label: 'rpa' },
 ];
 
-const PageProducts = () => { // Component name must be in PascalCase
+const PageProducts = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
@@ -31,6 +32,7 @@ const PageProducts = () => { // Component name must be in PascalCase
                     console.log('Product data fetched successfully:', response.data);
                     setProducts(response.data);
                     setFilteredProducts(response.data);
+                    checkImages(response.data);  // Check images on initial load
                 } else {
                     console.error('No data in response:', response);
                 }
@@ -43,6 +45,16 @@ const PageProducts = () => { // Component name must be in PascalCase
 
         fetchData();
     }, []);
+
+    const checkImages = (products) => {
+        products.forEach(product => {
+            const img = new Image();
+            img.src = product.Image_url;
+            img.onerror = () => {
+                console.log('Broken image found for product:', product.Title);
+            };
+        });
+    };
 
     useEffect(() => {
         if (selectedTags.length === 0) {
@@ -57,6 +69,10 @@ const PageProducts = () => { // Component name must be in PascalCase
 
     const handleTagChange = (selectedOptions) => {
         setSelectedTags(selectedOptions || []);
+    };
+
+    const handleImageError = (e) => {
+        e.target.src = '/placeholder.png';
     };
 
     if (loading) {
@@ -81,12 +97,15 @@ const PageProducts = () => { // Component name must be in PascalCase
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product, index) => (
                         <div key={index} className="product-card">
-                            <img
-                                src={product.Image_url}
-                                alt={product.Title}
-                                className="product-image"
-                                onClick={() => setSelectedImage(product.Image_url)}
-                            />
+                            <LazyLoad height={200} offset={100}>
+                                <img
+                                    src={product.Image_url}
+                                    alt={product.Title}
+                                    className="product-image"
+                                    onError={handleImageError}
+                                    onClick={() => setSelectedImage(product.Image_url)}
+                                />
+                            </LazyLoad>
                             <h2 className="product-title">{product.Title || 'No Title'}</h2>
                             <p className="product-price">${parseFloat(product.Price).toFixed(2)}</p>
                             <a href={product.ebay_link} className="product-link" target="_blank" rel="noopener noreferrer">View on eBay</a>
