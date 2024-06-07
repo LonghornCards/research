@@ -1298,3 +1298,13 @@ button {
         margin-top: 10px;
     }
 }
+
+.product-image.loading {
+    filter: blur(10px);
+    transition: filter 0.2s;
+}
+
+.product-image.loaded {
+    filter: blur(0);
+}
+

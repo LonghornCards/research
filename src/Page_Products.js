@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
-import LazyLoad from 'react-lazyload';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import './App.css';
 
 const tagOptions = [
@@ -97,15 +98,14 @@ const PageProducts = () => {
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product, index) => (
                         <div key={index} className="product-card">
-                            <LazyLoad height={200} offset={100}>
-                                <img
-                                    src={product.Image_url}
-                                    alt={product.Title}
-                                    className="product-image"
-                                    onError={handleImageError}
-                                    onClick={() => setSelectedImage(product.Image_url)}
-                                />
-                            </LazyLoad>
+                            <LazyLoadImage
+                                src={product.Image_url}
+                                alt={product.Title}
+                                effect="blur"
+                                className="product-image"
+                                onError={handleImageError}
+                                onClick={() => setSelectedImage(product.Image_url)}
+                            />
                             <h2 className="product-title">{product.Title || 'No Title'}</h2>
                             <p className="product-price">${parseFloat(product.Price).toFixed(2)}</p>
                             <a href={product.ebay_link} className="product-link" target="_blank" rel="noopener noreferrer">View on eBay</a>
