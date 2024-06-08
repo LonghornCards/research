@@ -6,6 +6,7 @@
     "@aws-amplify/analytics": "^7.0.34",
     "@aws-amplify/auth": "^6.3.4",
     "@aws-amplify/ui-react": "^6.1.12",
+    "@emotion/is-prop-valid": "^1.2.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

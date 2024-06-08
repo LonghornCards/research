@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import isPropValid from '@emotion/is-prop-valid';
 import SearchResults from './SearchResults';
 import axios from 'axios';
 
@@ -23,7 +24,9 @@ const Nav = styled.nav`
   }
 `;
 
-const NavMenu = styled.div`
+const NavMenu = styled('div').withConfig({
+    shouldForwardProp: (prop) => isPropValid(prop) && prop !== 'isOpen',
+})`
   display: flex;
   gap: 10px;
   flex: 1;
@@ -223,7 +226,7 @@ const Navbar = () => {
 
     const filterProducts = (query) => {
         if (!query) return [];
-        return products.filter(product =>
+        return products.filter((product) =>
             product.Title.toLowerCase().includes(query.toLowerCase())
         );
     };
@@ -235,7 +238,10 @@ const Navbar = () => {
             <Nav style={{ top: visible ? '0' : '-60px' }}>
                 <LogoContainer>
                     <Link to="/">
-                        <Logo src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo_Simple.png" alt="Logo" />
+                        <Logo
+                            src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo_Simple.png"
+                            alt="Logo"
+                        />
                     </Link>
                 </LogoContainer>
                 <Hamburger onClick={toggleMenu}>
@@ -244,28 +250,54 @@ const Navbar = () => {
                     <div />
                 </Hamburger>
                 <NavMenu isOpen={isOpen}>
-                    <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+                    <NavLink to="/" onClick={() => setIsOpen(false)}>
+                        Home
+                    </NavLink>
                     <Dropdown>
-                        <NavLink to="/page_store" onClick={() => setIsOpen(false)}>Store</NavLink>
+                        <NavLink to="/page_store" onClick={() => setIsOpen(false)}>
+                            Store
+                        </NavLink>
                         <DropdownContent className="dropdown-content">
-                            <Link to="/page_store" onClick={() => setIsOpen(false)}>Main Store</Link>
-                            <Link to="/page_products" onClick={() => setIsOpen(false)}>All Products</Link>
-                            <Link to="/page_gradedcards" onClick={() => setIsOpen(false)}>Graded Cards</Link>
-                            <Link to="/page_rawcards" onClick={() => setIsOpen(false)}>Raw Cards</Link> {/* Add the Page_RawCards link */}
+                            <Link to="/page_store" onClick={() => setIsOpen(false)}>
+                                Main Store
+                            </Link>
+                            <Link to="/page_products" onClick={() => setIsOpen(false)}>
+                                All Products
+                            </Link>
+                            <Link to="/page_gradedcards" onClick={() => setIsOpen(false)}>
+                                Graded Cards
+                            </Link>
+                            <Link to="/page_rawcards" onClick={() => setIsOpen(false)}>
+                                Raw Cards
+                            </Link>
                         </DropdownContent>
                     </Dropdown>
                     <Dropdown>
                         <span>Research</span>
                         <DropdownContent className="dropdown-content">
-                            <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>Scoreboard</Link>
-                            <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>Google Trends</Link>
-                            <Link to="/page_stats" onClick={() => setIsOpen(false)}>Player Statistics</Link>
-                            <Link to="/page_returns" onClick={() => setIsOpen(false)}>Player Returns</Link> {/* Add the Page_Returns link */}
-                            <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>eBay Card Sales</Link>
+                            <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>
+                                Scoreboard
+                            </Link>
+                            <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>
+                                Google Trends
+                            </Link>
+                            <Link to="/page_stats" onClick={() => setIsOpen(false)}>
+                                Player Statistics
+                            </Link>
+                            <Link to="/page_returns" onClick={() => setIsOpen(false)}>
+                                Player Returns
+                            </Link>
+                            <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>
+                                eBay Card Sales
+                            </Link>
                         </DropdownContent>
                     </Dropdown>
-                    <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>Blog</NavLink>
-                    <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
+                    <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>
+                        Blog
+                    </NavLink>
+                    <NavLink to="/about" onClick={() => setIsOpen(false)}>
+                        About
+                    </NavLink>
                 </NavMenu>
                 <SearchBar onSubmit={handleSearchSubmit} className="search-bar">
                     <input
@@ -276,10 +308,16 @@ const Navbar = () => {
                     />
                     <button type="submit">Search</button>
                 </SearchBar>
-                <LoginLink to="/login" className="login-link">Log-in/Subscribe</LoginLink>
+                <LoginLink to="/login" className="login-link">
+                    Log-in/Subscribe
+                </LoginLink>
             </Nav>
             {showSearchResults && (
-                <SearchResults query={searchQuery} products={searchResults} onClose={handleCloseSearch} />
+                <SearchResults
+                    query={searchQuery}
+                    products={searchResults}
+                    onClose={handleCloseSearch}
+                />
             )}
         </>
     );
