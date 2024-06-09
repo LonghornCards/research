@@ -19,7 +19,7 @@ const About = () => {
                 <p>Based in Austin, TX and Founded in 2023.</p>
             </div>
             <div className="contact-information">
-                <p>Contact us for more information: <a href="mailto:longhorncardsatx@gmail.com">longhorncardsatx@gmail.com</a></p>
+                <p>Contact us for more information: <a href="mailto:info@longhornsportscards.com">info@longhornsportscards.com</a></p>
                 <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
             <div className="footer-bar"></div>
