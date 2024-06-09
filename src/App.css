@@ -1308,3 +1308,61 @@ button {
     filter: blur(0);
 }
 
+/* Existing styles... */
+
+/* Flex layout for the auth container */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh; /* Ensure it takes the full height of the screen */
+}
+
+/* Responsive button styles */
+.signout-button {
+    margin: 20px;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .signout-button:hover {
+        background-color: #0056b3;
+    }
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 10px;
+    }
+
+    .signout-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
+    }
+
+    .App-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .signout-button {
+        padding: 14px;
+        font-size: 1.4rem;
+    }
+
+    .App-header h1 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Existing styles... */

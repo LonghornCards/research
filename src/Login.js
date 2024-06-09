@@ -12,26 +12,15 @@ function Login() {
         <div className="App">
             <Authenticator>
                 {({ signOut, user }) => (
-                    <main>
+                    <main className="auth-container">
                         <header className='App-header'>
                             <h1>Welcome, {user ? user.username : 'Guest'}</h1>
-                            {/* Modern Sign Out Button */}
                             <button
                                 onClick={() => {
                                     signOut();
                                     window.location.href = '/'; // Redirect to home page
                                 }}
-                                style={{
-                                    margin: '20px',
-                                    fontSize: '1rem',
-                                    padding: '10px 20px',
-                                    backgroundColor: '#007bff',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '5px',
-                                    cursor: 'pointer',
-                                    transition: 'background-color 0.3s'
-                                }}
+                                className="signout-button"
                             >
                                 Sign Out
                             </button>
