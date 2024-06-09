@@ -1365,4 +1365,112 @@ button {
     }
 }
 
-/* Existing styles... */
+.filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Increase max-width to accommodate all filters */
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid peru;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    box-sizing: border-box; /* Ensures padding is included within the width */
+}
+
+.filter-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: peru;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: center; /* Center items horizontally */
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding is included within the width */
+}
+
+.search-box input,
+.price-filter input,
+.tag-filter .basic-multi-select__control {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 40px; /* Ensures uniform height */
+    box-sizing: border-box;
+}
+
+.search-box input {
+    width: 300px; /* Further increase width to display full placeholder text */
+}
+
+.price-filter input,
+.tag-filter .basic-multi-select__control {
+    width: 200px;
+}
+
+.price-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.reset-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: peru;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box;
+    height: 40px; /* Ensures uniform height with input fields */
+    margin-top: 20px; /* Adds margin to separate from input fields */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: center; /* Center items vertically */
+        gap: 15px;
+    }
+
+    .search-box input,
+    .price-filter input,
+    .tag-filter .basic-multi-select__control,
+    .reset-button {
+        width: 100%; /* Full width on mobile */
+    }
+
+    .price-filter {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .reset-button {
+        margin-top: 15px; /* Adjust margin for better spacing */
+    }
+}
+
+.products-page {
+    padding: 20px;
+    padding-top: 100px; /* Ensure space under the navigation bar */
+}
+
+.products-title {
+    font-size: 32px;
+    color: peru;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
