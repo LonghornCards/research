@@ -1,6 +1,6 @@
 {
   "analytics": {
-    "LonghornCards": {
+    "websiteapp": {
       "providerPlugin": "awscloudformation",
       "service": "Pinpoint"
     }

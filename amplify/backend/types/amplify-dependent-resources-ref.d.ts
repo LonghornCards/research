@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
   "analytics": {
-    "LonghornCards": {
+    "websiteapp": {
       "Id": "string",
       "Region": "string",
       "appName": "string"
