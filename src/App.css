@@ -1474,3 +1474,70 @@ button {
     text-align: center;
     margin-bottom: 20px;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.scatterplot-container {
+    width: 100%;
+    height: auto; /* Adjust height for responsiveness */
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+    .scatterplot-container .plotly {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+.filter-wrapper {
+    border: 2px solid peru;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+    .filter-wrapper .player-select, .filter-wrapper .sport-select {
+        width: 100%; /* Full width on mobile */
+        max-width: 300px; /* Restrict maximum width */
+        margin-right: 10px;
+        margin-bottom: 10px; /* Space between items on mobile */
+    }
+
+    .filter-wrapper .reset-button {
+        padding: 10px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%; /* Full width on mobile */
+        max-width: 300px; /* Restrict maximum width */
+    }
+
+.scatterplot-title {
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.scatterplot-description {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: peru;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
