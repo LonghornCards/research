@@ -167,9 +167,10 @@ const Page_Returns = () => {
                             orientation: 'h',
                             base: normalizedLowValues,
                             marker: {
-                                color: 'rgba(54, 162, 235, 0.6)', // Blue bar
+                                color: 'rgba(0,0,0,0)', // No fill color
                                 line: {
-                                    width: 1,
+                                    color: 'peru', // Peru border color
+                                    width: 2,
                                 },
                             },
                         },
@@ -180,7 +181,7 @@ const Page_Returns = () => {
                             type: 'scatter',
                             mode: 'markers',
                             marker: {
-                                color: performanceColors, // Gradient marker
+                                color: performanceColors, // Gradient color for markers
                                 size: 10,
                             },
                         },
