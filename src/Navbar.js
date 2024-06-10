@@ -120,7 +120,7 @@ const Dropdown = styled.div`
 const DropdownContent = styled.div`
   display: none;
   position: absolute;
-  background-color: peru;
+  background: linear-gradient(45deg, #444, #666);
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -133,7 +133,8 @@ const DropdownContent = styled.div`
     text-align: left;
 
     &:hover {
-      background-color: #111;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
     }
   }
 `;
@@ -254,42 +255,37 @@ const Navbar = () => {
                         Home
                     </NavLink>
                     <Dropdown>
-                        <NavLink to="/page_store" onClick={() => setIsOpen(false)}>
-                            Store
-                        </NavLink>
+                        <span>Store</span>
                         <DropdownContent className="dropdown-content">
-                            <Link to="/page_store" onClick={() => setIsOpen(false)}>
-                                Main Store
-                            </Link>
-                            <Link to="/page_products" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/page_products" onClick={() => setIsOpen(false)}>
                                 All Products
-                            </Link>
-                            <Link to="/page_gradedcards" onClick={() => setIsOpen(false)}>
+                            </NavLink>
+                            <NavLink to="/page_gradedcards" onClick={() => setIsOpen(false)}>
                                 Graded Cards
-                            </Link>
-                            <Link to="/page_rawcards" onClick={() => setIsOpen(false)}>
+                            </NavLink>
+                            <NavLink to="/page_rawcards" onClick={() => setIsOpen(false)}>
                                 Raw Cards
-                            </Link>
+                            </NavLink>
                         </DropdownContent>
                     </Dropdown>
                     <Dropdown>
                         <span>Research</span>
                         <DropdownContent className="dropdown-content">
-                            <Link to="/page_scoreboard" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/page_scoreboard" onClick={() => setIsOpen(false)}>
                                 Scoreboard
-                            </Link>
-                            <Link to="/page_googletrends" onClick={() => setIsOpen(false)}>
+                            </NavLink>
+                            <NavLink to="/page_googletrends" onClick={() => setIsOpen(false)}>
                                 Google Trends
-                            </Link>
-                            <Link to="/page_stats" onClick={() => setIsOpen(false)}>
+                            </NavLink>
+                            <NavLink to="/page_stats" onClick={() => setIsOpen(false)}>
                                 Player Statistics
-                            </Link>
-                            <Link to="/page_returns" onClick={() => setIsOpen(false)}>
+                            </NavLink>
+                            <NavLink to="/page_returns" onClick={() => setIsOpen(false)}>
                                 Player Returns
-                            </Link>
-                            <Link to="/page_cardsearch" onClick={() => setIsOpen(false)}>
+                            </NavLink>
+                            <NavLink to="/page_cardsearch" onClick={() => setIsOpen(false)}>
                                 eBay Card Sales
-                            </Link>
+                            </NavLink>
                         </DropdownContent>
                     </Dropdown>
                     <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>
