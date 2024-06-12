@@ -1499,3 +1499,19 @@ body {
     width: 100%;
     bottom: 0;
 }
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px; /* Add this line to create more space between the logo and the icons */
+}
+
+    .social-icons a img {
+        height: 20px; /* Adjust the size as needed */
+        width: 20px; /* Adjust the size as needed */
+    }
+
+    .social-icons a:hover img {
+        filter: brightness(0.8);
+    }

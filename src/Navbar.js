@@ -85,6 +85,7 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 20px;
+  justify-content: space-between; /* Add this line */
 `;
 
 const LoginLink = styled(Link)`
@@ -102,6 +103,13 @@ const LoginLink = styled(Link)`
     margin-top: 10px;
     align-self: flex-end;
   }
+`;
+
+const SocialIcons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px; /* Add margin to the left to create spacing */
 `;
 
 const Dropdown = styled.div`
@@ -244,6 +252,14 @@ const Navbar = () => {
                             alt="Logo"
                         />
                     </Link>
+                    <SocialIcons>
+                        <a href="https://www.facebook.com/longhorncards?mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
+                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/facebook.ico" alt="Facebook" />
+                        </a>
+                        <a href="https://www.instagram.com/longhorncardsatx?igsh=MWs2cDUxbXk1bXhodQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
+                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/instagram.ico" alt="Instagram" />
+                        </a>
+                    </SocialIcons>
                 </LogoContainer>
                 <Hamburger onClick={toggleMenu}>
                     <div />
