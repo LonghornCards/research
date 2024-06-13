@@ -273,13 +273,13 @@ const Navbar = () => {
                     <Dropdown>
                         <span>Store</span>
                         <DropdownContent className="dropdown-content">
-                            <NavLink to="/page_products" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pageproducts" onClick={() => setIsOpen(false)}>
                                 All Products
                             </NavLink>
-                            <NavLink to="/page_gradedcards" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagegradedcards" onClick={() => setIsOpen(false)}>
                                 Graded Cards
                             </NavLink>
-                            <NavLink to="/page_rawcards" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagerawcards" onClick={() => setIsOpen(false)}>
                                 Raw Cards
                             </NavLink>
                         </DropdownContent>
@@ -287,24 +287,24 @@ const Navbar = () => {
                     <Dropdown>
                         <span>Research</span>
                         <DropdownContent className="dropdown-content">
-                            <NavLink to="/page_scoreboard" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagescoreboard" onClick={() => setIsOpen(false)}>
                                 Scoreboard
                             </NavLink>
-                            <NavLink to="/page_googletrends" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagegoogletrends" onClick={() => setIsOpen(false)}>
                                 Google Trends
                             </NavLink>
-                            <NavLink to="/page_stats" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagestats" onClick={() => setIsOpen(false)}>
                                 Player Statistics
                             </NavLink>
-                            <NavLink to="/page_returns" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
                                 Player Returns
                             </NavLink>
-                            <NavLink to="/page_cardsearch" onClick={() => setIsOpen(false)}>
+                            <NavLink to="/pagecardsearch" onClick={() => setIsOpen(false)}>
                                 eBay Card Sales
                             </NavLink>
                         </DropdownContent>
                     </Dropdown>
-                    <NavLink to="/page_blog" onClick={() => setIsOpen(false)}>
+                    <NavLink to="/pageblog" onClick={() => setIsOpen(false)}>
                         Blog
                     </NavLink>
                     <NavLink to="/about" onClick={() => setIsOpen(false)}>
