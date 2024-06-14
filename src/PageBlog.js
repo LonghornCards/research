@@ -6,6 +6,17 @@ import { useLocation, Link } from 'react-router-dom';
 const Page_Blog = () => {
     const blogEntries = [
         {
+            date: '06/13/24',
+            title: 'New Highs/Lows',
+            summary: 'New high/low card prices for a few select players over the last month.',
+            details: (
+                <span>
+                    Here is a snapshot of 4 players whose card prices hit new highs or lows over the past month. Nicola Jokic, Shai Gilgeous-Alexander, and Jordan Love soared to new highs in May, while Chet Holmgren's average card prices hit a new all-time low during the month. <Link to="/blog_post17">See Full Blog Post</Link>
+                </span>
+            ),
+            imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_6.13.24.png'
+        },
+        {
             date: '05/31/24',
             title: 'Player Scoreboard - Top 25',
             summary: 'The Longhorns Cards Player Scoreboard Top 25 Players by Composite Rank',

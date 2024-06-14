@@ -30,7 +30,8 @@ import BlogPost12 from './BlogPost12';
 import BlogPost13 from './BlogPost13';
 import BlogPost14 from './BlogPost14';
 import BlogPost15 from './BlogPost15';
-import BlogPost16 from './BlogPost16'; // Import the new BlogPost16 component
+import BlogPost16 from './BlogPost16';
+import BlogPost17 from './BlogPost17'; // Import the new BlogPost17 component
 
 import './App.css';
 
@@ -67,7 +68,8 @@ const AppRouter = () => {
                 <Route path="/blog_post13" element={<BlogPost13 />} />
                 <Route path="/blog_post14" element={<BlogPost14 />} />
                 <Route path="/blog_post15" element={<BlogPost15 />} />
-                <Route path="/blog_post16" element={<BlogPost16 />} /> {/* Add the new BlogPost16 route */}
+                <Route path="/blog_post16" element={<BlogPost16 />} />
+                <Route path="/blog_post17" element={<BlogPost17 />} /> {/* Add the new BlogPost17 route */}
             </Routes>
         </Router>
     );
