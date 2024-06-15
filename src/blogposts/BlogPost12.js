@@ -1,4 +1,4 @@
-// BlogPost13.js
+// BlogPost12.js
 import React, { useEffect } from 'react';
 import {
     FacebookShareButton,
@@ -10,11 +10,11 @@ import {
     EmailIcon,
     WhatsappIcon,
 } from 'react-share';
-import './App.css';
+import '../App.css';
 
-const BlogPost13 = () => {
+const BlogPost12 = () => {
     const shareUrl = window.location.href;
-    const title = "Heatmap Analysis: Google Trends for Key MLB Players";
+    const title = "Heatmap Analysis: Google Trends for Key NFL Players and 2024 Draft Picks";
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -22,19 +22,19 @@ const BlogPost13 = () => {
 
     return (
         <div className="full-blog-summary">
-            <h2 className="blog-title">Heatmap Analysis: Google Trends for Key MLB Players</h2>
+            <h2 className="blog-title">Heatmap Analysis: Google Trends for Key NFL Players and 2024 Draft Picks</h2>
 
-            <img className="blog-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_5.22.24.png" alt="Blog Post Graphic" />
+            <img className="blog-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_5.21.24.png" alt="Blog Post Graphic" />
 
             <h3 className="blog-subtitle">Overview</h3>
-            <p className="blog-paragraph">Google Trends data provides invaluable insights into the popularity of MLB players over time. This heatmap highlights key players' rankings, helping collectors understand shifts in interest and the potential impact on sports card values. By analyzing these trends, collectors can make informed decisions and stay ahead in the dynamic world of sports card collecting.</p>
+            <p className="blog-paragraph">Tracking the popularity of NFL players and upcoming draft picks can offer valuable insights for sports card collectors. Utilizing Google Trends data, we can visualize the interest levels of key NFL players over time, including some promising 2024 draft picks. This heatmap provides a comprehensive view of these trends, helping collectors understand market dynamics and make informed decisions.</p>
 
             <h3 className="blog-subtitle">Key Players and Their Popularity</h3>
-            <h4 className="blog-subsubtitle">Top MLB Stars</h4>
-            <p className="blog-paragraph">The heatmap reveals the fluctuating popularity of top MLB players. For instance, significant performances, media coverage, and other events often lead to spikes in interest, directly impacting their sports card values. Understanding these trends is crucial for collectors aiming to optimize their collections.</p>
+            <h4 className="blog-subsubtitle">NFL Stars</h4>
+            <p className="blog-paragraph">The heatmap reveals fluctuations in the popularity of several key NFL players. Significant performances, media coverage, and other events often lead to spikes in interest, which can directly impact the value of their sports cards. Understanding these trends is crucial for collectors looking to optimize their collections.</p>
 
-            <h4 className="blog-subsubtitle">Rising Talents</h4>
-            <p className="blog-paragraph">In addition to established stars, the heatmap also tracks rising talents in the MLB. Monitoring emerging players who show potential can be advantageous for collectors looking to invest early in promising careers. Staying informed about these trends allows collectors to make strategic decisions and enhance their collections.</p>
+            <h4 className="blog-subsubtitle">2024 Draft Picks</h4>
+            <p className="blog-paragraph">In addition to established players, the heatmap also tracks interest in 2024 draft picks. High-profile prospects like JJ McCarthy and Caleb Williams have already generated significant buzz, reflecting their potential impact in the NFL. Keeping an eye on these emerging talents can be advantageous for collectors aiming to invest early in promising careers.</p>
 
             <h3 className="blog-subtitle">Analyzing Google Trends Data</h3>
             <h4 className="blog-subsubtitle">Interpreting the Heatmap</h4>
@@ -45,7 +45,7 @@ const BlogPost13 = () => {
 
             <h3 className="blog-subtitle">Tips for Collectors</h3>
             <h4 className="blog-subsubtitle">Stay Informed on Player Performances</h4>
-            <p className="blog-paragraph">Regularly following MLB games and player performances can provide early indicators of rising stars. Notable performances often lead to increased interest and higher card values, making it essential to stay updated on the latest developments.</p>
+            <p className="blog-paragraph">Regularly following NFL games and player performances can provide early indicators of rising stars. Notable performances often lead to increased interest and higher card values, making it essential to stay updated on the latest developments.</p>
 
             <h4 className="blog-subsubtitle">Engage with the Collecting Community</h4>
             <p className="blog-paragraph">Participate in online forums and social media groups dedicated to sports card collecting. Engaging with the community can offer valuable insights, keep you informed about the latest trends, and provide opportunities for trading and networking.</p>
@@ -56,12 +56,12 @@ const BlogPost13 = () => {
             <h3 className="blog-subtitle">Key Takeaways</h3>
             <ul className="blog-list">
                 <li><strong>Google Trends:</strong> An essential tool for tracking player popularity and predicting card price movements.</li>
-                <li><strong>Top MLB Stars:</strong> Significant performances and media coverage can lead to spikes in interest and higher card values.</li>
+                <li><strong>JJ McCarthy and Caleb Williams:</strong> Emerging 2024 draft picks generating significant interest, reflecting their potential in the NFL.</li>
                 <li><strong>Collecting Strategies:</strong> Stay informed, monitor trends, diversify your collection, and engage with the community.</li>
             </ul>
 
             <h3 className="blog-subtitle">Conclusion</h3>
-            <p className="blog-paragraph">The heatmap analysis of Google Trends data for key MLB players provides valuable insights for sports card collectors. By understanding the dynamics of player popularity, collectors can make informed decisions and build a collection that reflects their passion for the sport. Leveraging tools like Google Trends allows collectors to stay ahead of the market and maximize the value of their collections. Happy collecting!</p>
+            <p className="blog-paragraph">The heatmap analysis of Google Trends data for key NFL players and 2024 draft picks provides valuable insights for sports card collectors. By understanding the dynamics of player popularity, collectors can make informed decisions and build a collection that reflects their passion for the sport. Leveraging tools like Google Trends allows collectors to stay ahead of the market and maximize the value of their collections. Happy collecting!</p>
 
             <div className="share-buttons">
                 <h3 className="blog-subtitle">Share This Post</h3>
@@ -82,4 +82,4 @@ const BlogPost13 = () => {
     );
 };
 
-export default BlogPost13;
+export default BlogPost12;

@@ -10,7 +10,7 @@ import {
     EmailIcon,
     WhatsappIcon,
 } from 'react-share';
-import './App.css'; // Ensure to import the main CSS file
+import '../App.css'; // Ensure to import the main CSS file
 
 const BlogPost1 = () => {
     const shareUrl = window.location.href;

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/analytics": "^7.0.35",
-    "@aws-amplify/auth": "^6.3.4",
+    "@aws-amplify/auth": "^6.3.5",
     "@aws-amplify/ui-react": "^6.1.12",
     "@emotion/is-prop-valid": "^1.2.2",
     "@testing-library/jest-dom": "^5.17.0",
@@ -26,6 +26,7 @@
     "react-dom": "^18.3.1",
     "react-lazy-load-image-component": "^1.6.0",
     "react-lazyload": "^3.2.1",
+    "react-modal": "^3.16.1",
     "react-multi-select-component": "^4.3.4",
     "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.23.1",

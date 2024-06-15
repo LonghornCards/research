@@ -1,13 +1,20 @@
+// Login.js
 import React from 'react';
 import './App.css';
 import { Amplify } from 'aws-amplify';
 import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 Amplify.configure(awsExports);
 
 function Login() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const redirectTo = location.state?.from?.pathname || '/';
+
     return (
         <div className="App">
             <Authenticator>
@@ -25,6 +32,7 @@ function Login() {
                                 Sign Out
                             </button>
                         </header>
+                        {user && navigate(redirectTo)}
                     </main>
                 )}
             </Authenticator>

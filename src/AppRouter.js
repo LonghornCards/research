@@ -15,23 +15,23 @@ import PageProducts from './PageProducts';
 import PageGradedCards from './PageGradedCards';
 import PageRawCards from './PageRawCards';
 import PageReturns from './PageReturns';
-import BlogPost1 from './BlogPost1';
-import BlogPost2 from './BlogPost2';
-import BlogPost3 from './BlogPost3';
-import BlogPost4 from './BlogPost4';
-import BlogPost5 from './BlogPost5';
-import BlogPost6 from './BlogPost6';
-import BlogPost7 from './BlogPost7';
-import BlogPost8 from './BlogPost8';
-import BlogPost9 from './BlogPost9';
-import BlogPost10 from './BlogPost10';
-import BlogPost11 from './BlogPost11';
-import BlogPost12 from './BlogPost12';
-import BlogPost13 from './BlogPost13';
-import BlogPost14 from './BlogPost14';
-import BlogPost15 from './BlogPost15';
-import BlogPost16 from './BlogPost16';
-import BlogPost17 from './BlogPost17'; // Import the new BlogPost17 component
+import BlogPost1 from './blogposts/BlogPost1';
+import BlogPost2 from './blogposts/BlogPost2';
+import BlogPost3 from './blogposts/BlogPost3';
+import BlogPost4 from './blogposts/BlogPost4';
+import BlogPost5 from './blogposts/BlogPost5';
+import BlogPost6 from './blogposts/BlogPost6';
+import BlogPost7 from './blogposts/BlogPost7';
+import BlogPost8 from './blogposts/BlogPost8';
+import BlogPost9 from './blogposts/BlogPost9';
+import BlogPost10 from './blogposts/BlogPost10';
+import BlogPost11 from './blogposts/BlogPost11';
+import BlogPost12 from './blogposts/BlogPost12';
+import BlogPost13 from './blogposts/BlogPost13';
+import BlogPost14 from './blogposts/BlogPost14';
+import BlogPost15 from './blogposts/BlogPost15';
+import BlogPost16 from './blogposts/BlogPost16';
+import BlogPost17 from './blogposts/BlogPost17'; // Import the new BlogPost17 component
 
 import './App.css';
 
