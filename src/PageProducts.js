@@ -3,6 +3,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Fuse from 'fuse.js';
+import { useAuth } from './AuthContext'; // Import the Auth context
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './App.css';
 
@@ -26,6 +27,7 @@ const fuseOptions = {
 };
 
 const PageProducts = () => {
+    const { isLoggedIn } = useAuth();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
@@ -40,15 +42,11 @@ const PageProducts = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json');
-                console.log('Full response data:', response);
                 if (response.data) {
-                    console.log('Product data fetched successfully:', response.data);
                     setProducts(response.data);
                     setFilteredProducts(response.data);
                     setFuse(new Fuse(response.data, fuseOptions));
-                    checkImages(response.data);  // Check images on initial load
-                } else {
-                    console.error('No data in response:', response);
+                    checkImages(response.data);
                 }
             } catch (error) {
                 console.error('Error fetching product data:', error);
@@ -110,7 +108,7 @@ const PageProducts = () => {
         if (searchText && fuse) {
             const searchTerms = searchText.split(',').map(term => term.trim().toLowerCase());
             const searchResults = searchTerms.flatMap(term => fuse.search(term).map(result => result.item));
-            const uniqueResults = Array.from(new Set(searchResults)); // Remove duplicates
+            const uniqueResults = Array.from(new Set(searchResults));
             filtered = uniqueResults;
         }
 

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import isPropValid from '@emotion/is-prop-valid';
 import SearchResults from './SearchResults';
 import axios from 'axios';
+import { useAuth } from './AuthContext';
 
 const Nav = styled.nav`
   background: peru;
@@ -84,8 +85,8 @@ const Logo = styled.img`
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 20px;
-  justify-content: space-between; /* Add this line */
+  justify-content: flex-start;
+  flex-shrink: 0; /* Prevent the container from shrinking */
 `;
 
 const LoginLink = styled(Link)`
@@ -94,6 +95,7 @@ const LoginLink = styled(Link)`
   text-decoration: none;
   font-size: 1rem;
   padding: 10px 15px;
+  white-space: nowrap;
 
   &:hover {
     color: black;
@@ -109,7 +111,7 @@ const SocialIcons = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 20px; /* Add margin to the left to create spacing */
+  margin-left: 20px;
 `;
 
 const Dropdown = styled.div`
@@ -182,6 +184,12 @@ const SearchBar = styled.form`
   }
 `;
 
+const RightNav = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
 const Navbar = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
     const [visible, setVisible] = useState(true);
@@ -189,11 +197,11 @@ const Navbar = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearchResults, setShowSearchResults] = useState(false);
     const [products, setProducts] = useState([]);
+    const { isLoggedIn, logout } = useAuth();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch product data from JSON file
         axios
             .get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json')
             .then((response) => {
@@ -241,6 +249,11 @@ const Navbar = () => {
     };
 
     const searchResults = filterProducts(searchQuery);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
         <>
@@ -320,9 +333,20 @@ const Navbar = () => {
                     />
                     <button type="submit">Search</button>
                 </SearchBar>
-                <LoginLink to="/login" className="login-link">
-                    Log-in/Subscribe
-                </LoginLink>
+                <RightNav>
+                    {isLoggedIn ? (
+                        <>
+                            <NavLink to="/dashboard">User Dashboard</NavLink>
+                            <LoginLink as="button" onClick={handleLogout}>
+                                Sign Out
+                            </LoginLink>
+                        </>
+                    ) : (
+                        <LoginLink to="/login" className="login-link">
+                            Log-in/Subscribe
+                        </LoginLink>
+                    )}
+                </RightNav>
             </Nav>
             {showSearchResults && (
                 <SearchResults

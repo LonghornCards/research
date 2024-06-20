@@ -1,0 +1,15 @@
+type User @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  username: String!
+  email: String! @primaryKey
+  address: String
+  city: String
+  state: String
+  zipCode: String
+  phone: String
+  birthdate: String
+  picture: String
+  favoriteSports: [String]
+  favoriteTeams: [String]
+  favoritePlayers: [String]
+}

@@ -1,3 +1,10 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 /* Ensure vertical alignment for table cells */
 .top-align {
     vertical-align: top;
@@ -35,7 +42,7 @@
 
 /* Scatterplot Container Styles */
 .scoreboard-scatterplot-container {
-    margin-bottom: 10px; /* Adjusted for mobile */
+    margin-top: 20px; /* Add space above the scatterplot */
     width: 100%;
     overflow-x: auto;
 }
@@ -152,6 +159,52 @@ tr:hover .td {
     background-color: #f1f1f1; /* Light gray background color on hover */
 }
 
+/* Average Row Styles */
+.average-row {
+    font-weight: bold;
+    background-color: #f9f9f9;
+    border-top: 4px solid peru;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+    .average-row .td {
+        padding: 10px;
+        border-right: 1px solid #ddd;
+    }
+
+        .average-row .td:last-child {
+            border-right: none;
+        }
+
+/* Scatterplot Styles */
+.scatterplot-container {
+    width: 100%;
+    height: auto; /* Adjust height for responsiveness */
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+    .scatterplot-container .plotly {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+.scatterplot-title {
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.scatterplot-description {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 /* Navigation Menu Styles */
 .navbar {
     overflow: hidden;
@@ -161,12 +214,16 @@ tr:hover .td {
     width: 100%; /* Full width */
     height: 60px;
     z-index: 1000; /* Ensure it stays on top */
-    transition: top 0.3s; /* Smooth transition */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Vertically center items */
 }
 
+    .navbar img {
+        height: 50px; /* Adjust the height as needed */
+        margin: 5px 10px; /* Adjust margin as needed */
+    }
+
     .navbar a, .navbar span {
-        float: left;
-        display: block;
         color: white;
         text-align: center;
         padding: 14px 16px;
@@ -988,8 +1045,6 @@ button {
     left: 0;
 }
 
-/* App.css */
-
 .products-page {
     padding: 20px;
     padding-top: 100px; /* Ensure space under the navigation bar */
@@ -1030,6 +1085,7 @@ button {
 .product-card {
     flex: 1 1 calc(25% - 20px);
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     border: 1px solid #ddd;
@@ -1064,7 +1120,6 @@ button {
         background-color: #ffeb3b;
     }
 }
-
 
 .product-image {
     width: 100%;
@@ -1145,7 +1200,6 @@ button {
         text-decoration: none;
         cursor: pointer;
     }
-
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
@@ -1305,10 +1359,12 @@ button {
         width: 100%;
         padding: 12px;
         font-size: 1.2rem;
+        background-color: peru;
     }
 
     .App-header h1 {
         font-size: 1.5rem;
+        color: peru;
     }
 }
 
@@ -1320,6 +1376,7 @@ button {
 
     .App-header h1 {
         font-size: 1.2rem;
+        color: peru;
     }
 }
 
@@ -1440,18 +1497,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.scatterplot-container {
-    width: 100%;
-    height: auto; /* Adjust height for responsiveness */
-    margin-bottom: 20px;
-    padding: 10px;
-}
-
-    .scatterplot-container .plotly {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
 .filter-wrapper {
     border: 2px solid peru;
     padding: 10px;
@@ -1515,7 +1560,6 @@ body {
     .social-icons a:hover img {
         filter: brightness(0.8);
     }
-
 
 .full-blog-summary {
     padding: 20px;
@@ -1645,3 +1689,304 @@ body {
         font-weight: bold; /* Make the text bold */
         text-decoration: underline; /* Underline the text */
     }
+
+.favorite-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10; /* Ensure it is above other elements */
+}
+
+.scoreboard-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tr {
+    display: table-row;
+}
+
+.th, .td {
+    display: table-cell;
+    border: 1px solid peru; /* Thin border with color peru */
+    padding: 8px;
+    min-width: 150px; /* Adjust as needed */
+    vertical-align: top; /* Ensure vertical alignment */
+}
+
+/* Header Styles */
+.th {
+    background-color: peru;
+    color: white;
+    font-weight: bold;
+}
+
+/* Data Row Styles */
+.td {
+    background-color: white;
+}
+
+/* Alternating Row Colors for Data Rows */
+.scoreboard-table-container .tr:nth-child(even) .td {
+    background-color: #f2f2f2; /* Light grey for even rows */
+}
+
+.scoreboard-table-container .tr:nth-child(odd) .td {
+    background-color: #ffffff; /* White for odd rows */
+}
+
+/* Sticky Header Column */
+.th.sticky {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    left: 0;
+    background-color: peru; /* Adjust as needed */
+    color: white;
+    font-weight: bold;
+    z-index: 2; /* Higher z-index to ensure it stays on top */
+    border-right: 1px solid peru; /* Adjust as needed */
+}
+
+/* Sticky Data Column */
+.td.sticky {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    left: 0;
+    background-color: white; /* Adjust as needed */
+    color: black;
+    font-weight: normal;
+    z-index: 1; /* Lower z-index than header */
+    border-right: 1px solid peru; /* Adjust as needed */
+}
+
+tr:hover .td {
+    background-color: #f1f1f1; /* Light gray background color on hover */
+}
+
+.average-row {
+    font-weight: bold;
+    background-color: #f9f9f9;
+    border-top: 4px solid peru;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+    .average-row .td {
+        padding: 10px;
+        border-right: 1px solid #ddd;
+    }
+
+        .average-row .td:last-child {
+            border-right: none;
+        }
+
+.google-news-page {
+    padding: 20px;
+    padding-top: 100px; /* Add more space under the navigation bar */
+}
+
+    .google-news-page h1 {
+        text-align: center;
+    }
+
+.instruction-text {
+    color: peru;
+    font-weight: bold;
+    text-align: center;
+}
+
+.input-container {
+    border: 2px solid peru;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px; /* Add gap between input elements */
+}
+
+.player-label {
+    margin-right: 10px;
+    color: peru;
+    font-weight: bold;
+}
+
+.player-input {
+    padding: 5px;
+    width: 400px; /* Increased width */
+}
+
+.button-widget {
+    display: flex;
+    flex-direction: column; /* Arrange buttons vertically */
+    gap: 10px; /* Add gap between buttons */
+    width: 400px; /* Increase width to accommodate button text */
+}
+
+.widget-button {
+    padding: 10px; /* Increase padding for better appearance */
+    background-color: peru;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.articles-container {
+    margin-top: 20px;
+    text-align: center;
+    border: 2px solid peru;
+    padding: 20px;
+}
+
+.get-articles-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: peru;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.articles-list {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.articles-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .articles-table th,
+    .articles-table td {
+        border: 1px solid peru;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .articles-table th {
+        background-color: peru;
+        color: white;
+    }
+
+.sports-news-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 4px solid peru;
+}
+
+    .sports-news-table th,
+    .sports-news-table td {
+        border-top: 2px solid peru;
+        border-bottom: 2px solid peru;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .sports-news-table th {
+        background-color: #f2f2f2;
+    }
+
+    .sports-news-table td a {
+        color: #1a0dab;
+        text-decoration: none;
+    }
+
+        .sports-news-table td a:hover {
+            text-decoration: underline;
+        }
+
+/* Centering the container and making the page responsive */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-container {
+    border: 1px solid peru;
+    padding: 10px;
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-input {
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
+}
+
+.reset-button {
+    background-color: peru;
+    color: white;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.card-prices-table-container {
+    border: 4px solid peru;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+.card-prices-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .card-prices-table th, .card-prices-table td {
+        border: 1px solid peru;
+        padding: 10px;
+    }
+
+.return-link {
+    align-self: flex-start;
+    margin-bottom: 20px;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.example-text {
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .card-input, .reset-button {
+        width: 100%;
+    }
+}

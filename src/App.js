@@ -4,7 +4,7 @@ import './App.css';
 
 const App = () => {
     const videoRef = useRef(null);
-    const [modalIsOpen, setModalIsOpen] = useState(true);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         if (videoRef.current) {
@@ -17,8 +17,14 @@ const App = () => {
     };
 
     useEffect(() => {
-        // Automatically open the modal when the page loads
-        setModalIsOpen(true);
+        // Check session storage for modal display flag
+        const isModalDisplayed = sessionStorage.getItem('isModalDisplayed');
+
+        if (!isModalDisplayed) {
+            // If modal hasn't been displayed in this session, show it and set the flag
+            setModalIsOpen(true);
+            sessionStorage.setItem('isModalDisplayed', 'true');
+        }
     }, []);
 
     return (

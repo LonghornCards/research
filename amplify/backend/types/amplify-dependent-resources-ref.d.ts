@@ -6,6 +6,12 @@ export type AmplifyDependentResourcesAttributes = {
       "appName": "string"
     }
   },
+  "api": {
+    "websiteapp": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string"
+    }
+  },
   "auth": {
     "websiteappe1216b0b": {
       "AppClientID": "string",

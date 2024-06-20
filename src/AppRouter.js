@@ -1,4 +1,3 @@
-// AppRouter.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -31,8 +30,11 @@ import BlogPost13 from './blogposts/BlogPost13';
 import BlogPost14 from './blogposts/BlogPost14';
 import BlogPost15 from './blogposts/BlogPost15';
 import BlogPost16 from './blogposts/BlogPost16';
-import BlogPost17 from './blogposts/BlogPost17'; // Import the new BlogPost17 component
-
+import BlogPost17 from './blogposts/BlogPost17';
+import Dashboard from './Dashboard';
+import CustomScoreboard from './CustomScoreboard';
+import GoogleNewsPage from './GoogleNews';
+import CardPrices from './CardPrices';
 import './App.css';
 
 const AppRouter = () => {
@@ -69,7 +71,11 @@ const AppRouter = () => {
                 <Route path="/blog_post14" element={<BlogPost14 />} />
                 <Route path="/blog_post15" element={<BlogPost15 />} />
                 <Route path="/blog_post16" element={<BlogPost16 />} />
-                <Route path="/blog_post17" element={<BlogPost17 />} /> {/* Add the new BlogPost17 route */}
+                <Route path="/blog_post17" element={<BlogPost17 />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/customscoreboard" element={<CustomScoreboard />} />
+                <Route path="/googlenews" element={<GoogleNewsPage />} />
+                <Route path="/cardprices" element={<CardPrices />} />
             </Routes>
         </Router>
     );

@@ -7,8 +7,8 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import datalabels from 'chartjs-plugin-datalabels';
 import Select, { components } from 'react-select';
 import { useTable, useBlockLayout } from 'react-table';
-import './App.css';
 import { useLocation } from 'react-router-dom';
+import './App.css';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend, Title, annotationPlugin, datalabels, CategoryScale);
 
