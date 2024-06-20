@@ -48,7 +48,6 @@
     "react-select": "^5.8.0",
     "react-share": "^5.1.0",
     "react-table": "^7.8.0",
-    "react-wordcloud": "^1.2.7",
     "sentiment": "^5.0.2",
     "styled-components": "^6.1.11",
     "web-vitals": "^2.1.4",
