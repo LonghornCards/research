@@ -504,7 +504,10 @@ const CustomScoreboard = () => {
     return (
         <div className="scoreboard-page-container">
             <Navbar />
-            <h1 className="scoreboard-center-text">Custom Scoreboard</h1>
+            <div className="title-container">
+                <h1 className="scoreboard-center-text">Custom Scoreboard</h1>
+                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo_Simple.png" alt="Logo" className="title-logo" />
+            </div>
             <p style={{ color: 'peru', fontWeight: 'bold' }}>
                 Select your players to create a custom scoreboard of analytics
             </p>

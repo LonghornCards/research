@@ -141,20 +141,24 @@ const CardPrices = () => {
         <div className="card-prices page-container">
             <Link to="/dashboard" className="return-link">Back to Dashboard</Link>
             <h1 className="center-text">Search for Card Prices</h1>
-            <div className="input-container">
-                <div className="input-wrapper">
-                    <p className="instruction-text">Enter card details:</p>
-                    <input
-                        type="text"
-                        value={cardDetails}
-                        onChange={handleInputChange}
-                        onKeyPress={handleKeyPress}
-                        placeholder="Enter card details"
-                        className="card-input"
-                    />
-                    <button onClick={resetInput} className="reset-button">Reset</button>
+            <div className="input-container-with-image">
+                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/sportscardpro.jpeg" alt="Sports Card Pro" className="side-image" />
+                <div className="input-container">
+                    <div className="input-wrapper">
+                        <p className="instruction-text">Enter card details:</p>
+                        <input
+                            type="text"
+                            value={cardDetails}
+                            onChange={handleInputChange}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Enter card details"
+                            className="card-input"
+                            maxLength="80"
+                        />
+                        <button onClick={resetInput} className="reset-button">Reset</button>
+                    </div>
+                    <p className="example-text">Example: "1986 Fleer Michael Jordan"</p>
                 </div>
-                <p className="example-text">Example: "1986 Fleer Michael Jordan"</p>
             </div>
             <p>Formatted Details: {formattedDetails}</p>
             <button ref={fetchButtonRef} onClick={fetchCardPrices} className="fetch-card-prices-button">Fetch Card Prices</button>

@@ -73,6 +73,20 @@ body {
 /* Center Text Styles */
 .scoreboard-center-text {
     text-align: center;
+    margin-right: 10px;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-logo {
+    width: 50px; /* Adjust the width as needed */
+    height: auto;
+    margin-left: 10px;
+    transform: translateZ(10px); /* Add a 3D effect */
 }
 
 .scoreboard-info-section {
@@ -1989,4 +2003,158 @@ tr:hover .td {
     .card-input, .reset-button {
         width: 100%;
     }
+}
+
+.aiSearch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px; /* Adjust as needed */
+}
+
+.aiSearch-search-box-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content horizontally */
+}
+
+.aiSearch-image {
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+    border-radius: 50%; /* Rounds the edges */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* 3D effect */
+    margin: 0 20px; /* Space between images and search box */
+}
+
+.aiSearch-articles-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    .aiSearch-articles-table th, .aiSearch-articles-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .aiSearch-articles-table th {
+        background-color: peru;
+        color: white;
+    }
+
+.aiSearch-all-text-container, .aiSearch-word-frequency-container, .aiSearch-word-frequency-display {
+    margin-top: 20px;
+    text-align: left;
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 200px; /* Set a fixed height for scrolling */
+}
+
+.aiSearch-export-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.aiSearch-export-button {
+    background-color: peru;
+    color: white;
+    padding: 10px 20px;
+    min-width: 150px; /* Set a minimum width */
+    border: none;
+    cursor: pointer;
+    text-align: center; /* Ensure text is centered */
+}
+
+.aiSearch-response-container {
+    border: 5px solid peru;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* 3D effect */
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.aiSearch-response-label {
+    color: peru;
+    font-weight: bold;
+    font-size: 1.5em; /* Increase font size */
+}
+
+.aiSearch-articles-container {
+    max-height: none; 
+    overflow: visible; 
+}
+
+.input-container-with-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.side-image {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+.card-input {
+    width: calc(1ch * 80); /* Adjust width to fit 80 characters */
+    padding: 10px;
+    font-size: 16px;
+}
+
+.input-container {
+    border: 2px solid #ccc; /* Adjust the border size as needed */
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.announcement-container {
+    position: absolute;
+    top: 100px; /* Adjust according to your layout */
+    right: 20px; /* Adjust according to your layout */
+    width: 300px; /* Adjust according to your layout */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 10; /* Ensure it stays on top */
+    overflow: visible; /* Ensure the arrow is visible */
+}
+
+.announcement-arrow {
+    position: absolute;
+    top: -20px; /* Adjust according to your layout */
+    right: 20px; /* Adjust according to your layout */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid white;
+    z-index: 11; /* Ensure it stays on top */
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-images {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+    .announcement-images img {
+        width: 30%;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+.announcement-message {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
 }

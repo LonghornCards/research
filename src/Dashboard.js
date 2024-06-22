@@ -519,13 +519,13 @@ const Dashboard = () => {
                                 <StyledImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Scoreboard.png" alt="Scoreboard" />
                                 <HoverText>Custom Scoreboard</HoverText>
                             </ImageWrapper>
-                            <ImageWrapper onClick={() => handleImageClick('/googlenews')}>
-                                <StyledImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/googlenews.jpg" alt="Google News" />
-                                <HoverText>Google News</HoverText>
-                            </ImageWrapper>
                             <ImageWrapper onClick={() => handleImageClick('/cardprices')}>
                                 <StyledImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/sportscardpro.jpeg" alt="Card Prices" />
                                 <HoverText>Search Card Prices</HoverText>
+                            </ImageWrapper>
+                            <ImageWrapper onClick={() => handleImageClick('/aisearch')}>
+                                <StyledImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/openai.png" alt="AI Search" />
+                                <HoverText>AI Search</HoverText>
                             </ImageWrapper>
                         </ImageContainer>
                         <Item>Preferences:

@@ -33,8 +33,8 @@ import BlogPost16 from './blogposts/BlogPost16';
 import BlogPost17 from './blogposts/BlogPost17';
 import Dashboard from './Dashboard';
 import CustomScoreboard from './CustomScoreboard';
-import GoogleNewsPage from './GoogleNews';
 import CardPrices from './CardPrices';
+import AISearch from './AISearch'; // Import the new AISearch component
 import './App.css';
 
 const AppRouter = () => {
@@ -74,8 +74,8 @@ const AppRouter = () => {
                 <Route path="/blog_post17" element={<BlogPost17 />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/customscoreboard" element={<CustomScoreboard />} />
-                <Route path="/googlenews" element={<GoogleNewsPage />} />
                 <Route path="/cardprices" element={<CardPrices />} />
+                <Route path="/aisearch" element={<AISearch />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );
