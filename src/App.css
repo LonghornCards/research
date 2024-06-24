@@ -1,4 +1,4 @@
-body {
+﻿body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -1934,7 +1934,6 @@ tr:hover .td {
     align-items: center;
     padding: 20px;
     width: 100%;
-    box-sizing: border-box;
 }
 
 .input-container {
@@ -1954,8 +1953,7 @@ tr:hover .td {
 
 .card-input {
     width: 100%;
-    max-width: 400px;
-    margin: 10px 0;
+    max-width: 500px;
 }
 
 .reset-button {
@@ -2082,22 +2080,21 @@ tr:hover .td {
 }
 
 .aiSearch-articles-container {
-    max-height: none; 
-    overflow: visible; 
+    max-height: none;
+    overflow: visible;
 }
 
 .input-container-with-image {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    width: 100%;
 }
 
 .side-image {
-    width: 200px;
+    max-width: 100%;
     height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 .card-input {
@@ -2107,12 +2104,10 @@ tr:hover .td {
 }
 
 .input-container {
-    border: 2px solid #ccc; /* Adjust the border size as needed */
-    padding: 20px;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .announcement-container {
@@ -2157,4 +2152,613 @@ tr:hover .td {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+}
+
+.page-collection-custom {
+    text-align: center;
+    padding: 20px;
+    padding-top: 100px; /* Shift the page down */
+}
+
+.page-title-custom {
+    font-size: 2em;
+}
+
+.page-description-custom {
+    font-weight: bold;
+    color: peru;
+}
+
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.file-input-custom {
+    margin-right: 10px;
+}
+
+.sample-csv-link {
+    color: peru;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    .sample-csv-link:hover {
+        text-decoration: underline;
+    }
+
+.summary-container-custom {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    font-weight: bold;
+}
+
+.search-container-custom {
+    border: 2px solid peru;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.search-input-custom {
+    width: 200px;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.gain-positive {
+    color: green;
+}
+
+.gain-negative {
+    color: red;
+}
+
+.table-container-custom {
+    width: 80%;
+    margin: 20px auto;
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 2px solid peru;
+    border-collapse: collapse;
+}
+
+.collection-table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .collection-table-custom th, .collection-table-custom td {
+        border-top: 2px solid peru;
+        border-bottom: 2px solid peru;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .collection-table-custom th {
+        background-color: #f4f4f4;
+    }
+
+.input-custom {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.input-title-custom {
+    width: 500px; /* Adjust width to fit 80 characters */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.input-price-custom {
+    width: 100px; /* Adjust width to fit price values */
+}
+
+.input-cost-custom {
+    width: 100px; /* Adjust width to fit cost values */
+}
+
+.input-qty-custom {
+    width: 50px; /* Adjust width to fit quantity values */
+}
+
+.input-date-custom {
+    width: 130px; /* Adjust width to fit date values */
+}
+
+.base-name-column {
+    font-size: 8px;
+    word-wrap: break-word;
+    max-width: 100px; /* Adjust max width as needed */
+}
+
+.add-row-button-custom, .delete-button-custom, .export-button-custom {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: peru;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; /* Add space between buttons */
+}
+
+    .add-row-button-custom:hover, .delete-button-custom:hover, .export-button-custom:hover {
+        background-color: #b87333; /* Slightly darker shade of Peru */
+    }
+
+.news-search-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    .news-search-link:hover {
+        text-decoration: none;
+    }
+
+/* Add these styles at the bottom of App.css */
+
+/* Styles for the search container */
+.search-container-custom {
+    border: 3px solid peru;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+    .search-container-custom label {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+.search-input-custom {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Styles for CardPrices page */
+.cardPrices-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cardPrices-search-box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cardPrices-results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cardPrices-results li {
+    background-color: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.reset-button,
+.fetch-card-prices-button {
+    padding: 10px 10px;
+    font-size: 14px;
+    height: 40px; /* Set a fixed height */
+    width: auto;
+}
+
+.sort-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.sort-button {
+    background: none;
+    border: none;
+    color: peru;
+    font-size: 10px; /* Adjust size as needed */
+    padding: 0;
+    margin-left: 5px; /* Adjust spacing as needed */
+    cursor: pointer;
+}
+
+    .sort-button:focus {
+        outline: none;
+    }
+
+.ascending, .descending {
+    display: block;
+    line-height: 1;
+}
+
+.collection-table-custom th {
+    white-space: nowrap;
+}
+
+.page-collection-custom {
+    text-align: center;
+    padding: 20px;
+    padding-top: 100px; /* Shift the page down */
+}
+
+.page-title-custom {
+    font-size: 2em;
+}
+
+.page-description-custom {
+    font-weight: bold;
+    color: peru;
+}
+
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.file-input-custom {
+    margin-right: 10px;
+}
+
+.sample-csv-link {
+    color: peru;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    .sample-csv-link:hover {
+        text-decoration: underline;
+    }
+
+.summary-container-custom {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    font-weight: bold;
+}
+
+.search-container-custom {
+    border: 2px solid peru;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.search-input-custom {
+    width: 200px;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.gain-positive {
+    color: green;
+}
+
+.gain-negative {
+    color: red;
+}
+
+.table-container-custom {
+    width: 100%;
+    margin: 20px auto;
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 2px solid peru;
+    border-collapse: collapse;
+}
+
+.collection-table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .collection-table-custom th, .collection-table-custom td {
+        border-top: 2px solid peru;
+        border-bottom: 2px solid peru;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .collection-table-custom th {
+        background-color: #f4f4f4;
+    }
+
+.input-custom {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.input-title-custom {
+    width: 500px; /* Adjust width to fit 80 characters */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.input-price-custom {
+    width: 100px; /* Adjust width to fit price values */
+}
+
+.input-cost-custom {
+    width: 100px; /* Adjust width to fit cost values */
+}
+
+.input-qty-custom {
+    width: 50px; /* Adjust width to fit quantity values */
+}
+
+.input-date-custom {
+    width: 130px; /* Adjust width to fit date values */
+}
+
+.base-name-column {
+    font-size: 8px;
+    word-wrap: break-word;
+    max-width: 100px; /* Adjust max width as needed */
+}
+
+.add-row-button-custom, .delete-button-custom, .export-button-custom {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: peru;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; /* Add space between buttons */
+}
+
+    .add-row-button-custom:hover, .delete-button-custom:hover, .export-button-custom:hover {
+        background-color: #b87333; /* Slightly darker shade of Peru */
+    }
+
+.news-search-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    .news-search-link:hover {
+        text-decoration: none;
+    }
+
+@media (max-width: 768px) {
+    .search-container-custom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .summary-container-custom {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .table-container-custom {
+        width: 100%;
+    }
+
+    .input-title-custom {
+        width: 100%;
+    }
+
+    .base-name-column {
+        max-width: 100%;
+    }
+
+    .add-row-button-custom, .delete-button-custom, .export-button-custom {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title-custom {
+        font-size: 1.5em;
+    }
+
+    .page-description-custom {
+        font-size: 1em;
+    }
+
+    .summary-container-custom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-container-custom {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .collection-table-custom th, .collection-table-custom td {
+        font-size: 12px;
+    }
+
+    .add-row-button-custom, .delete-button-custom, .export-button-custom {
+        width: 100%;
+        margin-right: 0;
+        padding: 10px;
+    }
+}
+
+.input-title-long {
+    width: 400px; /* Adjust width as necessary */
+    max-width: 100%;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+}
+
+.input-container-with-image {
+    display: flex;
+    align-items: center;
+}
+
+.side-image {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 3D effect */
+    margin-right: 10px; /* Space between image and title */
+}
+
+.button-group-custom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.add-row-button-custom,
+.delete-button-custom,
+.export-button-custom,
+.delete-collection-button-custom {
+    flex: 1;
+    margin: 0 10px;
+    white-space: nowrap;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .table-container-custom table, .table-container-custom thead, .table-container-custom tbody, .table-container-custom th, .table-container-custom td, .table-container-custom tr {
+        display: block;
+    }
+
+        .table-container-custom thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+    .table-container-custom tr {
+        border: 1px solid #ccc;
+    }
+
+    .table-container-custom td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+        .table-container-custom td:before {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        .table-container-custom td:nth-of-type(1):before {
+            content: "Delete Row";
+        }
+
+        .table-container-custom td:nth-of-type(2):before {
+            content: "News Search";
+        }
+
+        .table-container-custom td:nth-of-type(3):before {
+            content: "Price Search";
+        }
+
+        .table-container-custom td:nth-of-type(4):before {
+            content: "Base Name";
+        }
+
+        .table-container-custom td:nth-of-type(5):before {
+            content: "Title";
+        }
+
+        .table-container-custom td:nth-of-type(6):before {
+            content: "Price";
+        }
+
+        .table-container-custom td:nth-of-type(7):before {
+            content: "Cost";
+        }
+
+        .table-container-custom td:nth-of-type(8):before {
+            content: "Qty";
+        }
+
+        .table-container-custom td:nth-of-type(9):before {
+            content: "Date";
+        }
+
+        .table-container-custom td:nth-of-type(10):before {
+            content: "Gain/Loss";
+        }
+
+        .table-container-custom td:nth-of-type(11):before {
+            content: "% Gain/Loss";
+        }
+
+        .table-container-custom td:nth-of-type(12):before {
+            content: "Tags";
+        }
+}
+
+/* Chart Container */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    border: 5px solid peru; /* Changed border color to peru */
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: peru;
+    height: 50px; /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }

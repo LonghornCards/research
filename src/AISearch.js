@@ -2,6 +2,7 @@
 import axios from "axios";
 import Sentiment from 'sentiment';
 import html2canvas from 'html2canvas';
+import { useLocation } from "react-router-dom";
 
 const sentiment = new Sentiment();
 
@@ -34,6 +35,19 @@ const AISearch = () => {
     const [wordFrequency, setWordFrequency] = useState([]);
     const [wordCount, setWordCount] = useState(0);
     const visualizationRef = useRef(null);
+
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    };
+
+    const query = useQuery();
+
+    useEffect(() => {
+        const queryParam = query.get('query');
+        if (queryParam) {
+            setInputText(queryParam);
+        }
+    }, [query]);
 
     const fetchResponse = async () => {
         setLoading(true);

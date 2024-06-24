@@ -527,6 +527,10 @@ const Dashboard = () => {
                                 <StyledImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/openai.png" alt="AI Search" />
                                 <HoverText>AI Search</HoverText>
                             </ImageWrapper>
+                            <ImageWrapper onClick={() => handleImageClick('/pagecollection')}>
+                                <StyledImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/portfolioimage.png" alt="Card Collection" />
+                                <HoverText>Card Collection</HoverText>
+                            </ImageWrapper>
                         </ImageContainer>
                         <Item>Preferences:
                             <div>

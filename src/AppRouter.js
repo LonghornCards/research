@@ -34,7 +34,8 @@ import BlogPost17 from './blogposts/BlogPost17';
 import Dashboard from './Dashboard';
 import CustomScoreboard from './CustomScoreboard';
 import CardPrices from './CardPrices';
-import AISearch from './AISearch'; // Import the new AISearch component
+import AISearch from './AISearch';
+import PageCollection from './PageCollection'; // Import the new PageCollection component
 import './App.css';
 
 const AppRouter = () => {
@@ -75,7 +76,8 @@ const AppRouter = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/customscoreboard" element={<CustomScoreboard />} />
                 <Route path="/cardprices" element={<CardPrices />} />
-                <Route path="/aisearch" element={<AISearch />} /> {/* Add the new route */}
+                <Route path="/aisearch" element={<AISearch />} />
+                <Route path="/pagecollection" element={<PageCollection />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );

@@ -26,6 +26,7 @@
     "dotenv": "^16.4.5",
     "exceljs": "^4.4.0",
     "express": "^4.19.2",
+    "file-saver": "^2.0.5",
     "fuse.js": "^7.0.0",
     "html2canvas": "^1.4.1",
     "langchain": "^0.2.5",

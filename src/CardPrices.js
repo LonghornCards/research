@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -17,6 +17,21 @@ const CardPrices = () => {
     const additionalPricesRef = useRef(null);
     const fetchButtonRef = useRef(null);
     const resultsRef = useRef(null);
+
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    };
+
+    const query = useQuery();
+
+    useEffect(() => {
+        const queryParam = query.get('query');
+        if (queryParam) {
+            setCardDetails(queryParam);
+            const formatted = queryParam.split(' ').join('+');
+            setFormattedDetails(formatted);
+        }
+    }, [query]);
 
     const handleInputChange = (event) => {
         const input = event.target.value;
@@ -155,13 +170,15 @@ const CardPrices = () => {
                             className="card-input"
                             maxLength="80"
                         />
-                        <button onClick={resetInput} className="reset-button">Reset</button>
+                        <div className="button-container">
+                            <button ref={fetchButtonRef} onClick={fetchCardPrices} className="fetch-card-prices-button">Fetch Card Prices</button>
+                            <button onClick={resetInput} className="reset-button">Reset</button>
+                        </div>
                     </div>
                     <p className="example-text">Example: "1986 Fleer Michael Jordan"</p>
                 </div>
             </div>
             <p>Formatted Details: {formattedDetails}</p>
-            <button ref={fetchButtonRef} onClick={fetchCardPrices} className="fetch-card-prices-button">Fetch Card Prices</button>
 
             <div ref={resultsRef}>
                 {cardPrices.length > 0 && (
