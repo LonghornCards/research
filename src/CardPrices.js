@@ -170,9 +170,16 @@ const CardPrices = () => {
                             className="card-input"
                             maxLength="80"
                         />
-                        <div className="button-container">
-                            <button ref={fetchButtonRef} onClick={fetchCardPrices} className="fetch-card-prices-button">Fetch Card Prices</button>
-                            <button onClick={resetInput} className="reset-button">Reset</button>
+                        <div className="button-container" style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/download.svg"
+                                alt="Fetch Card Prices"
+                                onClick={fetchCardPrices}
+                                title="Fetch Card Prices"
+                                className="action-image"
+                                ref={fetchButtonRef}
+                                style={{ cursor: 'pointer', width: '40px', height: '40px' }}
+                            />
                         </div>
                     </div>
                     <p className="example-text">Example: "1986 Fleer Michael Jordan"</p>

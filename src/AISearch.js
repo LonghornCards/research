@@ -225,9 +225,16 @@ const AISearch = () => {
             <p style={{ marginTop: "10px", marginBottom: "10px", fontStyle: "italic" }}>
                 (Example: "How many points did Michael Jordan average?")
             </p>
-            <button onClick={fetchResponse} disabled={loading} className="aiSearch-fetch-button">
-                {loading ? "Loading..." : "Fetch ChatGPT Response"}
-            </button>
+            <div className="aiSearch-fetch-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/download.svg"
+                    alt="Fetch ChatGPT Response"
+                    className="aiSearch-fetch-image"
+                    onClick={fetchResponse}
+                    style={{ width: "18.75%", cursor: "pointer" }}
+                    title="Fetch ChatGPT Response"
+                />
+            </div>
             {error && <p style={{ color: "red" }}>Error: {error}</p>}
             <div className="aiSearch-content-left">
                 {response && (

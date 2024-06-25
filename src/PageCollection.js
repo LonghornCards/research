@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
@@ -20,6 +20,8 @@ const PageCollection = () => {
     const [costRange, setCostRange] = useState([0, 1000]);
     const [qtyRange, setQtyRange] = useState([0, 1000]);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+    const [fileName, setFileName] = useState('No file chosen');
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         localStorage.setItem('tableData', JSON.stringify(tableData));
@@ -28,6 +30,7 @@ const PageCollection = () => {
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
+            setFileName(file.name);
             Papa.parse(file, {
                 header: true,
                 skipEmptyLines: true,
@@ -317,6 +320,10 @@ const PageCollection = () => {
         },
     };
 
+    const handleImageClick = () => {
+        fileInputRef.current.click();
+    };
+
     return (
         <div className="page-collection-custom">
             <div className="input-container-with-image">
@@ -325,7 +332,23 @@ const PageCollection = () => {
             </div>
             <p className="page-description-custom">Add your card collection to store and update market prices</p>
             <div className="file-upload-container">
-                <input type="file" accept=".csv" onChange={handleFileUpload} className="file-input-custom" />
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/upload.svg"
+                    alt="Upload CSV File"
+                    className="upload-image-custom"
+                    title="Upload CSV File"
+                    style={{ cursor: 'pointer', height: '40px', marginRight: '10px' }}
+                    onClick={handleImageClick}
+                />
+                <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileUpload}
+                    className="file-input-custom"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                />
+                <span>{fileName}</span>
                 <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/sample_csv.csv" target="_blank" rel="noopener noreferrer" className="sample-csv-link" style={{ textDecoration: 'underline' }}>
                     See Sample .csv File
                 </a>
@@ -412,7 +435,14 @@ const PageCollection = () => {
                         className="qty-range-input"
                     />
                 </div>
-                <button onClick={resetFilters} className="reset-filters-button">Reset Filters</button>
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/reset.svg"
+                    alt="Reset Filters"
+                    className="reset-filters-image-custom"
+                    title="Reset Filters"
+                    style={{ cursor: 'pointer', height: '40px' }}
+                    onClick={resetFilters}
+                />
             </div>
             <div className="table-container-custom">
                 <table className="collection-table-custom">
@@ -540,10 +570,38 @@ const PageCollection = () => {
                 </table>
             </div>
             <div className="button-group-custom">
-                <button onClick={addNewRow} className="add-row-button-custom">Add New Row</button>
-                <button onClick={deleteSelectedRows} className="delete-button-custom">Delete Selected Rows</button>
-                <button onClick={exportToExcel} className="export-button-custom">Export to Excel</button>
-                <button onClick={deleteCollection} className="delete-collection-button-custom">Delete Collection</button>
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/plus.svg"
+                    alt="Add New Row"
+                    onClick={addNewRow}
+                    className="add-row-image-custom"
+                    title="Add New Row"
+                    style={{ cursor: 'pointer', height: '40px' }}
+                />
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/minus.svg"
+                    alt="Delete Selected Rows"
+                    onClick={deleteSelectedRows}
+                    className="delete-rows-image-custom"
+                    title="Delete Selected Rows"
+                    style={{ cursor: 'pointer', height: '40px' }}
+                />
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/csv.svg"
+                    alt="Export to CSV"
+                    onClick={exportToExcel}
+                    className="export-image-custom"
+                    title="Export to CSV"
+                    style={{ cursor: 'pointer', height: '40px' }}
+                />
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/delete.svg"
+                    alt="Delete Collection"
+                    onClick={deleteCollection}
+                    className="delete-image-custom"
+                    title="Delete Collection"
+                    style={{ cursor: 'pointer', height: '40px' }}
+                />
             </div>
             <div className="chart-container" style={{ border: '5px solid peru', padding: '20px', marginTop: '20px' }}>
                 <Bar data={chartData} options={chartOptions} />

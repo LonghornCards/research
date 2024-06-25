@@ -20,8 +20,10 @@ const Nav = styled.nav`
   transition: top 0.3s;
 
   @media (max-width: 768px) {
+    height: auto;
     flex-direction: column;
     align-items: flex-start;
+    padding: 0;
   }
 `;
 
@@ -36,9 +38,6 @@ const NavMenu = styled('div').withConfig({
   @media (max-width: 768px) {
     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
     flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 0;
     width: 100%;
     background: peru;
     padding: 10px 0;
@@ -66,6 +65,7 @@ const Hamburger = styled.div`
 
   @media (max-width: 768px) {
     display: flex;
+    padding: 10px;
   }
 
   div {

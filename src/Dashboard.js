@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InputMask from 'react-input-mask';
 import { useAuth } from './AuthContext';
@@ -102,16 +102,44 @@ const PlaceholderImage = styled.img`
   opacity: 0.6;
 `;
 
-const SaveButton = styled.button`
+const SaveImageContainer = styled.div`
   width: 100%;
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
-  background-color: peru;
-  color: white;
+  cursor: pointer;
+  position: relative;
+`;
+
+const SaveImage = styled.img`
+  width: 50px;
+  height: 50px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const HoverSaveText = styled.div`
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: peru;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s linear;
+  ${SaveImageContainer}:hover & {
+    visibility: visible;
+    opacity: 1;
+  }
 `;
 
 const Footer = styled.footer`
@@ -220,7 +248,6 @@ const Dashboard = () => {
 
     const userId = user?.attributes?.sub;
 
-    // Load data from local storage on component mount
     useEffect(() => {
         const storedData = JSON.parse(localStorage.getItem('profileData'));
         if (storedData) {
@@ -239,7 +266,6 @@ const Dashboard = () => {
         }
     }, []);
 
-    // Configure AWS SDK
     AWS.config.update({
         region: process.env.REACT_APP_AWS_REGION,
         accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -332,7 +358,6 @@ const Dashboard = () => {
                 favoritePlayers: favoritePlayers.join(', ')
             };
 
-            // Save data to local storage
             localStorage.setItem('profileData', JSON.stringify(newProfileData));
 
             console.log('New profile data prepared for saving:', newProfileData);
@@ -431,7 +456,7 @@ const Dashboard = () => {
                 <Title>Welcome to Your Dashboard, {username}</Title>
                 <Row>
                     <Column>
-                        <Item>Email: <span style={{ color: 'red' }}>*</span>
+                        <Item>Account Email: <span style={{ color: 'red' }}>*</span>
                             <Input
                                 type="email"
                                 value={email}
@@ -570,7 +595,10 @@ const Dashboard = () => {
                                 ))}
                             </div>
                         </Item>
-                        <SaveButton onClick={handleSaveProfile}>Save Profile</SaveButton>
+                        <SaveImageContainer onClick={handleSaveProfile}>
+                            <SaveImage src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/save.svg" alt="Save Profile" />
+                            <HoverSaveText>Save Profile</HoverSaveText>
+                        </SaveImageContainer>
                         {confirmationMessage && <ConfirmationMessage>{confirmationMessage}</ConfirmationMessage>}
                         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
                     </Column>

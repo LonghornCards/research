@@ -534,9 +534,13 @@ const CustomScoreboard = () => {
                         </ul>
                     </div>
                 )}
-                <button onClick={resetFilters} style={{ backgroundColor: 'peru', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '10px' }}>
-                    Reset Filters
-                </button>
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/reset.svg"
+                    alt="Reset Filters"
+                    onClick={resetFilters}
+                    style={{ cursor: 'pointer', width: '40px', height: '40px', marginTop: '10px' }}
+                    title="Reset Filters"
+                />
             </div>
             <div className="overview-container" style={{ border: '2px solid peru', padding: '10px', margin: '20px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div className="pie-chart-container" style={{ width: '50%', margin: 'auto' }}>
