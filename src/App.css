@@ -1178,24 +1178,29 @@ button {
 
 /* Modal styles */
 .modal {
-    display: block;
     position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.9);
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px; /* Adjusted width */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-height: 400px; /* Adjusted max-height to fit the content */
+    overflow: auto; /* Enable scrolling if content overflows */
+    text-align: center;
 }
 
 .modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .close {
@@ -1677,10 +1682,12 @@ body {
 
     .modal-content h2 {
         margin-bottom: 20px;
+        color: peru; /* Ensure modal header text is colored Peru */
     }
 
     .modal-content p {
         margin-bottom: 20px;
+        color: peru; /* Ensure modal paragraph text is colored Peru */
     }
 
     .modal-content a {
@@ -2767,4 +2774,748 @@ tr:hover .td {
     width: 50px; /* Adjust the size as needed */
     height: 50px; /* Adjust the size as needed */
     margin: 0 10px; /* Adjust spacing as needed */
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px; /* Adjusted width */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-height: 400px; /* Adjusted max-height to fit the content */
+    overflow: auto; /* Enable scrolling if content overflows */
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+    .modal-form label {
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    .modal-form input {
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+    .modal-buttons button {
+        padding: 10px 30px; /* Increased padding to fit text */
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #a0522d;
+        color: white;
+        margin: 0 10px;
+        text-align: center; /* Center text */
+        width: 100px; /* Set a fixed width to ensure button text is fully visible */
+    }
+
+        .modal-buttons button:hover {
+            background-color: #d2691e;
+        }
+
+.file-list {
+    margin-top: 20px;
+}
+
+    .file-list ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .file-list li {
+        margin: 10px 0;
+    }
+
+    .file-list button {
+        padding: 10px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #a0522d;
+        color: white;
+        text-align: center;
+    }
+
+        .file-list button:hover {
+            background-color: #d2691e;
+        }
+
+.file-link {
+    background: none;
+    border: none;
+    color: peru;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 0; /* Add padding if needed */
+}
+
+    .file-link:hover {
+        text-decoration: none;
+    }
+
+.psa-page-container-custom {
+    text-align: center;
+    padding: 20px;
+    padding-top: 80px; /* Adjust this value if needed to accommodate the navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.psa-title-container-custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.psa-title-custom {
+    margin-right: 20px;
+}
+
+.psa-image-custom {
+    border-radius: 15px;
+    width: 100px; /* Ensures the image is a square */
+    height: 100px; /* Ensures the image is a square */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: perspective(500px) rotateY(-10deg);
+}
+
+.psa-description-custom {
+    font-weight: bold;
+    color: peru;
+    margin-bottom: 20px;
+}
+
+.psa-form-container-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.psa-input-custom {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.psa-submit-button-custom {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: peru;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.psa-response-custom {
+    margin-top: 20px;
+    text-align: left;
+    width: 80%;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto; /* Add horizontal scroll for mobile view */
+}
+
+.psa-response-table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .psa-response-table-custom th,
+    .psa-response-table-custom td {
+        border: 1px solid peru;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .psa-response-table-custom th {
+        background-color: peru;
+        color: white;
+    }
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .psa-title-container-custom {
+        flex-direction: column;
+    }
+
+    .psa-title-custom {
+        font-size: 1.5em;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .psa-image-custom {
+        width: 80px;
+        height: 80px;
+    }
+
+    .psa-input-custom {
+        width: 80%;
+    }
+
+    .psa-submit-button-custom {
+        width: 80%;
+    }
+
+    .psa-response-table-custom th,
+    .psa-response-table-custom td {
+        font-size: 14px;
+    }
+}
+
+/* Custom RSS Feed Page Styles */
+.page-rss-custom {
+    padding: 20px;
+    padding-top: 120px; /* Adjust padding to shift down the page */
+}
+
+.header-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+    .header-custom img {
+        width: 50px; /* Adjust size as needed */
+        height: 50px; /* Adjust size as needed */
+        border-radius: 10px; /* Rounded edges */
+        margin-right: 20px;
+    }
+
+    .header-custom h1 {
+        margin: 0;
+    }
+
+.search-sort-custom {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+    .search-sort-custom input {
+        width: 60%;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+.sort-buttons-custom button {
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.articles-custom {
+    display: flex;
+    flex-direction: column;
+}
+
+.article-custom {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+    .article-custom h2 {
+        margin: 0 0 10px;
+    }
+
+    .article-custom p {
+        margin: 5px 0;
+    }
+
+    .article-custom a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+.page-card-hedge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding-top: 60px; /* Adjust this value according to your navigation bar height */
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.header-card-hedge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .header-card-hedge h1 {
+        margin-right: 20px;
+        text-align: center;
+    }
+
+.header-image-card-hedge {
+    border-radius: 10px;
+    max-width: 100px; /* Reduced by 50% */
+    max-height: 100px; /* Reduced by 50% */
+}
+
+.description-card-hedge {
+    color: peru;
+    font-weight: bold;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.search-box-card-hedge {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.download-icon-card-hedge {
+    max-width: 50px;
+    max-height: 50px;
+    cursor: pointer; /* Added cursor style for download icon */
+}
+
+.api-response-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+    .api-response-container h2 {
+        margin-bottom: 10px;
+    }
+
+    .api-response-container pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+.error-message {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 10px;
+    background-color: #ffe6e6;
+    color: red;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.coming-soon-image {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.source-description-card-hedge {
+    text-align: justify;
+    text-align-last: center;
+    margin-top: auto;
+    margin-bottom: 20px; /* Adjust margin as needed */
+    width: 80%; /* Adjust width as needed */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .page-card-hedge {
+        padding-top: 80px; /* Adjust for mobile navigation bar height */
+    }
+
+    .header-card-hedge h1 {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-right: 0;
+    }
+
+    .description-card-hedge {
+        font-size: 0.9rem;
+    }
+
+    .search-box-card-hedge {
+        font-size: 0.9rem;
+    }
+
+    .download-icon-card-hedge {
+        width: 40px;
+    }
+}
+
+
+.profile-page {
+    position: relative;
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25vh; /* Take up the top quarter of the page */
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-container {
+    padding-top: 25vh; /* Adjust this value based on the height of the video */
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+}
+
+    .profile-header h1 {
+        margin-right: 20px;
+    }
+
+.profile-image {
+    width: 50px; /* Adjust the size as needed */
+    height: auto;
+}
+
+.peru-container {
+    background-color: peru;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: white; /* Change text color to white */
+    font-weight: bold; /* Make text bold */
+    position: relative; /* Ensure the contact us link positions correctly */
+}
+
+.profile-info-column {
+    width: 45%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .date-picker-input {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+    }
+
+.date-of-birth-group {
+    display: flex;
+    flex-direction: column; /* Align the date picker below the label */
+    align-items: flex-start;
+}
+
+.save-profile-group-right {
+    position: absolute;
+    bottom: 10px; /* Align with the CONTACT US link */
+    right: 20px; /* Adjust this value to place the button at the right */
+}
+
+.save-profile-button {
+    background-color: white;
+    color: peru;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 150px; /* Adjust width to ensure text is fully displayed */
+    text-align: center;
+}
+
+    .save-profile-button:hover {
+        background-color: #f2f2f2;
+    }
+
+.upload-section {
+    margin-top: 20px;
+}
+
+.upload-container {
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+}
+
+.upload-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.upload-button {
+    display: none; /* Hide the default file input */
+}
+
+.upload-image-label {
+    display: block;
+    cursor: pointer;
+    margin-top: 10px; /* Adjust the space between the text and the image */
+}
+
+.upload-image {
+    width: 50px; /* Adjust the size as needed */
+    height: auto;
+    border: 2px solid white; /* Add a white border */
+    padding: 5px;
+    background-color: white;
+}
+
+.display-image-container {
+    margin-left: 20px; /* Adjust spacing as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Adjust the height as needed */
+}
+
+.display-image {
+    max-width: 100%;
+    max-height: 100%;
+    border: 2px solid white; /* Add a white border */
+    border-radius: 5px;
+    background-color: white;
+}
+
+.contact-us {
+    position: absolute;
+    bottom: 10px; /* Move to the bottom of the peru container */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px; /* Increase font size */
+}
+
+    .contact-us a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .contact-us a:hover {
+            text-decoration: underline;
+        }
+
+.success-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .success-message button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+.header-content-custom {
+    display: flex;
+    align-items: center;
+}
+
+.display-name-custom {
+    margin-left: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: peru;
+}
+
+/* Styles for the PageWheel.js component */
+.page-wheel-container {
+    text-align: center;
+    padding-top: 100px; /* Adjust to ensure the title is not hidden by the navbar */
+}
+
+.page-wheel-text {
+    font-size: 18px;
+    color: peru;
+    font-weight: bold;
+    margin-bottom: 10px; /* Reduced the space under the paragraph by 50% */
+}
+
+.prize-info-container {
+    border: 2px solid peru;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: peru;
+}
+
+.pie-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px; /* Create a large space above the pie chart */
+    position: relative;
+    transform: scale(1.5625); /* Scale the pie chart by another 25% */
+}
+
+.pie-chart {
+    transition: transform 7s ease-out; /* 7 seconds duration */
+    max-width: 400px; /* Ensure the chart is not too large */
+    max-height: 400px; /* Ensure the chart is not too large */
+}
+
+.spinning {
+    pointer-events: none; /* Disable interactions while spinning */
+}
+
+.spin-button {
+    margin-top: 150px; /* Create a larger space between the pie chart and the button */
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: peru;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .spin-button:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+    }
+
+.wheel-and-marker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.wheel-marker {
+    position: absolute;
+    transform: rotate(90deg); /* Rotate the marker to point right */
+    transform-origin: center;
+    left: 100%; /* Position to the right of the wheel */
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.selected-slice-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: peru;
+}
+
+.hover-text-container {
+    margin-top: 30px;
+}
+
+    .hover-text-container h2 {
+        font-size: 20px;
+        color: peru;
+        font-weight: bold;
+    }
+
+    .hover-text-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .hover-text-container li {
+        font-size: 18px;
+        color: peru;
+        margin-bottom: 5px;
+    }
+
+.close-button {
+    width: 100%;
+    padding: 10px;
+    background-color: peru;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px; /* Adjust as necessary for spacing */
+}
+
+.shop-link {
+    color: blue;
+    text-decoration: underline;
+    margin-top: 10px; /* Adjust as necessary for spacing */
 }

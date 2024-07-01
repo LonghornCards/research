@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
+import AWS from 'aws-sdk';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const PageCollection = () => {
     const [tableData, setTableData] = useState(() => {
@@ -21,6 +25,11 @@ const PageCollection = () => {
     const [qtyRange, setQtyRange] = useState([0, 1000]);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
     const [fileName, setFileName] = useState('No file chosen');
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [accountEmail, setAccountEmail] = useState('');
+    const [collectionName, setCollectionName] = useState('');
+    const [loadModalIsOpen, setLoadModalIsOpen] = useState(false);
+    const [availableFiles, setAvailableFiles] = useState([]);
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -102,6 +111,154 @@ const PageCollection = () => {
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
         const blob = new Blob([wbout], { type: 'application/octet-stream' });
         saveAs(blob, 'CardCollection.xlsx');
+    };
+
+    const exportToCSVAndUpload = async () => {
+        const csv = Papa.unparse(tableData);
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        saveAs(blob, 'CardCollection.csv');
+
+        // S3 Configuration
+        const s3 = new AWS.S3({
+            accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+            region: process.env.REACT_APP_AWS_REGION,
+        });
+
+        const params = {
+            Bucket: 'websiteapp-storage-fdb68492737c0-dev',
+            Key: 'Dashboard/Collections/CardCollection.csv',
+            Body: blob,
+            ContentType: 'text/csv',
+            ACL: 'public-read' // Adjust ACL as needed
+        };
+
+        try {
+            await s3.upload(params).promise();
+            alert('File uploaded successfully to S3');
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Failed to upload file to S3');
+        }
+    };
+
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const handleSaveToCSV = async () => {
+        if (!accountEmail || !collectionName) {
+            alert('Please enter both Account Email and Collection Name');
+            return;
+        }
+
+        const sanitizedCollectionName = collectionName.replace(/\s+/g, '_');
+        const fileName = `${accountEmail}_${sanitizedCollectionName}.csv`;
+        const csv = Papa.unparse(tableData);
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        saveAs(blob, fileName);
+
+        // S3 Configuration
+        const s3 = new AWS.S3({
+            accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+            region: process.env.REACT_APP_AWS_REGION,
+        });
+
+        const params = {
+            Bucket: 'websiteapp-storage-fdb68492737c0-dev',
+            Key: `Dashboard/Collections/${fileName}`,
+            Body: blob,
+            ContentType: 'text/csv',
+            ACL: 'public-read' // Adjust ACL as needed
+        };
+
+        try {
+            await s3.upload(params).promise();
+            alert('File uploaded successfully to S3');
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Failed to upload file to S3');
+        }
+
+        closeModal();
+    };
+
+    const openLoadModal = () => {
+        setLoadModalIsOpen(true);
+    };
+
+    const closeLoadModal = () => {
+        setLoadModalIsOpen(false);
+    };
+
+    const handleLoadCSV = async () => {
+        if (!accountEmail) {
+            alert('Please enter Account Email');
+            return;
+        }
+
+        // S3 Configuration
+        const s3 = new AWS.S3({
+            accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+            region: process.env.REACT_APP_AWS_REGION,
+        });
+
+        const params = {
+            Bucket: 'websiteapp-storage-fdb68492737c0-dev',
+            Prefix: `Dashboard/Collections/${accountEmail}_`,
+        };
+
+        try {
+            const data = await s3.listObjectsV2(params).promise();
+            const files = data.Contents
+                .filter(file => file.Key.includes(accountEmail))
+                .map(file => file.Key);
+            setAvailableFiles(files);
+        } catch (error) {
+            console.error('Error fetching files:', error);
+            alert('Failed to fetch files from S3');
+        }
+    };
+
+    const handleFileSelection = async (file) => {
+        // S3 Configuration
+        const s3 = new AWS.S3({
+            accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+            region: process.env.REACT_APP_AWS_REGION,
+        });
+
+        const params = {
+            Bucket: 'websiteapp-storage-fdb68492737c0-dev',
+            Key: file,
+        };
+
+        try {
+            const data = await s3.getObject(params).promise();
+            const csvData = data.Body.toString('utf-8');
+            const results = Papa.parse(csvData, { header: true, skipEmptyLines: true });
+
+            const newData = results.data.map(row => ({
+                Title: row.Title,
+                Price: parseFloat(row.Price).toFixed(2),
+                Cost: parseInt(row.Cost, 10),
+                Qty: parseInt(row.Qty, 10),
+                Date: new Date(row.Date).toISOString().substr(0, 10),
+                Tags: row.Tags || ''
+            }));
+
+            setTableData(newData);
+            closeLoadModal();
+        } catch (error) {
+            console.error('Error loading file:', error);
+            alert('Failed to load file from S3');
+        }
     };
 
     const addNewRow = () => {
@@ -332,6 +489,14 @@ const PageCollection = () => {
             </div>
             <p className="page-description-custom">Add your card collection to store and update market prices</p>
             <div className="file-upload-container">
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/open.svg"
+                    alt="Open CSV File"
+                    className="upload-image-custom"
+                    title="Open CSV File"
+                    style={{ cursor: 'pointer', height: '40px', marginRight: '10px' }}
+                    onClick={openLoadModal}
+                />
                 <img
                     src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/upload.svg"
                     alt="Upload CSV File"
@@ -589,9 +754,17 @@ const PageCollection = () => {
                 <img
                     src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/csv.svg"
                     alt="Export to CSV"
-                    onClick={exportToExcel}
+                    onClick={exportToCSVAndUpload}
                     className="export-image-custom"
                     title="Export to CSV"
+                    style={{ cursor: 'pointer', height: '40px' }}
+                />
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/save.svg"
+                    alt="Save to CSV"
+                    onClick={openModal}
+                    className="export-unique-image-custom"
+                    title="Save to CSV"
                     style={{ cursor: 'pointer', height: '40px' }}
                 />
                 <img
@@ -609,6 +782,64 @@ const PageCollection = () => {
             <div className="footer">
                 Longhorn Cards & Collectibles LLC
             </div>
+
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal" overlayClassName="overlay">
+                <h2>Save Collection</h2>
+                <form className="modal-form">
+                    <label>
+                        Account Email:
+                        <input
+                            type="email"
+                            value={accountEmail}
+                            onChange={(e) => setAccountEmail(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Collection Name:
+                        <input
+                            type="text"
+                            value={collectionName}
+                            onChange={(e) => setCollectionName(e.target.value.replace(/\s+/g, '_'))}
+                        />
+                    </label>
+                    <div className="modal-buttons">
+                        <button type="button" onClick={handleSaveToCSV}>Save</button>
+                        <button type="button" onClick={closeModal}>Cancel</button>
+                    </div>
+                </form>
+            </Modal>
+
+            <Modal isOpen={loadModalIsOpen} onRequestClose={closeLoadModal} className="modal" overlayClassName="overlay">
+                <h2>Open Collection</h2>
+                <form className="modal-form">
+                    <label>
+                        Account Email:
+                        <input
+                            type="email"
+                            value={accountEmail}
+                            onChange={(e) => setAccountEmail(e.target.value)}
+                        />
+                    </label>
+                    <div className="modal-buttons">
+                        <button type="button" onClick={handleLoadCSV}>Load</button>
+                        <button type="button" onClick={closeLoadModal}>Cancel</button>
+                    </div>
+                </form>
+                {availableFiles.length > 0 && (
+                    <div className="file-list">
+                        <h3>Available Collections</h3>
+                        <ul>
+                            {availableFiles.map((file, index) => (
+                                <li key={index}>
+                                    <a href="#" onClick={() => handleFileSelection(file)} style={{ textDecoration: 'underline' }}>
+                                        {file.split('/').pop()}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </Modal>
         </div>
     );
 };

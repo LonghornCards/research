@@ -35,7 +35,12 @@ import Dashboard from './Dashboard';
 import CustomScoreboard from './CustomScoreboard';
 import CardPrices from './CardPrices';
 import AISearch from './AISearch';
-import PageCollection from './PageCollection'; // Import the new PageCollection component
+import PageCollection from './PageCollection';
+import PagePSA from './PagePSA';
+import PageRSS from './PageRSS';
+import PageCardHedge from './PageCardHedge';
+import PageProfile from './PageProfile';
+import PageWheel from './PageWheel'; // Import the new PageWheel component
 import './App.css';
 
 const AppRouter = () => {
@@ -77,7 +82,12 @@ const AppRouter = () => {
                 <Route path="/customscoreboard" element={<CustomScoreboard />} />
                 <Route path="/cardprices" element={<CardPrices />} />
                 <Route path="/aisearch" element={<AISearch />} />
-                <Route path="/pagecollection" element={<PageCollection />} /> {/* Add the new route */}
+                <Route path="/pagecollection" element={<PageCollection />} />
+                <Route path="/pagepsa" element={<PagePSA />} />
+                <Route path="/pagerss" element={<PageRSS />} />
+                <Route path="/pagecardhedge" element={<PageCardHedge />} />
+                <Route path="/pageprofile" element={<PageProfile />} />
+                <Route path="/pagewheel" element={<PageWheel />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );
