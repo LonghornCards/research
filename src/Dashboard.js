@@ -370,6 +370,18 @@ const Dashboard = () => {
                     <LinkItem><LinkAnchor href="https://goldin.co/">Goldin</LinkAnchor></LinkItem>
                     <LinkItem><LinkAnchor href="https://www.pwccmarketplace.com/">PWCC</LinkAnchor></LinkItem>
                     <LinkItem><LinkAnchor href="https://www.ebay.com/">eBay</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.espn.com/">ESPN</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://sports.yahoo.com/">Yahoo Sports</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://sportscollectorsdigest.com/">Sports Collectors Digest</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.sportscollectorsdaily.com/">Sports Collectors Daily</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://bleacherreport.com/">Bleacher Report</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.sportscardportal.com/">Sports Card Portal</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.cardboardconnection.com/">The Cardboard Connection</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.splendidsports.com/">Splendid Sports</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.hobbynewsdaily.com/">Hobby Daily News</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.sportscardsnonsense.com/">Sports Cards Nonsense</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://marketmoversapp.com/">Market Movers</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.sportbible.com/">Sports Bible</LinkAnchor></LinkItem>
                 </LinkList>
             </LinkHubContainer>
             <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>

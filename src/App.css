@@ -3519,3 +3519,25 @@ tr:hover .td {
     text-decoration: underline;
     margin-top: 10px; /* Adjust as necessary for spacing */
 }
+
+.add-comment-button {
+    width: 150px; /* Adjust the width as needed */
+}
+
+/* Styles for the Spin The Wheel section */
+.spin-wheel-container {
+    margin-top: 20px; /* Add space above the spin wheel section */
+    text-align: center; /* Center align the text */
+}
+
+.spin-wheel-link {
+    font-size: 24px; /* Increase the font size */
+    font-weight: bold; /* Make the text bold */
+    color: peru; /* Use the same color theme */
+    text-decoration: none; /* Remove underline from the link */
+}
+
+    .spin-wheel-link:hover {
+        text-decoration: underline; /* Add underline on hover */
+        color: darkorange; /* Change color on hover */
+    }

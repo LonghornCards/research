@@ -157,7 +157,7 @@ const PageWheel = () => {
                 {spinCount >= 3 ? "Maximum Spins Reached, Try Again Next Week!" : "Spin"}
             </button>
             <div className="prize-info-container" style={{ borderColor: 'peru' }}>
-                <p>Possible Prizes: 10% Off (45%), 20% Off (10%), 30% Off (5%), 50% Off (5%), and Free $25 Card (5%)</p>
+                <p>3 Spins Per Week Max.  Possible Prizes with Odds: 10% Off (45%), 20% Off (10%), 30% Off (5%), 50% Off (5%), and Free $25 Card (5%)</p>
             </div>
 
             <Modal
