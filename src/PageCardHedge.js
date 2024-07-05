@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import axios from 'axios';
 import Plot from 'react-plotly.js';
+import { useLocation } from 'react-router-dom';
 
 const PageCardHedge = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -26,6 +27,15 @@ const PageCardHedge = () => {
     });
 
     const chartRef = useRef(null);
+    const location = useLocation();
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const query = queryParams.get('query');
+        if (query) {
+            setSearchQuery(query);
+        }
+    }, [location]);
 
     const handleInputChange = (e) => {
         setSearchQuery(e.target.value);
@@ -139,7 +149,6 @@ const PageCardHedge = () => {
                         dateRange,
                     });
 
-                    // Scroll to the chart container after setting the price response
                     setTimeout(() => {
                         if (chartRef.current) {
                             chartRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -192,7 +201,6 @@ const PageCardHedge = () => {
         name: cardDetails[selectedCardId]?.description || 'Price Data'
     };
 
-    // Calculate 50-day rolling moving average manually
     const prices = sortedPriceResponse.map(price => parseFloat(price.price));
     const movingAvg50 = prices.map((val, index, arr) => {
         if (index < 49) return null;
@@ -201,7 +209,6 @@ const PageCardHedge = () => {
         return (sum / 50).toFixed(2);
     });
 
-    // Calculate 200-day rolling moving average manually
     const movingAvg200 = prices.map((val, index, arr) => {
         if (index < 199) return null;
         const slice = arr.slice(index - 199, index + 1);
@@ -209,7 +216,6 @@ const PageCardHedge = () => {
         return (sum / 200).toFixed(2);
     });
 
-    // Filter out null values from moving averages and corresponding dates
     const movingAvg50Filtered = movingAvg50.filter(val => val !== null);
     const movingAvg50Dates = sortedPriceResponse.slice(49).map(price => new Date(price.closing_date).toLocaleDateString());
 
@@ -218,17 +224,16 @@ const PageCardHedge = () => {
 
     const avgPrice = (priceResponse.reduce((a, b) => a + parseFloat(b.price), 0) / priceResponse.length).toFixed(2);
 
-    // Data for box plot
     const boxPlotData = {
         y: sortedPriceResponse.map(price => price.price),
-        text: sortedPriceResponse.map(price => new Date(price.closing_date).toLocaleDateString()), // Adding closing date to hover text
+        text: sortedPriceResponse.map(price => new Date(price.closing_date).toLocaleDateString()),
         type: 'box',
         name: cardDetails[selectedCardId]?.description || 'Price Distribution',
         boxpoints: 'all',
         jitter: 0.5,
         pointpos: -1.8,
         marker: { color: 'peru' },
-        hoverinfo: 'y+text' // Show both price and closing date on hover
+        hoverinfo: 'y+text'
     };
 
     return (
@@ -327,7 +332,7 @@ const PageCardHedge = () => {
                                 xaxis: { title: 'Closing Date', showgrid: false, automargin: true },
                                 yaxis: { title: 'Price', showgrid: false, automargin: true },
                                 showlegend: true,
-                                legend: { orientation: 'h', y: -0.6 }, // Move the legend lower
+                                legend: { orientation: 'h', y: -0.6 },
                                 margin: { l: 70, r: 50, b: 150, t: 50, pad: 10 },
                                 shapes: [
                                     {

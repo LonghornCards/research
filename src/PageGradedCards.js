@@ -37,15 +37,11 @@ const PageGradedCards = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json');
-                console.log('Full response data:', response);
                 if (response.data) {
-                    console.log('Product data fetched successfully:', response.data);
                     const gradedProducts = response.data.filter(product => product.Tags.includes('graded'));
                     setProducts(gradedProducts);
                     setFilteredProducts(gradedProducts);
                     setFuse(new Fuse(gradedProducts, fuseOptions));
-                } else {
-                    console.error('No data in response:', response);
                 }
             } catch (error) {
                 console.error('Error fetching product data:', error);
@@ -117,6 +113,13 @@ const PageGradedCards = () => {
         e.target.src = '/placeholder.png';
     };
 
+    const handleFilterByTag = (tag) => {
+        const newTags = selectedTags.some(selectedTag => selectedTag.value === tag) ?
+            selectedTags.filter(selectedTag => selectedTag.value !== tag) :
+            [...selectedTags, { value: tag, label: tag }];
+        setSelectedTags(newTags);
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -161,6 +164,29 @@ const PageGradedCards = () => {
                             placeholder="Select tags to filter products"
                         />
                     </div>
+                </div>
+                <div className="image-filters">
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/football-solid.svg"
+                        alt="Football Cards"
+                        title="Football Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('Football')}
+                    />
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/basketball-solid.svg"
+                        alt="Basketball Cards"
+                        title="Basketball Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('Basketball')}
+                    />
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/baseball-solid.svg"
+                        alt="Baseball Cards"
+                        title="Baseball Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('Baseball')}
+                    />
                 </div>
                 <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
             </div>

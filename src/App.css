@@ -3055,12 +3055,15 @@ tr:hover .td {
 .articles-custom {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .article-custom {
     border: 1px solid #ccc;
     padding: 15px;
+    border-radius: 8px;
     margin-bottom: 10px;
+    background-color: #fff;
 }
 
     .article-custom h2 {
@@ -3856,4 +3859,223 @@ tr:hover .td {
     margin-top: 10px;
     font-style: italic;
     color: gray;
+}
+
+.scroll-container {
+    border: 2px solid peru;
+    max-height: 200px; /* Adjust height as needed */
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.comment-share-text {
+    font-weight: bold;
+    color: peru;
+    margin-top: 20px;
+}
+
+.comment-input textarea {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.comment-input button {
+    background-color: peru;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.comments-list .comment {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comments-list .comment-actions button {
+    margin-right: 10px;
+    background-color: peru;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.page-profile {
+    margin: 20px;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.profile-form input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.profile-form button {
+    background-color: peru;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.page-rss-custom {
+    text-align: center; /* Center align the content */
+}
+
+.sort-images-custom {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Add spacing between the images */
+    margin: 20px 0; /* Add margin for vertical spacing */
+}
+
+.sort-icon {
+    width: 40px; /* Increase the size of the images */
+    height: 40px; /* Increase the size of the images */
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.load-more-image {
+    cursor: pointer;
+    width: 50px; /* adjust size as needed */
+    margin: 20px auto;
+    display: block;
+}
+
+    .load-more-image:hover {
+        opacity: 0.8;
+    }
+
+.image-filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-image {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.wheel-text, .page-wheel-text, .prize-info-container p, .modal-content h2, .modal-content p {
+    color: white;
+    font-weight: bold;
+}
+
+.search-input-container input {
+    margin-right: 10px;
+    width: 400px; /* Adjust the width to double the original size */
+}
+
+/* Modal styles */
+.share-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    width: fit-content;
+}
+
+.share-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.share-button {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the icon */
+    left: 50%;
+    margin-left: -60px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.share-button:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.close-button {
+    display: block;
+    width: 100px;
+    margin: 10px auto 0;
+    padding: 10px;
+    background-color: peru;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+..price-search-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    border: none; /* Ensure no border is applied */
+}
+
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border: none; /* Ensure no border is applied */
+}
+
+.search-image {
+    width: 30px; /* Adjust the size as necessary */
+    height: auto;
+    border: none; /* Ensure no border is applied */
 }

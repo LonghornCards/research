@@ -653,13 +653,29 @@ const PageCollection = () => {
                                 </td>
                                 <td>
                                     <Link to={`/aisearch?query=${encodeURIComponent(getBaseName(row.Title))}`}>
-                                        Search News
+                                        <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/googlenews.jpg" alt="Search News" style={{ width: '40px', height: 'auto', marginRight: '10px' }} />
+                                    </Link>
+                                    <Link to="/PageRSS">
+                                        <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/espn.jpeg" alt="Search RSS" style={{ width: '40px', height: 'auto' }} />
                                     </Link>
                                 </td>
-                                <td>
-                                    <Link to={`/cardprices?query=${encodeURIComponent(getBaseName(row.Title))}`}>
-                                        Search Price
-                                    </Link>
+                                <td className="price-search-images">
+                                    <div className="image-row">
+                                        <a href="https://130point.com/sales/" target="_blank" rel="noopener noreferrer">
+                                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/130point.png" alt="Search 130point" className="search-image" />
+                                        </a>
+                                        <Link to={`/PageCardSearch?query=${encodeURIComponent(getBaseName(row.Title))}`}>
+                                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/ebay.png" alt="Search eBay" className="search-image" />
+                                        </Link>
+                                    </div>
+                                    <div className="image-row">
+                                        <Link to={`/cardprices?query=${encodeURIComponent(getBaseName(row.Title))}`}>
+                                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/sportscardpro.jpeg" alt="Search Price" className="search-image" />
+                                        </Link>
+                                        <Link to={`/PageCardHedge?query=${encodeURIComponent(getBaseName(row.Title))}`}>
+                                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/cardhedge.jpeg" alt="Card Hedge" className="search-image" />
+                                        </Link>
+                                    </div>
                                 </td>
                                 <td className="base-name-column">{getBaseName(row.Title)}</td>
                                 <td>

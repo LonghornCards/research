@@ -142,38 +142,42 @@ const PageWheel = () => {
 
     return (
         <div className="page-wheel-container">
-            <h1>Spin the Wheel!</h1>
-            <p className="page-wheel-text">
-                <strong>Spin the wheel for your chance at special prizes and discounts</strong>
-            </p>
-            <div className="wheel-and-marker-container">
-                <div className="pie-chart-container">
-                    <div className={`pie-chart ${spinning ? 'spinning' : ''}`} style={{ transform: `rotate(${rotation}deg)` }}>
-                        <Pie data={data} options={options} />
+            <video autoPlay loop muted playsInline className="background-video">
+                <source src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/mixkit-a-lot-of-cash-over-a-rotating-background-47005-hd-ready.mp4" type="video/mp4" />
+            </video>
+            <div className="content">
+                <h1 className="wheel-text">Spin the Wheel!</h1>
+                <p className="page-wheel-text">
+                    <strong>Spin the wheel for your chance at special prizes and discounts</strong>
+                </p>
+                <div className="wheel-and-marker-container">
+                    <div className="pie-chart-container">
+                        <div className={`pie-chart ${spinning ? 'spinning' : ''}`} style={{ transform: `rotate(${rotation}deg)` }}>
+                            <Pie data={data} options={options} />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <button className="spin-button" onClick={handleSpin} disabled={spinning || spinCount >= 3}>
-                {spinCount >= 3 ? "Maximum Spins Reached, Try Again Next Week!" : "Spin"}
-            </button>
-            <div className="prize-info-container" style={{ borderColor: 'peru' }}>
-                <p>3 Spins Per Week Max.  Possible Prizes with Odds: 10% Off (45%), 20% Off (10%), 30% Off (5%), 50% Off (5%), and Free $25 Card (5%)</p>
-            </div>
-
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Selected Slice Modal"
-                className="modal"
-                overlayClassName="overlay"
-            >
-                <div className="modal-content">
-                    <h2>Congratulations!</h2>
-                    <p>{selectedSlice}</p>
-                    {renderShopLink()}
-                    <button className="close-button" onClick={closeModal}>Close</button>
+                <button className="spin-button" onClick={handleSpin} disabled={spinning || spinCount >= 3}>
+                    {spinCount >= 3 ? "Maximum Spins Reached, Try Again Next Week!" : "Spin"}
+                </button>
+                <div className="prize-info-container" style={{ borderColor: 'peru' }}>
+                    <p className="wheel-text">3 Spins Per Week Max.  Possible Prizes with Odds: 10% Off (45%), 20% Off (10%), 30% Off (5%), 50% Off (5%), and Free $25 Card (5%)</p>
                 </div>
-            </Modal>
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Selected Slice Modal"
+                    className="modal"
+                    overlayClassName="overlay"
+                >
+                    <div className="modal-content">
+                        <h2 className="wheel-text">Congratulations!</h2>
+                        <p className="wheel-text">{selectedSlice}</p>
+                        {renderShopLink()}
+                        <button className="close-button" onClick={closeModal}>Close</button>
+                    </div>
+                </Modal>
+            </div>
         </div>
     );
 };

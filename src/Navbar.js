@@ -320,9 +320,17 @@ const Navbar = () => {
                             </NavLink>
                         </DropdownContent>
                     </Dropdown>
-                    <NavLink to="/pageblog" onClick={() => setIsOpen(false)}>
-                        Blog
-                    </NavLink>
+                    <Dropdown>
+                        <span>Blog</span>
+                        <DropdownContent className="dropdown-content">
+                            <NavLink to="/pageblog" onClick={() => setIsOpen(false)}>
+                                Blog
+                            </NavLink>
+                            <NavLink to="/pagerss" onClick={() => setIsOpen(false)}>
+                                RSS Feeds
+                            </NavLink>
+                        </DropdownContent>
+                    </Dropdown>
                     <NavLink to="/about" onClick={() => setIsOpen(false)}>
                         About
                     </NavLink>

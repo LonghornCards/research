@@ -39,7 +39,7 @@ const Page_GoogleTrends = () => {
                 displayColumns={["PLAYER", "3-Mo Average", "12-Mo Average", "Average", "Google Trend"]}
             />
             <div className="footer">
-                
+
             </div>
         </div>
     );

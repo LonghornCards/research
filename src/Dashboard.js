@@ -382,6 +382,12 @@ const Dashboard = () => {
                     <LinkItem><LinkAnchor href="https://www.sportscardsnonsense.com/">Sports Cards Nonsense</LinkAnchor></LinkItem>
                     <LinkItem><LinkAnchor href="https://marketmoversapp.com/">Market Movers</LinkAnchor></LinkItem>
                     <LinkItem><LinkAnchor href="https://www.sportbible.com/">Sports Bible</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.mlb.com/">MLB</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.nfl.com/">NFL</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.nba.com/">NBA</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.ncaa.com/">NCAA</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://www.secsports.com/">SEC Sports</LinkAnchor></LinkItem>
+                    <LinkItem><LinkAnchor href="https://texaslonghorns.com/">Texas Longhorns</LinkAnchor></LinkItem>
                 </LinkList>
             </LinkHubContainer>
             <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
