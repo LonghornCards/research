@@ -4079,3 +4079,55 @@ tr:hover .td {
     height: auto;
     border: none; /* Ensure no border is applied */
 }
+
+.page-podcasts {
+    padding: 100px 20px 20px 20px; /* Added top padding to avoid the navbar */
+}
+
+    .page-podcasts h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+.page-description {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: peru;
+}
+
+.select-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+.container-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: peru;
+    font-weight: bold;
+}
+
+.podcast-container {
+    border: 2px solid peru;
+    padding: 20px;
+    margin: 20px auto; /* Added margin to separate containers */
+    width: 90%;
+    max-width: 800px;
+}
+
+@media (max-width: 768px) {
+    .page-podcasts {
+        padding: 80px 10px 10px 10px;
+    }
+
+    .select-container {
+        width: 100%;
+    }
+
+    .podcast-container {
+        width: 100%;
+    }
+}

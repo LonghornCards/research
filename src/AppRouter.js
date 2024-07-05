@@ -41,7 +41,8 @@ import PageRSS from './PageRSS';
 import PageCardHedge from './PageCardHedge';
 import PageProfile from './PageProfile';
 import PageWheel from './PageWheel';
-import PagePlayers from './PagePlayers'; // Import the new PagePlayers component
+import PagePlayers from './PagePlayers';
+import PagePodcasts from './PagePodcasts'; // Import the new PagePodcasts component
 import './App.css';
 
 const AppRouter = () => {
@@ -89,7 +90,8 @@ const AppRouter = () => {
                 <Route path="/pagecardhedge" element={<PageCardHedge />} />
                 <Route path="/pageprofile" element={<PageProfile />} />
                 <Route path="/pagewheel" element={<PageWheel />} />
-                <Route path="/pageplayers" element={<PagePlayers />} /> {/* Add the new route */}
+                <Route path="/pageplayers" element={<PagePlayers />} />
+                <Route path="/pagepodcasts" element={<PagePodcasts />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );
