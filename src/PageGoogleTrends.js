@@ -23,14 +23,17 @@ const Page_GoogleTrends = () => {
             <TrendsChart
                 fileUrl="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_NFL.xlsx"
                 title="NFL Google Trends"
+                style={{ height: '400px', width: '100%' }}
             />
             <TrendsChart
                 fileUrl="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_NBA.xlsx"
                 title="NBA Google Trends"
+                style={{ height: '400px', width: '100%' }}
             />
             <TrendsChart
                 fileUrl="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_MLB.xlsx"
                 title="MLB Google Trends"
+                style={{ height: '400px', width: '100%' }}
             />
             <ScatterPlot
                 fileUrl="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_ALL.xlsx"

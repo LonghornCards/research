@@ -49,6 +49,12 @@ const Player_Scoreboard = () => {
     const [selectedName, setSelectedName] = useState([{ value: 'All Players', label: 'All Players' }]);
     const [selectedTrend, setSelectedTrend] = useState([{ value: 'All Trends', label: 'All Trends' }]);
     const [bubbleSize, setBubbleSize] = useState(columnOptions[1]); // Default to Fundamental Rank
+    const [topFootball, setTopFootball] = useState([]);
+    const [topBasketball, setTopBasketball] = useState([]);
+    const [topBaseball, setTopBaseball] = useState([]);
+    const [bottomFootball, setBottomFootball] = useState([]);
+    const [bottomBasketball, setBottomBasketball] = useState([]);
+    const [bottomBaseball, setBottomBaseball] = useState([]);
     const chartRef = useRef(null);
     const location = useLocation();
 
@@ -65,6 +71,7 @@ const Player_Scoreboard = () => {
                 const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
                 setData(worksheet);
+                filterAndSortData(worksheet);
                 filterTableData(worksheet, selectedName, selectedSport, selectedTrend);
                 updateChartData(worksheet, xAxis.value, yAxis.value, selectedSport.value, bubbleSize.value);
             } catch (error) {
@@ -104,17 +111,20 @@ const Player_Scoreboard = () => {
             datasets: [
                 {
                     label: "Scoreboard Scatterplot",
-                    data: filteredData.map(row => ({
-                        x: row[xAxis],
-                        y: row[yAxis],
-                        r: row[bubbleSize] ? row[bubbleSize] * scalingFactor : 5, // Scale the bubble size
-                        backgroundColor: getColor(row['Composite Rank'], maxCompositeRank),
-                        compositeRank: row['Composite Rank'],
-                        fundamentalRank: row['Fundamental Rank'],
-                        sentimentRank: row['Sentiment Rank'],
-                        technicalRank: row['Technical Rank'],
-                        name: row['Name']
-                    }))
+                    data: filteredData.map(row => {
+                        const size = row[bubbleSize] ? row[bubbleSize] * scalingFactor : 5;
+                        return {
+                            x: row[xAxis],
+                            y: row[yAxis],
+                            r: size,
+                            backgroundColor: getColor(row['Composite Rank'], maxCompositeRank),
+                            compositeRank: row['Composite Rank'],
+                            fundamentalRank: row['Fundamental Rank'],
+                            sentimentRank: row['Sentiment Rank'],
+                            technicalRank: row['Technical Rank'],
+                            name: row['Name']
+                        };
+                    })
                 }
             ]
         };
@@ -222,6 +232,33 @@ const Player_Scoreboard = () => {
         useBlockLayout
     );
 
+    const filterAndSortData = (data) => {
+        const getTopPlayers = (sport) => {
+            return data
+                .filter(row => row.Sport === sport)
+                .sort((a, b) => b['Composite Rank'] - a['Composite Rank'])
+                .slice(0, 5)
+                .map(row => ({ name: row.Name, rank: row['Composite Rank'] }));
+        };
+
+        const getBottomPlayers = (sport) => {
+            return data
+                .filter(row => row.Sport === sport)
+                .sort((a, b) => a['Composite Rank'] - b['Composite Rank'])
+                .slice(0, 5)
+                .reverse()
+                .map(row => ({ name: row.Name, rank: row['Composite Rank'] }));
+        };
+
+        setTopFootball(getTopPlayers('Football'));
+        setTopBasketball(getTopPlayers('Basketball'));
+        setTopBaseball(getTopPlayers('Baseball'));
+
+        setBottomFootball(getBottomPlayers('Football'));
+        setBottomBasketball(getBottomPlayers('Basketball'));
+        setBottomBaseball(getBottomPlayers('Baseball'));
+    };
+
     return (
         <div className="scoreboard-page-container">
             <div className="scoreboard-summary">
@@ -233,6 +270,54 @@ const Player_Scoreboard = () => {
 
             </div>
             <h1 style={{ color: 'peru', fontWeight: 'bold' }}>Longhorn Cards Player Scoreboard</h1>
+            <h2 className="table-title">Scoreboard Top 5 Rankings</h2>
+            <div className="tables-container">
+                {['Football', 'Basketball', 'Baseball'].map((sport, index) => (
+                    <div key={index} className="table-sub-container">
+                        <h3 className="sport-title">{sport}</h3>
+                        <table className="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Composite Rank</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(sport === 'Football' ? topFootball : sport === 'Basketball' ? topBasketball : topBaseball).map((player, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                        <td>{player.name}</td>
+                                        <td>{player.rank}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ))}
+            </div>
+            <h2 className="table-title">Scoreboard Bottom 5 Rankings</h2>
+            <div className="tables-container">
+                {['Football', 'Basketball', 'Baseball'].map((sport, index) => (
+                    <div key={index} className="table-sub-container">
+                        <h3 className="sport-title">{sport}</h3>
+                        <table className="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Composite Rank</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(sport === 'Football' ? bottomFootball : sport === 'Basketball' ? bottomBasketball : bottomBaseball).map((player, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                        <td>{player.name}</td>
+                                        <td>{player.rank}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ))}
+            </div>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
                     <label>X-Axis</label>

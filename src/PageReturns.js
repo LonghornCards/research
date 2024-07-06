@@ -147,7 +147,7 @@ const Page_Returns = () => {
             </div>
             <div className="chart-container">
                 <div className="chart-subplot">
-                    <h2 className="chart-title">Year to Date</h2>
+                    <h2 className="chart-title">Year to Date (6/30/24)</h2>
                     <Bar data={ytdChartData} options={options} />
                 </div>
                 <div className="chart-subplot">
