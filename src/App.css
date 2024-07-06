@@ -4178,3 +4178,57 @@ tr:hover .td {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+.new-container {
+    border: 2px solid peru;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.sub-container {
+    border: 2px solid peru;
+    margin: 10px;
+    padding: 10px;
+    flex: 1 1 30%;
+    box-sizing: border-box;
+    max-width: 30%;
+}
+
+.table-title {
+    background-color: peru;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.table-header {
+    background-color: peru;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.table-cell {
+    border: 1px solid peru;
+    padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px; /* Fixed width for table cells */
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.table-cell-player {
+    max-width: 200px; /* Fixed width for the Player column */
+    text-align: left; /* Left align for the Player column */
+}
+
+tbody tr {
+    height: 40px; /* Fixed height for table rows to ensure consistency */
+}
