@@ -42,7 +42,9 @@ import PageCardHedge from './PageCardHedge';
 import PageProfile from './PageProfile';
 import PageWheel from './PageWheel';
 import PagePlayers from './PagePlayers';
-import PagePodcasts from './PagePodcasts'; // Import the new PagePodcasts component
+import PagePodcasts from './PagePodcasts';
+import PageLeaders from './PageLeaders';
+import PageCSI from './PageCSI'; // Import the new PageCSI component
 import './App.css';
 
 const AppRouter = () => {
@@ -91,7 +93,9 @@ const AppRouter = () => {
                 <Route path="/pageprofile" element={<PageProfile />} />
                 <Route path="/pagewheel" element={<PageWheel />} />
                 <Route path="/pageplayers" element={<PagePlayers />} />
-                <Route path="/pagepodcasts" element={<PagePodcasts />} /> {/* Add the new route */}
+                <Route path="/pagepodcasts" element={<PagePodcasts />} />
+                <Route path="/pageleaders" element={<PageLeaders />} />
+                <Route path="/pagecsi" element={<PageCSI />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );

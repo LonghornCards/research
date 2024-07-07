@@ -315,6 +315,9 @@ const Navbar = () => {
                             <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
                                 Player Returns
                             </NavLink>
+                            <NavLink to="/pagecsi" onClick={() => setIsOpen(false)}>
+                                Index Returns
+                            </NavLink>
                             <NavLink to="/pagecardsearch" onClick={() => setIsOpen(false)}>
                                 eBay Card Sales
                             </NavLink>
