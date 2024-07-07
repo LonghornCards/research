@@ -1,4 +1,3 @@
-// PageBlog.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { useLocation, Link } from 'react-router-dom';
@@ -13,6 +12,7 @@ import {
     EmailShareButton,
     EmailIcon
 } from 'react-share';
+import { Helmet } from 'react-helmet';  // Import Helmet
 
 Modal.setAppElement('#root');  // To avoid screen readers problems
 
@@ -55,6 +55,9 @@ const PageBlog = () => {
 
     return (
         <div className="page-blog">
+            <Helmet>
+                <title>Longhorn Cards Blog</title>
+            </Helmet>
             <h1>Longhorn Cards Research Blog</h1>
             <a href="/login" style={{ textDecoration: 'none' }}>
                 <h2 style={{ color: 'peru', fontWeight: 'bold' }}>

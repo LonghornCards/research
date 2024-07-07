@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { useTable, useBlockLayout } from 'react-table';
@@ -131,6 +132,9 @@ const Page_Stats = () => {
 
     return (
         <div className="scoreboard-page-container">
+            <Helmet>
+                <title>Player Statistics</title>
+            </Helmet>
             <h1>Sports Statistics</h1>
             <p className="scoreboard-intro-paragraph">
                 Welcome to the Sports Statistics page! Here, you will find comprehensive statistics for key NFL, NBA, and MLB players.

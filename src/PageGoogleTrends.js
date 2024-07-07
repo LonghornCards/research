@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import TrendsChart from './TrendsChart';
 import ScatterPlot from './ScatterPlot';
 import { useLocation } from 'react-router-dom';
@@ -20,6 +21,9 @@ const Page_GoogleTrends = () => {
 
     return (
         <div style={{ paddingTop: '50px', padding: '20px' }}>
+            <Helmet>
+                <title>Player Google Trends</title>
+            </Helmet>
             <TrendsChart
                 fileUrl="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_NFL.xlsx"
                 title="NFL Google Trends"

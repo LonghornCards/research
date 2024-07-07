@@ -3,6 +3,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import Select from 'react-select';
 import { sortBy } from 'lodash';
+import { Helmet } from 'react-helmet'; // Import react-helmet for the title
 import './App.css'; // Reference App.css for styling
 
 const RSS_FEEDS = [
@@ -139,6 +140,9 @@ const PageRSS = () => {
 
     return (
         <div className="page-rss-custom">
+            <Helmet>
+                <title>Sports RSS Feeds</title>
+            </Helmet>
             <div className="header-custom">
                 <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/espn.jpeg" alt="ESPN RSS" className="header-image-custom" />
                 <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/fox.png" alt="Fox RSS" className="header-image-custom" />

@@ -8,6 +8,7 @@ import datalabels from 'chartjs-plugin-datalabels';
 import Select, { components } from 'react-select';
 import { useTable, useBlockLayout } from 'react-table';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import './App.css';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend, Title, annotationPlugin, datalabels, CategoryScale);
@@ -261,6 +262,9 @@ const Player_Scoreboard = () => {
 
     return (
         <div className="scoreboard-page-container">
+            <Helmet>
+                <title>Player Scoreboard</title>
+            </Helmet>
             <div className="scoreboard-summary">
                 <p className="scoreboard-top-paragraph">The Longhorn Cards Player Scoreboard provides a comprehensive analysis of player rankings using historical card prices, player career statistics, and Google Trends search interest.</p>
 

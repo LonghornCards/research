@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Helmet } from 'react-helmet'; // Import Helmet from react-helmet
 import './App.css';
 
 const About = () => {
     return (
         <div className="about-container">
+            <Helmet>
+                <title>About Longhorn Cards</title>
+            </Helmet>
             <div className="about-video-container">
                 <video autoPlay muted loop playsInline className="about-background-video">
                     <source src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/about_background.mp4" type="video/mp4" />

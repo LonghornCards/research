@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Fuse from 'fuse.js';
 import { useAuth } from './AuthContext'; // Import the Auth context
+import { Helmet } from 'react-helmet'; // Import Helmet
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './App.css';
 
@@ -141,6 +142,9 @@ const PageProducts = () => {
 
     return (
         <div className="products-page">
+            <Helmet>
+                <title>Longhorn Cards Sports Card Products</title>
+            </Helmet>
             <h1 className="products-title">Current Inventory: Subscribe & Check Back For Updates!</h1>
             <div className="filter-wrapper">
                 <div className="filter-title">Search Cards:</div>

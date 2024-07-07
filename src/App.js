@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import './App.css';
 
 const Announcement = () => {
@@ -27,6 +28,9 @@ const App = () => {
 
     return (
         <div className="video-background-container">
+            <Helmet>
+                <title>Longhorn Cards & Collectibles</title>
+            </Helmet>
             <video
                 ref={videoRef}
                 className="video-background"

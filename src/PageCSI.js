@@ -51,7 +51,7 @@ const PageCSI = () => {
     return (
         <div className="page-csi">
             <Helmet>
-                <title>CSI Page</title>
+                <title>Card Price Index Returns</title>
             </Helmet>
             <div className="content-wrapper" style={{ textAlign: 'center', padding: '0 10px' }}>
                 <h1>Card Price Index Returns</h1>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
+import { Helmet } from 'react-helmet';
 import './App.css';
 
 const options = [
@@ -43,6 +44,9 @@ const PagePodcasts = () => {
 
     return (
         <div className="page-podcasts">
+            <Helmet>
+                <title>Sports & Hobby Podcasts</title>
+            </Helmet>
             <h1>Sports & Hobby Podcasts</h1>
             <p className="page-description">View Recent Podcasts Covering Sports and The Hobby</p>
             <div className="select-container">

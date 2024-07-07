@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import Plot from 'react-plotly.js';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Helmet } from 'react-helmet';
 import './App.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -235,6 +236,10 @@ const Page_Returns = () => {
 
     return (
         <div className="page-returns">
+            <Helmet>
+                <title>Card Price Returns</title>
+                <meta name="description" content="Page displaying the card price index returns year-to-date and for the calendar year 2023." />
+            </Helmet>
             <h1 className="returns-title">Card Price Returns Year-to-Date & Calendar Year 2023</h1>
             <h2 className="subtitle">Top Returns Year-to-Date</h2>
             <div className="status-toggle">
@@ -403,7 +408,7 @@ const Page_Returns = () => {
 
             {/* New container for CSI indices returns */}
             <div className="csi-container" style={{ border: '2px solid peru', padding: '20px', margin: '20px 0' }}>
-                <h2 className="csi-title">CSI Index Returns</h2>
+                <h2 className="csi-title">Card Price Index Returns</h2>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
                         <tr className="table-header">
@@ -426,6 +431,7 @@ const Page_Returns = () => {
                         ))}
                     </tbody>
                 </table>
+                <a href="/PageCSI" className="csi-link">Go to Card Price Index Page</a>
             </div>
 
             <div className="chart-status-toggle">

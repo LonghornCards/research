@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Pie, Chart } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -142,6 +143,9 @@ const PageWheel = () => {
 
     return (
         <div className="page-wheel-container">
+            <Helmet>
+                <title>Longhorn Cards Discount Wheel</title>
+            </Helmet>
             <video autoPlay loop muted playsInline className="background-video">
                 <source src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/mixkit-a-lot-of-cash-over-a-rotating-background-47005-hd-ready.mp4" type="video/mp4" />
             </video>
