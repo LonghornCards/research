@@ -4291,56 +4291,67 @@ tbody tr {
         color: peru;
     }
 
-/* Styles for PageCSI */
 .page-csi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
-    padding-top: 70px; /* Ensure space under the navigation bar */
+    box-sizing: border-box;
 }
 
-.page-csi-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: peru;
-}
+    .page-csi .content-wrapper {
+        margin-top: 60px; /* Adjust this value as needed to ensure the title is not hidden by the nav bar */
+    }
 
-.table-container {
-    overflow: unset !important; /* Ensure no overflow styles are applied */
-    margin-top: 20px;
-}
+    .page-csi table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid peru;
+    }
 
-.index-returns-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    border: 4px solid peru; /* Add a thick border around the table */
-}
+    .page-csi th, .page-csi td {
+        border: 1px solid peru;
+        padding: 8px;
+        text-align: center;
+    }
 
-.index-returns-table-header,
-.index-returns-table-cell {
-    padding: 10px;
-    border: 1px solid peru;
-}
+    .page-csi th {
+        background-color: peru;
+        color: white;
+        font-weight: bold;
+    }
 
-.index-returns-table-header {
-    background-color: peru;
-    color: white;
-    font-weight: bold;
-}
+    .page-csi .positive {
+        color: green;
+    }
 
-.index-returns-table-cell.center {
-    text-align: center; /* Center align all columns except the Index column */
-}
+    .page-csi .negative {
+        color: red;
+    }
 
-.index-returns-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+    .page-csi h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
 
-.disclosure-paragraph {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 0.9em;
-    color: gray;
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
+    .page-csi p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+@media (max-width: 600px) {
+    .page-csi h1 {
+        font-size: 20px;
+    }
+
+    .page-csi p {
+        font-size: 14px;
+    }
+
+    .page-csi th, .page-csi td {
+        font-size: 12px;
+        padding: 6px;
+    }
 }

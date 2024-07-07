@@ -1,63 +1,103 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Plot from 'react-plotly.js';
 import Papa from 'papaparse';
-import './App.css'; // Reference the App.css file
+import './App.css'; // Ensure this path is correct based on your project structure
 
 const PageCSI = () => {
-    const [data, setData] = useState([]);
-    const [columns, setColumns] = useState([]);
+    const [csvData, setCsvData] = useState([]);
 
     useEffect(() => {
-        fetch('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/CSI_Index_Returns.csv')
-            .then(response => response.text())
-            .then(csv => {
-                Papa.parse(csv, {
-                    header: true,
-                    complete: (results) => {
-                        // Filter out rows with no data and get columns
-                        const filteredData = results.data.filter(row => Object.values(row).some(value => value));
-                        setColumns(Object.keys(results.data[0]));
-                        setData(filteredData);
-                    }
-                });
-            });
+        // Fetch CSV data from AWS S3
+        const fetchData = async () => {
+            const response = await fetch('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/CSI_Index_Returns.csv');
+            const reader = response.body.getReader();
+            const result = await reader.read();
+            const decoder = new TextDecoder('utf-8');
+            const csv = decoder.decode(result.value);
+            const parsedData = Papa.parse(csv, { header: true });
+            // Filter out any rows that are empty or contain only empty cells
+            const filteredData = parsedData.data.filter(row =>
+                Object.values(row).some(value => value.trim() !== '')
+            );
+            setCsvData(filteredData);
+        };
+
+        fetchData();
     }, []);
 
-    const formatCell = (value, isIndex) => {
-        if (isIndex) return value;
-        const floatValue = parseFloat(value).toFixed(1);
-        const color = parseFloat(value) >= 0 ? 'green' : 'red';
-        return <span style={{ color }}>{floatValue}%</span>;
+    const formatValue = (value, key) => {
+        if (key !== 'Index') {
+            const floatValue = parseFloat(value.replace('%', ''));
+            const isPositive = floatValue >= 0;
+            return (
+                <td className={isPositive ? 'positive' : 'negative'}>
+                    {floatValue.toFixed(2)}%
+                </td>
+            );
+        }
+        return <td>{value}</td>;
     };
 
+    const getValueForChart = (value) => {
+        if (value) {
+            return parseFloat(value.replace('%', ''));
+        }
+        return 0;
+    };
+
+    const columns = ['Year-to-Date', '1-Month', '3-Months', '1-Year', '3-Years*', '5-Years*', '10-Years*', '20-Years*'];
+
     return (
-        <div className="page-csi" style={{ paddingTop: '70px' }}>
-            <h1 className="page-csi-title">Card Price Index Returns</h1>
-            <div className="table-container">
-                <table className="index-returns-table">
+        <div className="page-csi">
+            <Helmet>
+                <title>CSI Page</title>
+            </Helmet>
+            <div className="content-wrapper" style={{ textAlign: 'center', padding: '0 10px' }}>
+                <h1>Card Price Index Returns</h1>
+                <p>These index returns reflect average card prices for different subsets across football, basketball, and baseball.</p>
+
+                <table style={{ margin: '0 auto', width: '100%', maxWidth: '600px', border: '1px solid peru' }}>
                     <thead>
                         <tr>
-                            {columns.map((col, index) => (
-                                <th key={index} className="index-returns-table-header">{col}</th>
+                            {csvData.length > 0 && Object.keys(csvData[0]).map((key) => (
+                                <th key={key} style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>{key}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((row, index) => (
+                        {csvData.map((row, index) => (
                             <tr key={index}>
-                                {columns.map((col, colIndex) => (
-                                    <td key={colIndex} className={`index-returns-table-cell ${col === 'Index' ? '' : 'center'}`}>
-                                        {formatCell(row[col], col === 'Index')}
-                                    </td>
+                                {Object.entries(row).map(([key, value], i) => (
+                                    formatValue(value, key)
                                 ))}
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
+                {csvData.length > 0 && columns.map(column => (
+                    <div key={column} style={{ margin: '20px 0' }}>
+                        <Plot
+                            data={[
+                                {
+                                    x: csvData.map(row => row.Index),
+                                    y: csvData.map(row => getValueForChart(row[column])),
+                                    type: 'bar',
+                                    marker: {
+                                        color: csvData.map(row => getValueForChart(row[column]) >= 0 ? 'green' : 'red')
+                                    },
+                                },
+                            ]}
+                            layout={{ title: `${column} Returns by Index`, autosize: true }}
+                            useResizeHandler={true}
+                            style={{ width: '100%', height: '100%' }}
+                        />
+                    </div>
+                ))}
+
+                <p>*Annualized Return. Data Source: Card Ladder as of 06/30/2024. Calculations performed by Longhorn Cards & Collectibles.</p>
             </div>
-            <div style={{ height: '50px' }}></div> {/* Empty container for spacing */}
-            <p className="disclosure-paragraph">
-                *Annualized Returns; Source: Card Ladder; Calculations performed by Longhorn Cards & Collectibles. Data as of 06/30/2024.
-            </p>
         </div>
     );
 };
