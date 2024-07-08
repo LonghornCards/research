@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import Plot from 'react-plotly.js';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import './App.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -264,7 +265,9 @@ const Page_Returns = () => {
                         <tbody>
                             {topFootball.map((player, index) => (
                                 <tr key={index}>
-                                    <td className="table-cell" title={player.Player}>{player.Player}</td>
+                                    <td className="table-cell" title={player.Player}>
+                                        <Link to={`/PageSnapshot?player=${player.Player}`}>{player.Player}</Link>
+                                    </td>
                                     <td className="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
                                         {formatNumber(player.YTDReturn).value}
                                     </td>
@@ -289,7 +292,9 @@ const Page_Returns = () => {
                         <tbody>
                             {topBasketball.map((player, index) => (
                                 <tr key={index}>
-                                    <td className="table-cell" title={player.Player}>{player.Player}</td>
+                                    <td className="table-cell" title={player.Player}>
+                                        <Link to={`/PageSnapshot?player=${player.Player}`}>{player.Player}</Link>
+                                    </td>
                                     <td className="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
                                         {formatNumber(player.YTDReturn).value}
                                     </td>
@@ -314,7 +319,9 @@ const Page_Returns = () => {
                         <tbody>
                             {topBaseball.map((player, index) => (
                                 <tr key={index}>
-                                    <td className="table-cell" title={player.Player}>{player.Player}</td>
+                                    <td className="table-cell" title={player.Player}>
+                                        <Link to={`/PageSnapshot?player=${player.Player}`}>{player.Player}</Link>
+                                    </td>
                                     <td className="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
                                         {formatNumber(player.YTDReturn).value}
                                     </td>
@@ -342,7 +349,9 @@ const Page_Returns = () => {
                         <tbody>
                             {bottomFootball.map((player, index) => (
                                 <tr key={index}>
-                                    <td className="table-cell" title={player.Player}>{player.Player}</td>
+                                    <td className="table-cell" title={player.Player}>
+                                        <Link to={`/PageSnapshot?player=${player.Player}`}>{player.Player}</Link>
+                                    </td>
                                     <td className="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
                                         {formatNumber(player.YTDReturn).value}
                                     </td>
@@ -367,8 +376,10 @@ const Page_Returns = () => {
                         <tbody>
                             {bottomBasketball.map((player, index) => (
                                 <tr key={index}>
-                                    <td className="table-cell" title={player.Player}>{player.Player}</td>
-                                    <td class="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
+                                    <td className="table-cell" title={player.Player}>
+                                        <Link to={`/PageSnapshot?player=${player.Player}`}>{player.Player}</Link>
+                                    </td>
+                                    <td className="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
                                         {formatNumber(player.YTDReturn).value}
                                     </td>
                                     <td className="table-cell" style={{ color: formatNumber(player.Year2023Return).color, textAlign: 'center' }}>
@@ -392,7 +403,9 @@ const Page_Returns = () => {
                         <tbody>
                             {bottomBaseball.map((player, index) => (
                                 <tr key={index}>
-                                    <td className="table-cell" title={player.Player}>{player.Player}</td>
+                                    <td className="table-cell" title={player.Player}>
+                                        <Link to={`/PageSnapshot?player=${player.Player}`}>{player.Player}</Link>
+                                    </td>
                                     <td className="table-cell" style={{ color: formatNumber(player.YTDReturn).color, textAlign: 'center' }}>
                                         {formatNumber(player.YTDReturn).value}
                                     </td>

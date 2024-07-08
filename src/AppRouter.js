@@ -32,7 +32,7 @@ import BlogPost15 from './blogposts/BlogPost15';
 import BlogPost16 from './blogposts/BlogPost16';
 import BlogPost17 from './blogposts/BlogPost17';
 import BlogPost18 from './blogposts/BlogPost18';
-import BlogPost19 from './blogposts/BlogPost19'; // Import the new BlogPost19 component
+import BlogPost19 from './blogposts/BlogPost19';
 import Dashboard from './Dashboard';
 import CustomScoreboard from './CustomScoreboard';
 import CardPrices from './CardPrices';
@@ -47,7 +47,8 @@ import PagePlayers from './PagePlayers';
 import PagePodcasts from './PagePodcasts';
 import PageLeaders from './PageLeaders';
 import PageCSI from './PageCSI';
-import PageLonghorns from './PageLonghorns'; // Import the new PageLonghorns component
+import PageLonghorns from './PageLonghorns';
+import PageSnapshot from './PageSnapshot'; // Import the new PageSnapshot component
 import './App.css';
 
 const AppRouter = () => {
@@ -86,7 +87,7 @@ const AppRouter = () => {
                 <Route path="/blog_post16" element={<BlogPost16 />} />
                 <Route path="/blog_post17" element={<BlogPost17 />} />
                 <Route path="/blog_post18" element={<BlogPost18 />} />
-                <Route path="/blog_post19" element={<BlogPost19 />} /> {/* Add the new route */}
+                <Route path="/blog_post19" element={<BlogPost19 />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/customscoreboard" element={<CustomScoreboard />} />
                 <Route path="/cardprices" element={<CardPrices />} />
@@ -102,6 +103,7 @@ const AppRouter = () => {
                 <Route path="/pageleaders" element={<PageLeaders />} />
                 <Route path="/pagecsi" element={<PageCSI />} />
                 <Route path="/pagelonghorns" element={<PageLonghorns />} />
+                <Route path="/pagesnapshot" element={<PageSnapshot />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );

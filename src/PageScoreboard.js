@@ -7,7 +7,7 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import datalabels from 'chartjs-plugin-datalabels';
 import Select, { components } from 'react-select';
 import { useTable, useBlockLayout } from 'react-table';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './App.css';
 
@@ -65,6 +65,7 @@ const Player_Scoreboard = () => {
     const [bottomBaseball, setBottomBaseball] = useState([]);
     const chartRef = useRef(null);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -289,6 +290,10 @@ const Player_Scoreboard = () => {
         setBottomBaseball(getBottomPlayers('Baseball'));
     };
 
+    const handlePlayerClick = (playerName) => {
+        navigate(`/page-snapshot?player=${encodeURIComponent(playerName)}`);
+    };
+
     return (
         <div className="scoreboard-page-container">
             <Helmet>
@@ -318,7 +323,9 @@ const Player_Scoreboard = () => {
                             <tbody>
                                 {(sport === 'Football' ? topFootball : sport === 'Basketball' ? topBasketball : topBaseball).map((player, rowIndex) => (
                                     <tr key={rowIndex}>
-                                        <td>{player.name}</td>
+                                        <td>
+                                            <a href="#" onClick={() => handlePlayerClick(player.name)}>{player.name}</a>
+                                        </td>
                                         <td style={{ textAlign: 'center' }}>{player.rank}</td>
                                     </tr>
                                 ))}
@@ -342,7 +349,9 @@ const Player_Scoreboard = () => {
                             <tbody>
                                 {(sport === 'Football' ? bottomFootball : sport === 'Basketball' ? bottomBasketball : bottomBaseball).map((player, rowIndex) => (
                                     <tr key={rowIndex}>
-                                        <td>{player.name}</td>
+                                        <td>
+                                            <a href="#" onClick={() => handlePlayerClick(player.name)}>{player.name}</a>
+                                        </td>
                                         <td style={{ textAlign: 'center' }}>{player.rank}</td>
                                     </tr>
                                 ))}
@@ -557,7 +566,7 @@ const Player_Scoreboard = () => {
                 <div className="scoreboard-filter">
                     <label>Status</label>
                     <Select
-                        options={statusOptions}
+                        options={getUniqueStatusOptions()}
                         value={selectedStatus}
                         onChange={handleStatusChange}
                         closeMenuOnSelect={true}
@@ -586,7 +595,11 @@ const Player_Scoreboard = () => {
                                 <div {...row.getRowProps()} className="tr" id={`row-${row.original.Name.replace(/\s+/g, '-').toLowerCase()}`}>
                                     {row.cells.map(cell => (
                                         <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
-                                            {cell.render('Cell')}
+                                            {cell.column.id === 'Name' ? (
+                                                <a href="#" onClick={() => handlePlayerClick(cell.value)}>{cell.value}</a>
+                                            ) : (
+                                                cell.render('Cell')
+                                            )}
                                         </div>
                                     ))}
                                 </div>

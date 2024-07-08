@@ -2,14 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import TrendsChart from './TrendsChart';
 import ScatterPlot from './ScatterPlot';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
+import Fuse from 'fuse.js';
+
+const fetchCompositeRanks = async () => {
+    try {
+        const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Composite_Ranks.xlsx', { responseType: 'arraybuffer' });
+        const data = new Uint8Array(response.data);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        return worksheet;
+    } catch (error) {
+        console.error('Error fetching composite ranks data:', error);
+        return [];
+    }
+};
 
 const Page_GoogleTrends = () => {
     const location = useLocation();
     const [topPlayers, setTopPlayers] = useState([]);
     const [bottomPlayers, setBottomPlayers] = useState([]);
+    const [compositeRanks, setCompositeRanks] = useState([]);
 
     useEffect(() => {
         if (location.hash) {
@@ -25,22 +41,25 @@ const Page_GoogleTrends = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_ALL.xlsx', {
-                responseType: 'arraybuffer'
-            });
-            const data = new Uint8Array(response.data);
-            const workbook = XLSX.read(data, { type: 'array' });
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
-            const json = XLSX.utils.sheet_to_json(worksheet);
+            const [googleTrendsData, compositeRanksData] = await Promise.all([
+                axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_ALL.xlsx', { responseType: 'arraybuffer' })
+                    .then(response => {
+                        const data = new Uint8Array(response.data);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const sheetName = workbook.SheetNames[0];
+                        const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+                        return worksheet;
+                    }),
+                fetchCompositeRanks()
+            ]);
 
-            // Sort data by "3-Mo Average" and extract the top 10
-            const sortedDataTop = json.sort((a, b) => b["3-Mo Average"] - a["3-Mo Average"]).slice(0, 10);
+            const sortedDataTop = googleTrendsData.sort((a, b) => b["3-Mo Average"] - a["3-Mo Average"]).slice(0, 10);
             setTopPlayers(sortedDataTop);
 
-            // Sort data by "3-Mo Average" and extract the bottom 10, then reverse the order
-            const sortedDataBottom = json.sort((a, b) => a["3-Mo Average"] - b["3-Mo Average"]).slice(0, 10).reverse();
+            const sortedDataBottom = googleTrendsData.sort((a, b) => a["3-Mo Average"] - b["3-Mo Average"]).slice(0, 10).reverse();
             setBottomPlayers(sortedDataBottom);
+
+            setCompositeRanks(compositeRanksData);
         };
 
         fetchData();
@@ -61,18 +80,40 @@ const Page_GoogleTrends = () => {
         }
     };
 
+    const fuse = new Fuse(compositeRanks, {
+        keys: ['Name'],
+        threshold: 0.3,
+        ignoreLocation: true
+    });
+
+    const toTitleCase = (str) => {
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    };
+
     const renderTable = (data) => {
-        return data.map((row, i) => (
-            <tr key={i} style={{ borderBottom: '1px solid peru' }}>
-                <td style={{ textAlign: 'left' }}>{row["PLAYER"]}</td>
-                <td style={{ textAlign: 'left' }}>{row["Sport"]}</td>
-                <td style={{ textAlign: 'center' }}>{row["24-Jun"]}</td>
-                <td style={{ textAlign: 'center' }}>{row["Average"]}</td>
-                <td style={{ textAlign: 'center' }}>{row["3-Mo Average"]}</td>
-                <td style={{ textAlign: 'center' }}>{row["12-Mo Average"]}</td>
-                <td style={{ textAlign: 'left', ...getTrendStyle(row["Google Trend"]) }}>{row["Google Trend"]}</td>
-            </tr>
-        ));
+        return data.map((row, i) => {
+            const playerName = toTitleCase(row["PLAYER"]);
+            const result = fuse.search(playerName);
+            const isNameMatched = result.length > 0;
+
+            return (
+                <tr key={i} style={{ borderBottom: '1px solid peru' }}>
+                    <td style={{ textAlign: 'left' }}>
+                        {isNameMatched ? (
+                            <Link to={`/PageSnapshot?player=${playerName}`}>{playerName}</Link>
+                        ) : (
+                            playerName
+                        )}
+                    </td>
+                    <td style={{ textAlign: 'left' }}>{row["Sport"]}</td>
+                    <td style={{ textAlign: 'center' }}>{row["24-Jun"]}</td>
+                    <td style={{ textAlign: 'center' }}>{row["Average"]}</td>
+                    <td style={{ textAlign: 'center' }}>{row["3-Mo Average"]}</td>
+                    <td style={{ textAlign: 'center' }}>{row["12-Mo Average"]}</td>
+                    <td style={{ textAlign: 'left', ...getTrendStyle(row["Google Trend"]) }}>{row["Google Trend"]}</td>
+                </tr>
+            );
+        });
     };
 
     const columnNames = ["Player", "Sport", "24-Jun", "Average", "3-Mo Average", "12-Mo Average", "Google Trend"];

@@ -4,6 +4,8 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { useTable, useBlockLayout } from 'react-table';
 import Select, { components } from 'react-select';
+import { Link } from 'react-router-dom';
+import Fuse from 'fuse.js';
 import './App.css';
 import { useLocation } from 'react-router-dom';
 
@@ -21,7 +23,7 @@ const fetchData = async (url) => {
     }
 };
 
-const DataTable = ({ data, selectedNames }) => {
+const DataTable = ({ data, selectedNames, compositeRanks }) => {
     const columns = React.useMemo(
         () => (data.length > 0 ? Object.keys(data[0]).map(key => ({
             Header: key,
@@ -35,6 +37,11 @@ const DataTable = ({ data, selectedNames }) => {
         if (selectedNames.length === 0) return data;
         return data.filter(row => selectedNames.some(option => option.value === row.Name));
     }, [data, selectedNames]);
+
+    const fuse = new Fuse(compositeRanks, {
+        keys: ['Name'],
+        threshold: 0.3
+    });
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
         {
@@ -63,11 +70,21 @@ const DataTable = ({ data, selectedNames }) => {
                         prepareRow(row);
                         return (
                             <div {...row.getRowProps()} className="tr" id={`row-${row.original.Name.replace(/\s+/g, '-').toLowerCase()}`}>
-                                {row.cells.map(cell => (
-                                    <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
-                                        {cell.render('Cell')}
-                                    </div>
-                                ))}
+                                {row.cells.map(cell => {
+                                    const isNameColumn = cell.column.Header === 'Name';
+                                    const name = cell.value;
+                                    const result = isNameColumn ? fuse.search(name) : [];
+                                    const isNameMatched = result.length > 0;
+                                    return (
+                                        <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
+                                            {isNameColumn && isNameMatched ? (
+                                                <Link to={`/PageSnapshot?player=${name}`}>{name}</Link>
+                                            ) : (
+                                                cell.render('Cell')
+                                            )}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         );
                     })}
@@ -97,16 +114,21 @@ const Page_Stats = () => {
     const [selectedNflNames, setSelectedNflNames] = useState([]);
     const [selectedNbaNames, setSelectedNbaNames] = useState([]);
     const [selectedMlbNames, setSelectedMlbNames] = useState([]);
+    const [compositeRanks, setCompositeRanks] = useState([]);
     const location = useLocation();
 
     useEffect(() => {
         const loadStats = async () => {
-            const nflData = await fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NFL_Stats.xlsx');
-            const nbaData = await fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NBA_Stats.xlsx');
-            const mlbData = await fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/MLB_Stats.xlsx');
+            const [nflData, nbaData, mlbData, compositeRanks] = await Promise.all([
+                fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NFL_Stats.xlsx'),
+                fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NBA_Stats.xlsx'),
+                fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/MLB_Stats.xlsx'),
+                fetchData('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Composite_Ranks.xlsx')
+            ]);
             setNflData(nflData);
             setNbaData(nbaData);
             setMlbData(mlbData);
+            setCompositeRanks(compositeRanks);
         };
 
         loadStats();
@@ -158,7 +180,7 @@ const Page_Stats = () => {
                     />
                 </div>
             </div>
-            <DataTable data={nflData} selectedNames={selectedNflNames} />
+            <DataTable data={nflData} selectedNames={selectedNflNames} compositeRanks={compositeRanks} />
             <h2>NBA Statistics</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
@@ -174,7 +196,7 @@ const Page_Stats = () => {
                     />
                 </div>
             </div>
-            <DataTable data={nbaData} selectedNames={selectedNbaNames} />
+            <DataTable data={nbaData} selectedNames={selectedNbaNames} compositeRanks={compositeRanks} />
             <h2>MLB Statistics</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
@@ -190,7 +212,7 @@ const Page_Stats = () => {
                     />
                 </div>
             </div>
-            <DataTable data={mlbData} selectedNames={selectedMlbNames} />
+            <DataTable data={mlbData} selectedNames={selectedMlbNames} compositeRanks={compositeRanks} />
             <div className="stats-paragraph-section">
                 <p>
                     The tables above provide comprehensive statistics for NFL, NBA, and MLB players. These statistics are sourced from Sports-Reference.com as of April 2024.
