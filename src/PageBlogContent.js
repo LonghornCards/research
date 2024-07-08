@@ -1,5 +1,16 @@
-// PageBlogContent.js
 const blogEntries = [
+    {
+        date: '07/08/24',
+        title: 'Google Trends June 2024 Update',
+        summary: 'This is a summary of the top 25 players as measured by Google Trends. The scores are aggregated on a monthly basis to determine overall trend and relative ranks for different players based on their interest over time.',
+        details: (
+            <span>
+                This is a summary of the top 25 players as measured by Google Trends. The scores are aggregated on a monthly basis to determine overall trend and relative ranks for different players based on their interest over time. JJ McCarthy is at the top of the leaderboard this month based on interest and popularity averages, followed by Luka Doncic and Elly de la Cruz. Caitlin Clark and Travis Kelce round out the top 5. See the full Longhorn Cards Google Trends analysis for insights on potential future card prices.
+            </span>
+        ),
+        fullPostLink: '/blog_post19',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.8.24.png'
+    },
     {
         date: '07/07/24',
         title: 'Longhorn Cards Player Scoreboard June 2024',
