@@ -51,6 +51,14 @@ const DataTable = ({ data, selectedNames, compositeRanks }) => {
         useBlockLayout
     );
 
+    const getRankColor = (value) => {
+        if (value < 25) return 'red';
+        if (value >= 25 && value < 50) return 'indianred';
+        if (value >= 50 && value < 75) return 'green';
+        if (value >= 75 && value <= 100) return 'limegreen';
+        return 'black';
+    };
+
     return (
         <div className="scoreboard-table-container">
             <div {...getTableProps()} className="scoreboard-table">
@@ -58,7 +66,11 @@ const DataTable = ({ data, selectedNames, compositeRanks }) => {
                     {headerGroups.map(headerGroup => (
                         <div {...headerGroup.getHeaderGroupProps()} className="tr">
                             {headerGroup.headers.map(column => (
-                                <div {...column.getHeaderProps()} className={`th ${column.sticky ? 'sticky' : ''}`}>
+                                <div
+                                    {...column.getHeaderProps()}
+                                    className={`th ${column.sticky ? 'sticky' : ''}`}
+                                    style={{ textAlign: column.Header === 'Name' ? 'left' : 'center' }}
+                                >
                                     {column.render('Header')}
                                 </div>
                             ))}
@@ -72,11 +84,21 @@ const DataTable = ({ data, selectedNames, compositeRanks }) => {
                             <div {...row.getRowProps()} className="tr" id={`row-${row.original.Name.replace(/\s+/g, '-').toLowerCase()}`}>
                                 {row.cells.map(cell => {
                                     const isNameColumn = cell.column.Header === 'Name';
+                                    const isRankColumn = cell.column.Header.includes('Rank');
+                                    const cellValue = cell.value;
                                     const name = cell.value;
                                     const result = isNameColumn ? fuse.search(name) : [];
                                     const isNameMatched = result.length > 0;
+
                                     return (
-                                        <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
+                                        <div
+                                            {...cell.getCellProps()}
+                                            className={`td ${cell.column.sticky ? 'sticky' : ''}`}
+                                            style={{
+                                                textAlign: isNameColumn ? 'left' : 'center',
+                                                color: isRankColumn ? getRankColor(cellValue) : 'black'
+                                            }}
+                                        >
                                             {isNameColumn && isNameMatched ? (
                                                 <Link to={`/PageSnapshot?player=${name}`}>{name}</Link>
                                             ) : (

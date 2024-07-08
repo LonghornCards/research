@@ -16,6 +16,7 @@ const PageSnapshot = () => {
     const [sportsData, setSportsData] = useState(null);
     const [dateValues, setDateValues] = useState([]);
     const [previousYearValue, setPreviousYearValue] = useState(null);
+    const [rebase, setRebase] = useState(false);
 
     useEffect(() => {
         if (playerName) {
@@ -210,9 +211,26 @@ const PageSnapshot = () => {
         return {};
     };
 
+    const divideSportsData = (data) => {
+        const keys = Object.keys(data);
+        const half = Math.ceil(keys.length / 2);
+        const firstHalf = keys.slice(0, half);
+        const secondHalf = keys.slice(half);
+        return [firstHalf, secondHalf];
+    };
+
+    const rebaseValues = (values) => {
+        if (values.length === 0) return [];
+        const baseValue = values[0].value;
+        return values.map(item => ({
+            date: item.date,
+            value: (item.value / baseValue) * 100
+        }));
+    };
+
     return (
         <div className="page-snapshot" style={{ paddingTop: '60px' }}>
-            <h1 className="page-title">Player Snapshot</h1>
+            <h1 className="page-title">{`Player Snapshot${playerName ? `: ${playerName}` : ''}`}</h1>
             <p className="page-description">
                 Below are the snapshots of various player statistics across different categories.
             </p>
@@ -251,12 +269,22 @@ const PageSnapshot = () => {
                             )}
                         </div>
                         <div style={{ flex: 1 }}>
+                            <div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={rebase}
+                                        onChange={() => setRebase(!rebase)}
+                                    />
+                                    Rebase to 100
+                                </label>
+                            </div>
                             {dateValues.length > 0 && (
                                 <Plot
                                     data={[
                                         {
                                             x: dateValues.map(d => d.date),
-                                            y: dateValues.map(d => d.value),
+                                            y: rebase ? rebaseValues(dateValues).map(d => d.value) : dateValues.map(d => d.value),
                                             type: 'scatter',
                                             mode: 'lines+markers',
                                             marker: { color: 'blue' },
@@ -302,12 +330,6 @@ const PageSnapshot = () => {
                                     </tr>
                                     <tr>
                                         <td style={{ border: '1px solid peru', padding: '8px' }}><strong>Sentiment Rank</strong></td>
-                                        <td style={{ border: '1px solid peru', padding: '8px', color: getRankColor(compositeData['Sentiment Rank']) }}>
-                                            {compositeData['Sentiment Rank']}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ border: '1px solid peru', padding: '8px' }}><strong>Trend</strong></td>
                                         <td style={{ border: '1px solid peru', padding: '8px', color: getTrendColor(compositeData.Trend) }}>
                                             {compositeData.Trend}
                                         </td>
@@ -345,26 +367,28 @@ const PageSnapshot = () => {
                 <h2 className="category-title">Sport Statistics</h2>
                 {playerName && sportsData ? (
                     <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
-                        <div style={{ flex: 1 }}>
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                <thead>
-                                    <tr style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>
-                                        <th style={{ border: '1px solid peru', padding: '8px' }}>Metric</th>
-                                        <th style={{ border: '1px solid peru', padding: '8px' }}>Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Object.keys(sportsData).map(key => (
-                                        <tr key={key}>
-                                            <td style={{ border: '1px solid peru', padding: '8px' }}><strong>{key}</strong></td>
-                                            <td style={{ border: '1px solid peru', padding: '8px', ...getStyleForRank(key, sportsData[key]) }}>
-                                                {sportsData[key]}
-                                            </td>
+                        {divideSportsData(sportsData).map((halfData, index) => (
+                            <div key={index} style={{ flex: 1 }}>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead>
+                                        <tr style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>
+                                            <th style={{ border: '1px solid peru', padding: '8px' }}>Metric</th>
+                                            <th style={{ border: '1px solid peru', padding: '8px' }}>Value</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        {halfData.map(key => (
+                                            <tr key={key}>
+                                                <td style={{ border: '1px solid peru', padding: '8px' }}><strong>{key}</strong></td>
+                                                <td style={{ border: '1px solid peru', padding: '8px', ...getStyleForRank(key, sportsData[key]) }}>
+                                                    {sportsData[key]}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ))}
                     </div>
                 ) : (
                     <p>No sports data found for {playerName}</p>
