@@ -424,7 +424,7 @@ tr:hover .td {
     font-size: 24px;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    z-index: 3;
+    z-index: 10;
 }
 
 .about-container {
@@ -4354,4 +4354,32 @@ tbody tr {
         font-size: 12px;
         padding: 6px;
     }
+}
+
+/* Add these styles at the bottom of App.css */
+
+/* Title Container Styles */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-image {
+    width: 50px; /* Adjust the width as needed */
+    height: auto;
+    margin-right: 10px; /* Adjust the space between the image and the title */
+}
+
+.longhorns-image-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1000; /* Ensure the wrapper is on top of other elements */
+}
+
+.longhorns-image {
+    width: 100px;
+    height: auto;
 }

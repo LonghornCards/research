@@ -44,7 +44,8 @@ import PageWheel from './PageWheel';
 import PagePlayers from './PagePlayers';
 import PagePodcasts from './PagePodcasts';
 import PageLeaders from './PageLeaders';
-import PageCSI from './PageCSI'; // Import the new PageCSI component
+import PageCSI from './PageCSI';
+import PageLonghorns from './PageLonghorns'; // Import the new PageLonghorns component
 import './App.css';
 
 const AppRouter = () => {
@@ -95,7 +96,8 @@ const AppRouter = () => {
                 <Route path="/pageplayers" element={<PagePlayers />} />
                 <Route path="/pagepodcasts" element={<PagePodcasts />} />
                 <Route path="/pageleaders" element={<PageLeaders />} />
-                <Route path="/pagecsi" element={<PageCSI />} /> {/* Add the new route */}
+                <Route path="/pagecsi" element={<PageCSI />} />
+                <Route path="/pagelonghorns" element={<PageLonghorns />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );

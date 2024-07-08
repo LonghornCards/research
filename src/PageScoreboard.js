@@ -27,6 +27,12 @@ const sportOptions = [
     { value: 'Baseball', label: 'Baseball' }
 ];
 
+const statusOptions = [
+    { value: 'All', label: 'All' },
+    { value: 'Active', label: 'Active' },
+    { value: 'Retired', label: 'Retired' }
+];
+
 const Option = (props) => (
     <components.Option {...props}>
         <input type="checkbox" checked={props.isSelected} onChange={() => null} />{' '}
@@ -47,9 +53,10 @@ const Player_Scoreboard = () => {
     const [yAxis, setYAxis] = useState(columnOptions[3]); // Default to Sentiment Rank
     const [selectedSport, setSelectedSport] = useState(sportOptions[0]); // Default to All Sports
     const [filteredData, setFilteredData] = useState([]);
-    const [selectedName, setSelectedName] = useState([{ value: 'All Players', label: 'All Players' }]);
-    const [selectedTrend, setSelectedTrend] = useState([{ value: 'All Trends', label: 'All Trends' }]);
+    const [selectedName, setSelectedName] = useState(sportOptions[0]); // Default to All Sports
+    const [selectedTrend, setSelectedTrend] = useState(statusOptions[0]); // Default to All
     const [bubbleSize, setBubbleSize] = useState(columnOptions[1]); // Default to Fundamental Rank
+    const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]); // Default to All
     const [topFootball, setTopFootball] = useState([]);
     const [topBasketball, setTopBasketball] = useState([]);
     const [topBaseball, setTopBaseball] = useState([]);
@@ -73,7 +80,7 @@ const Player_Scoreboard = () => {
 
                 setData(worksheet);
                 filterAndSortData(worksheet);
-                filterTableData(worksheet, selectedName, selectedSport, selectedTrend);
+                filterTableData(worksheet, selectedName, selectedSport, selectedTrend, selectedStatus);
                 updateChartData(worksheet, xAxis.value, yAxis.value, selectedSport.value, bubbleSize.value);
             } catch (error) {
                 console.error('Error fetching the data:', error);
@@ -168,29 +175,46 @@ const Player_Scoreboard = () => {
         }
     };
 
-    const handleNameChange = selectedOptions => {
-        setSelectedName(selectedOptions);
-        filterTableData(selectedOptions, selectedSport, selectedTrend);
+    const handleNameChange = selectedOption => {
+        if (selectedOption) {
+            setSelectedName(selectedOption);
+            filterTableData(data, selectedOption, selectedSport, selectedTrend, selectedStatus);
+        }
     };
 
-    const handleTrendChange = selectedOptions => {
-        setSelectedTrend(selectedOptions);
-        filterTableData(selectedName, selectedSport, selectedOptions);
+    const handleTrendChange = selectedOption => {
+        if (selectedOption) {
+            setSelectedTrend(selectedOption);
+            filterTableData(data, selectedName, selectedSport, selectedOption, selectedStatus);
+        }
     };
 
-    const filterTableData = (names, sport, trends) => {
+    const handleStatusChange = selectedOption => {
+        if (selectedOption) {
+            setSelectedStatus(selectedOption);
+            filterTableData(data, selectedName, selectedSport, selectedTrend, selectedOption);
+        }
+    };
+
+    const filterTableData = (data, names, sport, trends, statuses) => {
         let filtered = filterDataBySport(data, sport.value);
 
-        if (names.some(option => option.value === 'All Players')) {
+        if (names.value === 'All Sports') {
             filtered = filtered.filter(row => true);
-        } else if (names.length > 0) {
-            filtered = filtered.filter(row => names.some(option => option.value === row.Name));
+        } else if (names.value) {
+            filtered = filtered.filter(row => row.Name === names.value);
         }
 
-        if (trends.some(option => option.value === 'All Trends')) {
+        if (trends.value === 'All') {
             filtered = filtered.filter(row => true);
-        } else if (trends.length > 0) {
-            filtered = filtered.filter(row => trends.some(option => option.value === row.Trend));
+        } else if (trends.value) {
+            filtered = filtered.filter(row => row.Trend === trends.value);
+        }
+
+        if (statuses.value === 'All') {
+            filtered = filtered.filter(row => true);
+        } else if (statuses.value) {
+            filtered = filtered.filter(row => row.Status === statuses.value);
         }
 
         setFilteredData(filtered);
@@ -204,12 +228,17 @@ const Player_Scoreboard = () => {
 
     const getUniquePlayerOptions = () => {
         const uniqueOptions = getUniqueOptions('Name');
-        return [{ value: 'All Players', label: 'All Players' }, ...uniqueOptions];
+        return [{ value: 'All Sports', label: 'All Sports' }, ...uniqueOptions];
     };
 
     const getUniqueTrendOptions = () => {
         const uniqueOptions = getUniqueOptions('Trend');
-        return [{ value: 'All Trends', label: 'All Trends' }, ...uniqueOptions];
+        return [{ value: 'All', label: 'All' }, ...uniqueOptions];
+    };
+
+    const getUniqueStatusOptions = () => {
+        const uniqueOptions = getUniqueOptions('Status');
+        return [{ value: 'All', label: 'All' }, ...uniqueOptions];
     };
 
     const columns = React.useMemo(
@@ -283,14 +312,14 @@ const Player_Scoreboard = () => {
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Composite Rank</th>
+                                    <th style={{ textAlign: 'center' }}>Composite Rank</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {(sport === 'Football' ? topFootball : sport === 'Basketball' ? topBasketball : topBaseball).map((player, rowIndex) => (
                                     <tr key={rowIndex}>
                                         <td>{player.name}</td>
-                                        <td>{player.rank}</td>
+                                        <td style={{ textAlign: 'center' }}>{player.rank}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -307,14 +336,14 @@ const Player_Scoreboard = () => {
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Composite Rank</th>
+                                    <th style={{ textAlign: 'center' }}>Composite Rank</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {(sport === 'Football' ? bottomFootball : sport === 'Basketball' ? bottomBasketball : bottomBaseball).map((player, rowIndex) => (
                                     <tr key={rowIndex}>
                                         <td>{player.name}</td>
-                                        <td>{player.rank}</td>
+                                        <td style={{ textAlign: 'center' }}>{player.rank}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -343,6 +372,7 @@ const Player_Scoreboard = () => {
             <div className="scoreboard-scatterplot-container">
                 {chartData ? (
                     <div className="responsive-chart">
+                        <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo.png" alt="Logo" style={{ position: 'absolute', top: 20, left: 20, width: '100px', height: 'auto', zIndex: 10 }} />
                         <Scatter
                             data={chartData}
                             options={{
@@ -489,16 +519,15 @@ const Player_Scoreboard = () => {
             <div className="scoreboard-info-section">
                 <p>Detailed Player Scoreboard Information</p>
             </div>
-            <h2 className="scoreboard-center-text">Filter by Player, Sport, and Trend:</h2>
+            <h2 className="scoreboard-center-text">Filter by Player, Sport, Trend, and Status:</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
                     <label>Player</label>
                     <Select
-                        isMulti
-                        options={[{ value: 'All Players', label: 'All Players' }, ...getUniquePlayerOptions()]}
+                        options={getUniquePlayerOptions()}
                         value={selectedName}
                         onChange={handleNameChange}
-                        closeMenuOnSelect={false}
+                        closeMenuOnSelect={true}
                         hideSelectedOptions={false}
                         components={{ Option, MultiValue }}
                     />
@@ -506,11 +535,10 @@ const Player_Scoreboard = () => {
                 <div className="scoreboard-filter">
                     <label>Sport</label>
                     <Select
-                        isMulti
                         options={sportOptions}
                         value={selectedSport}
                         onChange={handleSportChange}
-                        closeMenuOnSelect={false}
+                        closeMenuOnSelect={true}
                         hideSelectedOptions={false}
                         components={{ Option, MultiValue }}
                     />
@@ -518,11 +546,21 @@ const Player_Scoreboard = () => {
                 <div className="scoreboard-filter">
                     <label>Trend</label>
                     <Select
-                        isMulti
-                        options={[{ value: 'All Trends', label: 'All Trends' }, ...getUniqueTrendOptions()]}
+                        options={getUniqueTrendOptions()}
                         value={selectedTrend}
                         onChange={handleTrendChange}
-                        closeMenuOnSelect={false}
+                        closeMenuOnSelect={true}
+                        hideSelectedOptions={false}
+                        components={{ Option, MultiValue }}
+                    />
+                </div>
+                <div className="scoreboard-filter">
+                    <label>Status</label>
+                    <Select
+                        options={statusOptions}
+                        value={selectedStatus}
+                        onChange={handleStatusChange}
+                        closeMenuOnSelect={true}
                         hideSelectedOptions={false}
                         components={{ Option, MultiValue }}
                     />

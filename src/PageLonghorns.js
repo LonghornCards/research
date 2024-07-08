@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Fuse from 'fuse.js';
 import { useAuth } from './AuthContext'; // Import the Auth context
+import { Helmet } from 'react-helmet'; // Import Helmet
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './App.css';
 
@@ -16,8 +17,7 @@ const tagOptions = [
     { value: 'rookie', label: 'rookie' },
     { value: 'auto', label: 'auto' },
     { value: 'patch', label: 'patch' },
-    { value: 'rpa', label: 'rpa' },
-    { value: 'longhorns', label: 'Longhorns' }, // Added the new tag here
+    { value: 'rpa', label: 'rpa' }
 ];
 
 const fuseOptions = {
@@ -27,7 +27,7 @@ const fuseOptions = {
     findAllMatches: true,
 };
 
-const PageLonghornsCards = () => {
+const PageLonghorns = () => {
     const { isLoggedIn } = useAuth();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -44,7 +44,7 @@ const PageLonghornsCards = () => {
             try {
                 const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json');
                 if (response.data) {
-                    const longhornsProducts = response.data.filter(product => product.Tags && product.Tags.includes('longhorns'));
+                    const longhornsProducts = response.data.filter(product => product.Tags.includes('longhorns'));
                     setProducts(longhornsProducts);
                     setFilteredProducts(longhornsProducts);
                     setFuse(new Fuse(longhornsProducts, fuseOptions));
@@ -130,13 +130,30 @@ const PageLonghornsCards = () => {
         e.target.src = '/placeholder.png';
     };
 
+    const handleFilterByTag = (tag) => {
+        const newTags = selectedTags.some(selectedTag => selectedTag.value === tag) ?
+            selectedTags.filter(selectedTag => selectedTag.value !== tag) :
+            [...selectedTags, { value: tag, label: tag }];
+        setSelectedTags(newTags);
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
         <div className="products-page">
-            <h1 className="products-title">Longhorns Cards Collection</h1>
+            <Helmet>
+                <title>Longhorn Cards Sports Card Products</title>
+            </Helmet>
+            <div className="title-container">
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/texas.png"
+                    alt="Longhorn Logo"
+                    className="title-image"
+                />
+                <h1 className="products-title">Current Longhorn Inventory: Subscribe & Check Back For Updates!</h1>
+            </div>
             <div className="filter-wrapper">
                 <div className="filter-title">Search Cards:</div>
                 <div className="filter-container">
@@ -175,6 +192,29 @@ const PageLonghornsCards = () => {
                         />
                     </div>
                 </div>
+                <div className="image-filters">
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/football-solid.svg"
+                        alt="Football Cards"
+                        title="Football Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('Football')}
+                    />
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/basketball-solid.svg"
+                        alt="Basketball Cards"
+                        title="Basketball Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('Basketball')}
+                    />
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/baseball-solid.svg"
+                        alt="Baseball Cards"
+                        title="Baseball Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('Baseball')}
+                    />
+                </div>
                 <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
             </div>
             <div className="products-grid">
@@ -208,4 +248,4 @@ const PageLonghornsCards = () => {
     );
 };
 
-export default PageLonghornsCards;
+export default PageLonghorns;

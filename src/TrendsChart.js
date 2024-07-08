@@ -99,7 +99,9 @@ const TrendsChart = ({ fileUrl, title, idPrefix }) => {
                     )}
                 </select>
             </div>
-            <button onClick={handleReset} className="reset-button">Reset Selection</button>
+            <div onClick={handleReset} style={{ cursor: 'pointer', display: 'inline-block', marginTop: '10px' }} title="Reset Selection">
+                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/reset.svg" alt="Reset Selection" style={{ width: '30px', height: '30px' }} />
+            </div>
             <div className="chart-container">
                 {selectedPlayers.length > 0 ? (
                     <Line data={chartData} />

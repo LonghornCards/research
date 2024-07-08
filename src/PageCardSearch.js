@@ -52,7 +52,10 @@ const Page_CardSearch = () => {
                 </video>
             </div>
             <div className="content">
-                <h1>eBay Sale Card Search</h1>
+                <div className="title-container">
+                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/ebay.png" alt="eBay Logo" className="title-image" />
+                    <h1>eBay Sale Card Search</h1>
+                </div>
                 <form className="search-box" onSubmit={handleSearch}>
                     <div className="form-row">
                         <input

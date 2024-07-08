@@ -295,6 +295,9 @@ const Navbar = () => {
                             <NavLink to="/pagerawcards" onClick={() => setIsOpen(false)}>
                                 Raw Cards
                             </NavLink>
+                            <NavLink to="/pagelonghorns" onClick={() => setIsOpen(false)}>
+                                Longhorn Cards
+                            </NavLink>
                             <NavLink to="/pagewheel" onClick={() => setIsOpen(false)}>
                                 Discount Wheel
                             </NavLink>

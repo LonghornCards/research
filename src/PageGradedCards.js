@@ -14,6 +14,7 @@ const gradedTagOptions = [
     { value: 'rookie', label: 'rookie' },
     { value: 'auto', label: 'auto' },
     { value: 'rpa', label: 'rpa' },
+    { value: 'longhorns', label: 'longhorns' } // Added new tag option
 ];
 
 const fuseOptions = {
@@ -190,6 +191,13 @@ const PageGradedCards = () => {
                         title="Baseball Cards"
                         className="filter-image"
                         onClick={() => handleFilterByTag('Baseball')}
+                    />
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/texas.png"
+                        alt="Longhorn Cards"
+                        title="Longhorn Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('longhorns')}
                     />
                 </div>
                 <button className="reset-button" onClick={resetFilters}>Reset Filters</button>

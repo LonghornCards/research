@@ -98,8 +98,7 @@ const ScatterPlot = ({ fileUrl, xAxis, yAxis, displayColumns }) => {
             <h2 className="scatterplot-title">Google Trends Scatterplot</h2>
             <p className="scatterplot-description">
                 This scatterplot displays the 3-Mo and 12-Mo average Google trends for various players.
-                Use the multi-selectors below to filter the players and sports you want to focus on. Click "Reset Filter"
-                to clear all selections and view the entire dataset again.
+                Use the multi-selectors below to filter the players and sports you want to focus on. Click the image below to reset the filters.
             </p>
             <div className="filter-wrapper">
                 <Select
@@ -118,7 +117,12 @@ const ScatterPlot = ({ fileUrl, xAxis, yAxis, displayColumns }) => {
                     placeholder="Select Sports"
                     className="sport-select"
                 />
-                <button onClick={handleResetFilter} className="reset-button">Reset Filter</button>
+                <img
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/reset.svg"
+                    alt="Reset Filter"
+                    onClick={handleResetFilter}
+                    style={{ cursor: 'pointer', marginTop: '10px', width: '50px', height: '50px' }}
+                />
             </div>
             <Plot
                 data={[
@@ -148,6 +152,17 @@ const ScatterPlot = ({ fileUrl, xAxis, yAxis, displayColumns }) => {
                     title: {
                         text: '',
                     },
+                    images: [
+                        {
+                            source: "https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Logo.png",
+                            x: 0,
+                            y: 1,
+                            sizex: 0.1,
+                            sizey: 0.1,
+                            xanchor: "left",
+                            yanchor: "top"
+                        }
+                    ],
                     width: 1600, // Set the width to half the previous size
                     height: 1600, // Set the height to half the previous size
                     xaxis: {

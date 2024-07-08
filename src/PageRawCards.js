@@ -14,6 +14,7 @@ const rawTagOptions = [
     { value: 'rookie', label: 'rookie' },
     { value: 'auto', label: 'auto' },
     { value: 'rpa', label: 'rpa' },
+    { value: 'longhorns', label: 'longhorns' } // Added new tag option
 ];
 
 const fuseOptions = {
@@ -38,15 +39,11 @@ const PageRawCards = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/products_json.json');
-                console.log('Full response data:', response);
                 if (response.data) {
-                    console.log('Product data fetched successfully:', response.data);
                     const rawProducts = response.data.filter(product => product.Tags.includes('raw'));
                     setProducts(rawProducts);
                     setFilteredProducts(rawProducts);
                     setFuse(new Fuse(rawProducts, fuseOptions));
-                } else {
-                    console.error('No data in response:', response);
                 }
             } catch (error) {
                 console.error('Error fetching product data:', error);
@@ -194,6 +191,13 @@ const PageRawCards = () => {
                         title="Baseball Cards"
                         className="filter-image"
                         onClick={() => handleFilterByTag('Baseball')}
+                    />
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/texas.png"
+                        alt="Longhorn Cards"
+                        title="Longhorn Cards"
+                        className="filter-image"
+                        onClick={() => handleFilterByTag('longhorns')}
                     />
                 </div>
                 <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
