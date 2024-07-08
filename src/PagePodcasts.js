@@ -29,6 +29,9 @@ const options = [
     { value: 'The Joe Rogan Experience', label: 'The Joe Rogan Experience' },
     { value: 'Barstool Sports: Barstool Rundown', label: 'Barstool Sports: Barstool Rundown' },
     { value: 'Barstool Sports: Barstool Radio', label: 'Barstool Sports: Barstool Radio' },
+    { value: 'Happy Hobby Sports Cards', label: 'Happy Hobby Sports Cards' },
+    { value: 'Fantasy Footballers', label: 'Fantasy Footballers' },
+    { value: 'The Ringer NBA Show', label: 'The Ringer NBA Show' },
 ];
 
 const PagePodcasts = () => {
@@ -479,6 +482,57 @@ const PagePodcasts = () => {
                         <iframe
                             style={{ borderRadius: '12px' }}
                             src="https://open.spotify.com/embed/show/2Bc48V9lz8sUeYStl1aVpt?utm_source=generator"
+                            width="100%"
+                            height="352"
+                            frameBorder="0"
+                            allowFullScreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+                </>
+            )}
+            {isSelected('Happy Hobby Sports Cards') && (
+                <>
+                    <h2 className="container-title">Happy Hobby Sports Cards</h2>
+                    <div className="podcast-container">
+                        <iframe
+                            style={{ borderRadius: '12px' }}
+                            src="https://open.spotify.com/embed/show/3lcy2MgZHo6HGI2jqfR3fb?utm_source=generator"
+                            width="100%"
+                            height="352"
+                            frameBorder="0"
+                            allowFullScreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+                </>
+            )}
+            {isSelected('Fantasy Footballers') && (
+                <>
+                    <h2 className="container-title">Fantasy Footballers</h2>
+                    <div className="podcast-container">
+                        <iframe
+                            style={{ borderRadius: '12px' }}
+                            src="https://open.spotify.com/embed/show/5RaNsb5sKEBleahQa4MVC5?utm_source=generator"
+                            width="100%"
+                            height="352"
+                            frameBorder="0"
+                            allowFullScreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+                </>
+            )}
+            {isSelected('The Ringer NBA Show') && (
+                <>
+                    <h2 className="container-title">The Ringer NBA Show</h2>
+                    <div className="podcast-container">
+                        <iframe
+                            style={{ borderRadius: '12px' }}
+                            src="https://open.spotify.com/embed/show/5jUeKBONOmKJivqrRoIDJn?utm_source=generator"
                             width="100%"
                             height="352"
                             frameBorder="0"

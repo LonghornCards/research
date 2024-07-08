@@ -1,6 +1,18 @@
 // PageBlogContent.js
 const blogEntries = [
     {
+        date: '07/07/24',
+        title: 'Longhorn Cards Player Scoreboard June 2024',
+        summary: 'The Longhorn Cards Scoreboard combines player career statistics, historical card prices, and Google Trends sentiment to calculate a Composite Rank for each player.',
+        details: (
+            <span>
+                Updated for June 2024, our Longhorn Cards Player Scoreboard combines player career statistics, historical card prices, and Google Trends sentiment to calculate a Composite Rank for each player. Also provided is the current price trend and percentages from different price levels.
+            </span>
+        ),
+        fullPostLink: '/blog_post18',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.7.24.png'
+    },
+    {
         date: '06/13/24',
         title: 'New Highs/Lows',
         summary: 'New high/low card prices for a few select players over the last month.',
