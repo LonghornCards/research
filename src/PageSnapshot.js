@@ -394,6 +394,12 @@ const PageSnapshot = () => {
                     <p>No sports data found for {playerName}</p>
                 )}
             </div>
+            <div className="stat-container" style={{ backgroundColor: 'peru', padding: '20px' }}>
+                <h2 className="category-title">Detailed Statistics</h2>
+                <p className="page-description left-align">
+                    {/* Add your detailed statistics content here */}
+                </p>
+            </div>
             <div className="stat-container">
                 <h2 className="category-title">Glossary</h2>
                 <p className="page-description left-align">
@@ -444,31 +450,31 @@ const PageSnapshot = () => {
                     <strong>OPS</strong> -- On-Base + Slugging Percentages<br />
                     <strong>OPS+</strong> -- OPS+<br />
                     <strong>ORB</strong> -- Offensive Rebounds Per Game<br />
-                    <strong>PA</strong> -- Plate Appearances<br />
-                    <strong>PF</strong> -- Personal Fouls Per Game<br />
-                    <strong>PTS</strong> -- Points Per Game<br />
-                    <strong>QBR</strong> -- NFL Quarterback Rating<br />
-                    <strong>QBrec</strong> -- Team record in games started by this QB (regular season)<br />
-                    <strong>R</strong> -- Runs Scored/Allowed<br />
-                    <strong>RBI</strong> -- Runs Batted In<br />
-                    <strong>SB</strong> -- Stolen Bases<br />
-                    <strong>SF</strong> -- Sacrifice Flies<br />
-                    <strong>SH</strong> -- Sacrifice Hits (Sacrifice Bunts)<br />
-                    <strong>Sk%</strong> -- Percentage of Time Sacked when Attempting to Pass: Times Sacked / (Passes Attempted + Times Sacked)<br />
-                    <strong>SLG</strong> -- Total Bases/At Bats<br />
-                    <strong>SO</strong> -- Strikeouts<br />
-                    <strong>STL</strong> -- Steals Per Game<br />
-                    <strong>Succ%</strong> -- Passing Success Rate<br />
-                    <strong>TB</strong> -- Total Bases<br />
-                    <strong>TOV</strong> -- Turnovers Per Game<br />
-                    <strong>TRB</strong> -- Total Rebounds Per Game<br />
-                    <strong>TD%</strong> -- Percentage of Touchdowns Thrown when Attempting to Pass<br />
-                    <strong>Y/A</strong> -- Yards gained per pass attempt<br />
-                    <strong>Y/C</strong> -- Yards gained per pass completion (Passing Yards) / (Passes Completed)<br />
-                    <strong>Y/G</strong> -- Yards gained per game played<br />
-                </p>
-            </div>
+                <strong>PA</strong> -- Plate Appearances<br />
+                <strong>PF</strong> -- Personal Fouls Per Game<br />
+                <strong>PTS</strong> -- Points Per Game<br />
+                <strong>QBR</strong> -- NFL Quarterback Rating<br />
+                <strong>QBrec</strong> -- Team record in games started by this QB (regular season)<br />
+                <strong>R</strong> -- Runs Scored/Allowed<br />
+                <strong>RBI</strong> -- Runs Batted In<br />
+                <strong>SB</strong> -- Stolen Bases<br />
+                <strong>SF</strong> -- Sacrifice Flies<br />
+                <strong>SH</strong> -- Sacrifice Hits (Sacrifice Bunts)<br />
+                <strong>Sk%</strong> -- Percentage of Time Sacked when Attempting to Pass: Times Sacked / (Passes Attempted + Times Sacked)<br />
+                <strong>SLG</strong> -- Total Bases/At Bats<br />
+                <strong>SO</strong> -- Strikeouts<br />
+                <strong>STL</strong> -- Steals Per Game<br />
+                <strong>Succ%</strong> -- Passing Success Rate<br />
+                <strong>TB</strong> -- Total Bases<br />
+                <strong>TOV</strong> -- Turnovers Per Game<br />
+                <strong>TRB</strong> -- Total Rebounds Per Game<br />
+                <strong>TD%</strong> -- Percentage of Touchdowns Thrown when Attempting to Pass<br />
+                <strong>Y/A</strong> -- Yards gained per pass attempt<br />
+                <strong>Y/C</strong> -- Yards gained per pass completion (Passing Yards) / (Passes Completed)<br />
+                <strong>Y/G</strong> -- Yards gained per game played<br />
+            </p>
         </div>
+        </div >
     );
 };
 

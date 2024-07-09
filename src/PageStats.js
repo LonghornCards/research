@@ -183,13 +183,12 @@ const Page_Stats = () => {
             <p className="scoreboard-intro-paragraph">
                 Welcome to the Sports Statistics page! Here, you will find comprehensive statistics for key NFL, NBA, and MLB players.
 
-                Use the filters below to narrow down the data based on your player selections. Data as of May 2024 and sourced from Sports-Reference.com.
+                Use the filters below to narrow down the data based on your player selections. Data sourced from Sports-Reference.com.
 
                 See the bottom of the page for a full glossary of the different statistics provided.
 
-                See full season statistics <Link to="/PageLeaders">here</Link>.
             </p>
-            <h2>NFL Statistics</h2>
+            <h2>NFL Statistics Ranks</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
                     <label>Filter by Name</label>
@@ -205,7 +204,7 @@ const Page_Stats = () => {
                 </div>
             </div>
             <DataTable data={nflData} selectedNames={selectedNflNames} compositeRanks={compositeRanks} />
-            <h2>NBA Statistics</h2>
+            <h2>NBA Statistics Ranks</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
                     <label>Filter by Name</label>
@@ -221,7 +220,7 @@ const Page_Stats = () => {
                 </div>
             </div>
             <DataTable data={nbaData} selectedNames={selectedNbaNames} compositeRanks={compositeRanks} />
-            <h2>MLB Statistics</h2>
+            <h2>MLB Statistics Ranks</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
                     <label>Filter by Name</label>

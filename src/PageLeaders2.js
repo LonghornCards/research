@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';

@@ -1,18 +1,18 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
 import './App.css';
 
-const PageLeaders2 = () => {
+const PageLeaders3 = () => {
     const [selectedYear, setSelectedYear] = useState(2024);
-    const [selectedStat, setSelectedStat] = useState('QBR');
-    const [topQBRPlayers, setTopQBRPlayers] = useState([]);
-    const [topHRPlayers, setTopHRPlayers] = useState([]);
-    const [topBAPlayers, setTopBAPlayers] = useState([]);
-    const [topRBIPlayers, setTopRBIPlayers] = useState([]);
-    const [topRunsPlayers, setTopRunsPlayers] = useState([]);
-    const [topOPSPlusPlayers, setTopOPSPlusPlayers] = useState([]);
+    const [selectedStat, setSelectedStat] = useState('PTS');
+    const [topPointsPlayers, setTopPointsPlayers] = useState([]);
+    const [topAssistsPlayers, setTopAssistsPlayers] = useState([]);
+    const [topReboundsPlayers, setTopReboundsPlayers] = useState([]);
+    const [topStealsPlayers, setTopStealsPlayers] = useState([]);
+    const [topBlocksPlayers, setTopBlocksPlayers] = useState([]);
+    const [topFGPercentagePlayers, setTopFGPercentagePlayers] = useState([]);
     const [fullTableData, setFullTableData] = useState([]);
     const [barChartData, setBarChartData] = useState([]);
 
@@ -26,7 +26,7 @@ const PageLeaders2 = () => {
         const s3 = new AWS.S3();
         const params = {
             Bucket: 'websiteapp-storage-fdb68492737c0-dev',
-            Key: 'NFL_Season_Stats.xlsx'
+            Key: 'NBA_Season_Stats.xlsx' // Change the key to point to the NBA stats file
         };
 
         s3.getObject(params, (err, data) => {
@@ -38,26 +38,26 @@ const PageLeaders2 = () => {
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-            const filteredData = jsonData.filter(row => row.Year == selectedYear);
+            const filteredData = jsonData.filter(row => row.Year === selectedYear);
             setFullTableData(filteredData);
 
-            const sortedQBRData = filteredData.sort((a, b) => b.QBR - a.QBR).slice(0, 5);
-            setTopQBRPlayers(sortedQBRData);
+            const sortedPointsData = filteredData.sort((a, b) => b.PTS - a.PTS).slice(0, 5);
+            setTopPointsPlayers(sortedPointsData);
 
-            const sortedHRData = filteredData.sort((a, b) => b.HR - a.HR).slice(0, 5);
-            setTopHRPlayers(sortedHRData);
+            const sortedAssistsData = filteredData.sort((a, b) => b.AST - a.AST).slice(0, 5);
+            setTopAssistsPlayers(sortedAssistsData);
 
-            const sortedBAData = filteredData.sort((a, b) => b.BA - a.BA).slice(0, 5);
-            setTopBAPlayers(sortedBAData);
+            const sortedReboundsData = filteredData.sort((a, b) => b.REB - a.REB).slice(0, 5);
+            setTopReboundsPlayers(sortedReboundsData);
 
-            const sortedRBIData = filteredData.sort((a, b) => b.RBI - a.RBI).slice(0, 5);
-            setTopRBIPlayers(sortedRBIData);
+            const sortedStealsData = filteredData.sort((a, b) => b.STL - a.STL).slice(0, 5);
+            setTopStealsPlayers(sortedStealsData);
 
-            const sortedRunsData = filteredData.sort((a, b) => b.R - a.R).slice(0, 5);
-            setTopRunsPlayers(sortedRunsData);
+            const sortedBlocksData = filteredData.sort((a, b) => b.BLK - a.BLK).slice(0, 5);
+            setTopBlocksPlayers(sortedBlocksData);
 
-            const sortedOPSPlusData = filteredData.sort((a, b) => b['OPS+'] - a['OPS+']).slice(0, 5);
-            setTopOPSPlusPlayers(sortedOPSPlusData);
+            const sortedFGPercentageData = filteredData.sort((a, b) => b["FG%"] - a["FG%"]).slice(0, 5);
+            setTopFGPercentagePlayers(sortedFGPercentageData);
 
             setBarChartData(filteredData);
         });
@@ -94,7 +94,7 @@ const PageLeaders2 = () => {
     );
 
     const renderFullTable = (data) => {
-        const sortedData = [...data].sort((a, b) => b.QBR - a.QBR);
+        const sortedData = [...data].sort((a, b) => b.PTS - a.PTS);
         const columns = Object.keys(data[0] || {}).filter(col => col !== 'Year');
         return renderTable(sortedData, columns);
     };
@@ -109,10 +109,10 @@ const PageLeaders2 = () => {
 
     return (
         <div className="leaders-page">
-            <h1>Football Leaderboards</h1>
-            <p>View current season leaders and detailed statistics for key football players</p>
+            <h1>Basketball Leaderboards</h1>
+            <p>View current season leaders and detailed statistics for key basketball players</p>
             <div className="leaders-container">
-                <h2>NFL Football Leaders</h2>
+                <h2>NBA Basketball Leaders</h2>
                 <div>
                     <label htmlFor="year-select">Select Year: </label>
                     <select id="year-select" value={selectedYear} onChange={handleYearChange}>
@@ -126,22 +126,22 @@ const PageLeaders2 = () => {
                 </div>
                 <div className="leaders-subcontainers">
                     <div className="leaders-subcontainer">
-                        {renderTable(topQBRPlayers, ['Name', 'QBR'])}
+                        {renderTable(topPointsPlayers, ['Name', 'PTS'])}
                     </div>
                     <div className="leaders-subcontainer">
-                        {renderTable(topHRPlayers, ['Name', 'HR'])}
+                        {renderTable(topAssistsPlayers, ['Name', 'AST'])}
                     </div>
                     <div className="leaders-subcontainer">
-                        {renderTable(topBAPlayers, ['Name', 'BA'])}
+                        {renderTable(topReboundsPlayers, ['Name', 'REB'])}
                     </div>
                     <div className="leaders-subcontainer">
-                        {renderTable(topRBIPlayers, ['Name', 'RBI'])}
+                        {renderTable(topStealsPlayers, ['Name', 'STL'])}
                     </div>
                     <div className="leaders-subcontainer">
-                        {renderTable(topRunsPlayers, ['Name', 'R'])}
+                        {renderTable(topBlocksPlayers, ['Name', 'BLK'])}
                     </div>
                     <div className="leaders-subcontainer">
-                        {renderTable(topOPSPlusPlayers, ['Name', 'OPS+'])}
+                        {renderTable(topFGPercentagePlayers, ['Name', 'FG%'])}
                     </div>
                 </div>
                 <div className="scrollable-container">
@@ -151,31 +151,14 @@ const PageLeaders2 = () => {
                     <div>
                         <label htmlFor="stat-select">Select Statistic: </label>
                         <select id="stat-select" value={selectedStat} onChange={handleStatChange}>
-                            <option value="QBR">QBR</option>
-                            <option value="G">G</option>
-                            <option value="PA">PA</option>
-                            <option value="AB">AB</option>
-                            <option value="R">R</option>
-                            <option value="2B">2B</option>
-                            <option value="3B">3B</option>
-                            <option value="HR">HR</option>
-                            <option value="RBI">RBI</option>
-                            <option value="SB">SB</option>
-                            <option value="CS">CS</option>
-                            <option value="BB">BB</option>
-                            <option value="SO">SO</option>
-                            <option value="BA">BA</option>
-                            <option value="OBP">OBP</option>
-                            <option value="SLG">SLG</option>
-                            <option value="OPS">OPS</option>
-                            <option value="OPS+">OPS+</option>
-                            <option value="TB">TB</option>
-                            <option value="GDP">GDP</option>
-                            <option value="HBP">HBP</option>
-                            <option value="SH">SH</option>
-                            <option value="SF">SF</option>
-                            <option value="IBB">IBB</option>
-                            <option value="Awards">Awards</option>
+                            <option value="PTS">PTS</option>
+                            <option value="AST">AST</option>
+                            <option value="REB">REB</option>
+                            <option value="STL">STL</option>
+                            <option value="BLK">BLK</option>
+                            <option value="FG%">FG%</option>
+                            <option value="3P%">3P%</option>
+                            <option value="FT%">FT%</option>
                         </select>
                     </div>
                     <Plot
@@ -189,9 +172,9 @@ const PageLeaders2 = () => {
                         ]}
                         layout={{
                             title: `Top Players by ${selectedStat}`,
-                            xaxis: { title: '' },
+                            xaxis: { title: '' }, // Remove "Player" title
                             yaxis: { title: selectedStat },
-                            width: 1000
+                            width: 1000 // Increase the width by 25%
                         }}
                     />
                 </div>
@@ -269,4 +252,4 @@ const PageLeaders2 = () => {
     );
 }
 
-export default PageLeaders2;
+export default PageLeaders3;
