@@ -186,6 +186,8 @@ const Page_Stats = () => {
                 Use the filters below to narrow down the data based on your player selections. Data as of May 2024 and sourced from Sports-Reference.com.
 
                 See the bottom of the page for a full glossary of the different statistics provided.
+
+                See full season statistics <Link to="/PageLeaders">here</Link>.
             </p>
             <h2>NFL Statistics</h2>
             <div className="scoreboard-filters center-filters">

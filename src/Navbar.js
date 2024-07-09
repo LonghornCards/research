@@ -318,6 +318,9 @@ const Navbar = () => {
                             <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
                                 Player Returns
                             </NavLink>
+                            <NavLink to="/pagepricecharts" onClick={() => setIsOpen(false)}>
+                                Price Charts
+                            </NavLink>
                             <NavLink to="/pagecsi" onClick={() => setIsOpen(false)}>
                                 Index Returns
                             </NavLink>

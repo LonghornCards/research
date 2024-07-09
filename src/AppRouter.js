@@ -48,7 +48,8 @@ import PagePodcasts from './PagePodcasts';
 import PageLeaders from './PageLeaders';
 import PageCSI from './PageCSI';
 import PageLonghorns from './PageLonghorns';
-import PageSnapshot from './PageSnapshot'; // Import the new PageSnapshot component
+import PageSnapshot from './PageSnapshot';
+import PagePriceCharts from './PagePriceCharts';  // Import the new PagePriceCharts component
 import './App.css';
 
 const AppRouter = () => {
@@ -103,7 +104,8 @@ const AppRouter = () => {
                 <Route path="/pageleaders" element={<PageLeaders />} />
                 <Route path="/pagecsi" element={<PageCSI />} />
                 <Route path="/pagelonghorns" element={<PageLonghorns />} />
-                <Route path="/pagesnapshot" element={<PageSnapshot />} /> {/* Add the new route */}
+                <Route path="/pagesnapshot" element={<PageSnapshot />} />
+                <Route path="/pagepricecharts" element={<PagePriceCharts />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );

@@ -4423,3 +4423,203 @@ tbody tr {
 .left-align {
     text-align: left;
 }
+
+.leaders-page {
+    padding: 20px;
+    padding-top: 80px; /* Adjust to ensure content isn't hidden by the navbar */
+    text-align: center; /* Center the content */
+}
+
+.leaders-container {
+    border: 2px solid peru;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    display: inline-block; /* Ensure container width adjusts to content */
+    width: 80%; /* Adjust width as needed */
+}
+
+    .leaders-container h2 {
+        margin: 0;
+        padding: 0;
+        color: peru;
+    }
+
+.leaders-subcontainers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adjust spacing between subcontainers */
+    margin-top: 20px;
+}
+
+.leaders-subcontainer {
+    border: 2px solid peru;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    flex: 0 0 30%; /* Adjust width as needed */
+}
+
+.leaders-table, .empty-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .leaders-table th, .empty-table th,
+    .leaders-table td, .empty-table td {
+        border: 1px solid peru;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .leaders-table th, .empty-table th {
+        background-color: peru;
+        color: white;
+        font-weight: bold;
+    }
+
+        /* Center text in Header 2 columns */
+        .leaders-table th:nth-child(2), .empty-table th:nth-child(2),
+        .leaders-table td:nth-child(2), .empty-table td:nth-child(2) {
+            text-align: center;
+        }
+
+/* Center all columns except the Name column */
+.full-table th:not(:first-child),
+.full-table td:not(:first-child) {
+    text-align: center;
+}
+
+.scrollable-container {
+    max-height: 400px; /* Adjust height as needed */
+    overflow: auto;
+    margin-top: 20px;
+    border: 2px solid peru;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* New CSS for the Select component */
+.leaders-multi-select {
+    width: 100%;
+}
+
+.leaders-select__control {
+    min-height: 30px; /* Adjust as needed */
+    font-size: 14px; /* Adjust as needed */
+}
+
+.leaders-select__menu {
+    z-index: 1000;
+}
+
+.leaders-select__option {
+    font-size: 14px; /* Adjust as needed */
+    color: black; /* Change text color to black */
+}
+
+.leaders-select__option--is-focused {
+    background-color: peru;
+    color: black; /* Ensure focused option text color is black */
+}
+
+.leaders-select__option--is-selected {
+    background-color: peru;
+    color: black; /* Ensure selected option text color is black */
+}
+
+.pricechart-page-price-charts {
+    padding: 20px;
+    padding-top: 80px; /* Shift down the page to avoid hiding the title behind the navigation bar */
+}
+
+.pricechart-title {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.pricechart-description {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.pricechart-player-select {
+    margin-bottom: 20px;
+}
+
+.pricechart-chart-container {
+    border: 2px solid peru;
+    padding: 20px;
+    width: 100%; /* Make sure the chart container takes the full width */
+    max-width: 100%; /* Remove fixed max-width for better responsiveness */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+}
+
+.pricechart-summary-container {
+    width: 100%; /* Match the width of the chart container */
+    max-width: 100%; /* Remove fixed max-width for better responsiveness */
+    overflow: auto; /* Enable scrolling for the container */
+    max-height: 600px; /* Optional: Set a max height for vertical scrolling */
+    border: 1px solid peru; /* Add peru border around the container */
+    padding: 10px; /* Optional: Add some padding inside the container */
+}
+
+.pricechart-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; /* Enable horizontal scrolling for the table */
+}
+
+    .pricechart-summary-table th,
+    .pricechart-summary-table td {
+        padding: 10px;
+        border: 1px solid peru;
+    }
+
+    .pricechart-summary-table th {
+        background-color: peru;
+        color: white;
+        font-weight: bold;
+    }
+
+    .pricechart-summary-table td.positive {
+        color: green;
+    }
+
+    .pricechart-summary-table td.negative {
+        color: red;
+    }
+
+.pricechart-disclosure-container {
+    width: 100%; /* Match the width of the chart container */
+    max-width: 100%; /* Remove fixed max-width for better responsiveness */
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .pricechart-title {
+        font-size: 1.2rem;
+    }
+
+    .pricechart-description {
+        font-size: 0.9rem;
+    }
+
+    .pricechart-chart-container {
+        padding: 10px;
+    }
+
+    .pricechart-summary-table th,
+    .pricechart-summary-table td {
+        padding: 5px;
+    }
+}
