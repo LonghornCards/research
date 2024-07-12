@@ -3,18 +3,25 @@ import AWS from 'aws-sdk';
 import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
 import './App.css';
+import Select from 'react-select';
 
 const PageLeaders3 = () => {
-    const [selectedYear, setSelectedYear] = useState(2024);
+    const [selectedYear, setSelectedYear] = useState('2023');
     const [selectedStat, setSelectedStat] = useState('PTS');
     const [topPointsPlayers, setTopPointsPlayers] = useState([]);
     const [topAssistsPlayers, setTopAssistsPlayers] = useState([]);
     const [topReboundsPlayers, setTopReboundsPlayers] = useState([]);
-    const [topStealsPlayers, setTopStealsPlayers] = useState([]);
     const [topBlocksPlayers, setTopBlocksPlayers] = useState([]);
     const [topFGPercentagePlayers, setTopFGPercentagePlayers] = useState([]);
+    const [topThreePointPercentagePlayers, setTopThreePointPercentagePlayers] = useState([]);
     const [fullTableData, setFullTableData] = useState([]);
     const [barChartData, setBarChartData] = useState([]);
+    const [pivotData, setPivotData] = useState([]);
+    const [selectedNames, setSelectedNames] = useState([]);
+    const [selectedPivotStat, setSelectedPivotStat] = useState('PTS');
+    const [availableYears, setAvailableYears] = useState([]);
+    const [startYear, setStartYear] = useState('2005');
+    const [endYear, setEndYear] = useState('2023');
 
     useEffect(() => {
         AWS.config.update({
@@ -26,7 +33,7 @@ const PageLeaders3 = () => {
         const s3 = new AWS.S3();
         const params = {
             Bucket: 'websiteapp-storage-fdb68492737c0-dev',
-            Key: 'NBA_Season_Stats.xlsx' // Change the key to point to the NBA stats file
+            Key: 'NBA_Season_Stats.xlsx'
         };
 
         s3.getObject(params, (err, data) => {
@@ -36,9 +43,12 @@ const PageLeaders3 = () => {
             }
             const workbook = XLSX.read(data.Body, { type: 'array' });
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
 
-            const filteredData = jsonData.filter(row => row.Year === selectedYear);
+            const years = [...new Set(jsonData.map(row => row.Season.substring(0, 4)))].sort();
+            setAvailableYears(years);
+
+            const filteredData = jsonData.filter(row => row.Season && row.Season.startsWith(selectedYear));
             setFullTableData(filteredData);
 
             const sortedPointsData = filteredData.sort((a, b) => b.PTS - a.PTS).slice(0, 5);
@@ -47,11 +57,8 @@ const PageLeaders3 = () => {
             const sortedAssistsData = filteredData.sort((a, b) => b.AST - a.AST).slice(0, 5);
             setTopAssistsPlayers(sortedAssistsData);
 
-            const sortedReboundsData = filteredData.sort((a, b) => b.REB - a.REB).slice(0, 5);
+            const sortedReboundsData = filteredData.sort((a, b) => b.TRB - a.TRB).slice(0, 5);
             setTopReboundsPlayers(sortedReboundsData);
-
-            const sortedStealsData = filteredData.sort((a, b) => b.STL - a.STL).slice(0, 5);
-            setTopStealsPlayers(sortedStealsData);
 
             const sortedBlocksData = filteredData.sort((a, b) => b.BLK - a.BLK).slice(0, 5);
             setTopBlocksPlayers(sortedBlocksData);
@@ -59,7 +66,20 @@ const PageLeaders3 = () => {
             const sortedFGPercentageData = filteredData.sort((a, b) => b["FG%"] - a["FG%"]).slice(0, 5);
             setTopFGPercentagePlayers(sortedFGPercentageData);
 
+            const sortedThreePointPercentageData = filteredData.sort((a, b) => b["3P%"] - a["3P%"]).slice(0, 5);
+            setTopThreePointPercentagePlayers(sortedThreePointPercentageData);
+
             setBarChartData(filteredData);
+
+            const pivotData = jsonData.reduce((acc, row) => {
+                const { Season, Name, ...stats } = row;
+                if (Season && Name) {
+                    if (!acc[Name]) acc[Name] = {};
+                    acc[Name][Season.substring(0, 4)] = stats;
+                }
+                return acc;
+            }, {});
+            setPivotData(pivotData);
         });
     }, [selectedYear]);
 
@@ -70,9 +90,32 @@ const PageLeaders3 = () => {
         }
     }, [selectedStat, fullTableData]);
 
+    useEffect(() => {
+        if (startYear && endYear) {
+            const filteredPivotData = Object.keys(pivotData).reduce((acc, name) => {
+                acc[name] = Object.keys(pivotData[name])
+                    .filter(year => year >= startYear && year <= endYear)
+                    .reduce((subAcc, year) => {
+                        subAcc[year] = pivotData[name][year];
+                        return subAcc;
+                    }, {});
+                return acc;
+            }, {});
+            setPivotData(filteredPivotData);
+        }
+    }, [startYear, endYear]);
+
+    const getGradientColor = (value, min, max, reverse = false) => {
+        if (value === 0 || isNaN(value) || typeof value !== 'number') return 'lightgray';
+        const ratio = (value - min) / (max - min);
+        const red = reverse ? Math.max(0, 255 * ratio) : Math.max(0, 255 - (255 * ratio));
+        const green = reverse ? Math.max(0, 255 - (255 * ratio)) : Math.max(0, 255 * ratio);
+        return `rgb(${red},${green},0)`;
+    };
+
     const renderTable = (data, columns) => (
         <table className="leaders-table">
-            <thead>
+            <thead className="sticky-header">
                 <tr>
                     {columns.map(column => (
                         <th key={column}>{column}</th>
@@ -95,20 +138,113 @@ const PageLeaders3 = () => {
 
     const renderFullTable = (data) => {
         const sortedData = [...data].sort((a, b) => b.PTS - a.PTS);
-        const columns = Object.keys(data[0] || {}).filter(col => col !== 'Year');
+        const columns = Object.keys(data[0] || {}).filter(col => col !== 'Season');
         return renderTable(sortedData, columns);
     };
 
+    const renderPivotTable = (pivotData) => {
+        const years = availableYears.filter(year => year >= startYear && year <= endYear);
+        const names = Object.keys(pivotData)
+            .filter(name => selectedNames.length === 0 || selectedNames.includes(name))
+            .filter(name => years.some(year => pivotData[name][year]?.[selectedPivotStat] > 0));
+
+        const minMaxValues = {};
+        years.forEach(year => {
+            const values = names.map(name => {
+                const value = pivotData[name][year]?.[selectedPivotStat];
+                return (typeof value === 'number') ? value : 0;
+            });
+            minMaxValues[year] = { min: Math.min(...values), max: Math.max(...values) };
+        });
+
+        return (
+            <div className="scrollable-table">
+                <table className="pivot-table" style={{ borderCollapse: 'collapse', margin: '0 auto' }}>
+                    <thead className="sticky-header">
+                        <tr style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>
+                            <th style={{ border: '1px solid peru' }}>Name / Year</th>
+                            {years.map(year => (
+                                <th key={year} style={{ border: '1px solid peru' }}>{year}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {names.map(name => (
+                            <tr key={name}>
+                                <td style={{ border: '1px solid peru' }}>{name}</td>
+                                {years.map(year => {
+                                    const value = pivotData[name][year]?.[selectedPivotStat];
+                                    const { min, max } = minMaxValues[year];
+                                    return (
+                                        <td key={year} style={{ border: '1px solid peru', backgroundColor: getGradientColor(value, min, max) }}>
+                                            {value !== undefined ? value : 'N/A'}
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
     const handleYearChange = (event) => {
-        setSelectedYear(parseInt(event.target.value));
+        setSelectedYear(event.target.value.substring(0, 4));
     };
 
     const handleStatChange = (event) => {
         setSelectedStat(event.target.value);
     };
 
+    const handleNameChange = (selectedOptions) => {
+        setSelectedNames(selectedOptions ? selectedOptions.map(option => option.value) : []);
+    };
+
+    const handlePivotStatChange = (selectedOptions) => {
+        setSelectedPivotStat(selectedOptions ? selectedOptions.value : 'PTS');
+    };
+
+    const handleStartYearChange = (event) => {
+        setStartYear(event.target.value);
+    };
+
+    const handleEndYearChange = (event) => {
+        setEndYear(event.target.value);
+    };
+
+    const nameOptions = Object.keys(pivotData).map(name => ({ value: name, label: name }));
+    const statOptions = [
+        { value: 'G', label: 'G' },
+        { value: 'GS', label: 'GS' },
+        { value: 'MP', label: 'MP' },
+        { value: 'FG', label: 'FG' },
+        { value: 'FGA', label: 'FGA' },
+        { value: 'FG%', label: 'FG%' },
+        { value: '3P', label: '3P' },
+        { value: '3PA', label: '3PA' },
+        { value: '3P%', label: '3P%' },
+        { value: '2P', label: '2P' },
+        { value: '2PA', label: '2PA' },
+        { value: '2P%', label: '2P%' },
+        { value: 'eFG%', label: 'eFG%' },
+        { value: 'FT', label: 'FT' },
+        { value: 'FTA', label: 'FTA' },
+        { value: 'FT%', label: 'FT%' },
+        { value: 'ORB', label: 'ORB' },
+        { value: 'DRB', label: 'DRB' },
+        { value: 'TRB', label: 'TRB' },
+        { value: 'AST', label: 'AST' },
+        { value: 'STL', label: 'STL' },
+        { value: 'BLK', label: 'BLK' },
+        { value: 'TOV', label: 'TOV' },
+        { value: 'PF', label: 'PF' },
+        { value: 'PTS', label: 'PTS' },
+    ];
+
     return (
         <div className="leaders-page">
+            <a href="/PageStats" className="return-link">Return to Statistics Page</a>
             <h1>Basketball Leaderboards</h1>
             <p>View current season leaders and detailed statistics for key basketball players</p>
             <div className="leaders-container">
@@ -116,12 +252,9 @@ const PageLeaders3 = () => {
                 <div>
                     <label htmlFor="year-select">Select Year: </label>
                     <select id="year-select" value={selectedYear} onChange={handleYearChange}>
-                        <option value={2024}>2024</option>
-                        <option value={2023}>2023</option>
-                        <option value={2022}>2022</option>
-                        <option value={2021}>2021</option>
-                        <option value={2020}>2020</option>
-                        <option value={2019}>2019</option>
+                        {availableYears.map(year => (
+                            <option key={year} value={year}>{year}-{parseInt(year) + 1}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="leaders-subcontainers">
@@ -132,16 +265,16 @@ const PageLeaders3 = () => {
                         {renderTable(topAssistsPlayers, ['Name', 'AST'])}
                     </div>
                     <div className="leaders-subcontainer">
-                        {renderTable(topReboundsPlayers, ['Name', 'REB'])}
-                    </div>
-                    <div className="leaders-subcontainer">
-                        {renderTable(topStealsPlayers, ['Name', 'STL'])}
+                        {renderTable(topReboundsPlayers, ['Name', 'TRB'])}
                     </div>
                     <div className="leaders-subcontainer">
                         {renderTable(topBlocksPlayers, ['Name', 'BLK'])}
                     </div>
                     <div className="leaders-subcontainer">
                         {renderTable(topFGPercentagePlayers, ['Name', 'FG%'])}
+                    </div>
+                    <div className="leaders-subcontainer">
+                        {renderTable(topThreePointPercentagePlayers, ['Name', '3P%'])}
                     </div>
                 </div>
                 <div className="scrollable-container">
@@ -151,14 +284,11 @@ const PageLeaders3 = () => {
                     <div>
                         <label htmlFor="stat-select">Select Statistic: </label>
                         <select id="stat-select" value={selectedStat} onChange={handleStatChange}>
-                            <option value="PTS">PTS</option>
-                            <option value="AST">AST</option>
-                            <option value="REB">REB</option>
-                            <option value="STL">STL</option>
-                            <option value="BLK">BLK</option>
-                            <option value="FG%">FG%</option>
-                            <option value="3P%">3P%</option>
-                            <option value="FT%">FT%</option>
+                            {statOptions.map(option => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <Plot
@@ -172,35 +302,66 @@ const PageLeaders3 = () => {
                         ]}
                         layout={{
                             title: `Top Players by ${selectedStat}`,
-                            xaxis: { title: '' }, // Remove "Player" title
+                            xaxis: { title: '' },
                             yaxis: { title: selectedStat },
-                            width: 1000 // Increase the width by 25%
+                            width: 1000
                         }}
                     />
                 </div>
             </div>
+            <div className="historical-statistics-container" style={{ border: '1px solid peru', padding: '20px', marginTop: '20px', textAlign: 'center' }}>
+                <h2>Historical Statistics</h2>
+                <div style={{ width: '50%', margin: '0 auto' }}>
+                    <label htmlFor="start-year-select">Select Start Year: </label>
+                    <select id="start-year-select" value={startYear} onChange={handleStartYearChange}>
+                        {availableYears.map(year => (
+                            <option key={year} value={year}>{year}</option>
+                        ))}
+                    </select>
+                </div>
+                <div style={{ width: '50%', margin: '0 auto' }}>
+                    <label htmlFor="end-year-select">Select End Year: </label>
+                    <select id="end-year-select" value={endYear} onChange={handleEndYearChange}>
+                        {availableYears.map(year => (
+                            <option key={year} value={year}>{year}</option>
+                        ))}
+                    </select>
+                </div>
+                <div style={{ width: '50%', margin: '0 auto' }}>
+                    <label htmlFor="name-select">Select Names: </label>
+                    <Select
+                        isMulti
+                        id="name-select"
+                        options={nameOptions}
+                        onChange={handleNameChange}
+                        className="name-select"
+                        styles={{ container: base => ({ ...base, width: '100%' }) }}
+                    />
+                </div>
+                <div style={{ width: '50%', margin: '20px auto' }}>
+                    <label htmlFor="statistic-select">Select Statistic: </label>
+                    <Select
+                        id="statistic-select"
+                        options={statOptions}
+                        onChange={handlePivotStatChange}
+                        className="statistic-select"
+                        styles={{ container: base => ({ ...base, width: '100%' }) }}
+                    />
+                </div>
+                {renderPivotTable(pivotData)}
+            </div>
             <div className="glossary-container" style={{ textAlign: 'left' }}>
-                <p>Glossary for fundamental stats: The tables above provide comprehensive statistics for NFL, NBA, and MLB players. These statistics are sourced from Sports-Reference.com</p>
-                <p>1D -- First downs passing</p>
-                <p>2B -- Doubles Hit/Allowed</p>
+                <p>Glossary for fundamental stats: The tables above provide comprehensive statistics for NBA players. These statistics are sourced from Sports-Reference.com</p>
                 <p>2P -- 2-Point Field Goals Per Game</p>
                 <p>2PA -- 2-Point Field Goal Attempts Per Game</p>
                 <p>2P% -- 2-Point Field Goal Percentage</p>
-                <p>3B -- Triples Hit/Allowed</p>
                 <p>3P -- 3-Point Field Goals Per Game</p>
                 <p>3PA -- 3-Point Field Goal Attempts Per Game</p>
                 <p>3P% -- 3-Point Field Goal Percentage</p>
-                <p>4QC -- Comebacks led by quarterback.</p>
-                <p>AB -- At Bats</p>
-                <p>ANY/A -- Adjusted Net Yards per Pass Attempt</p>
                 <p>AST -- Assists Per Game</p>
                 <p>AV -- Approximate Value is our attempt to attach a single number to every player-season since 1960.</p>
-                <p>AY/A -- Adjusted Yards gained per pass attempt</p>
                 <p>Awards -- Summary of how player did in awards voting that year.</p>
-                <p>BB -- Bases on Balls/Walks</p>
                 <p>BLK -- Blocks Per Game</p>
-                <p>Cmp% -- Percentage of Passes Completed</p>
-                <p>CS -- Caught Stealing</p>
                 <p>DRB -- Defensive Rebounds Per Game</p>
                 <p>eFG% -- Effective Field Goal Percentage</p>
                 <p>FG -- Field Goals Per Game</p>
@@ -210,43 +371,13 @@ const PageLeaders3 = () => {
                 <p>FTA -- Free Throw Attempts Per Game</p>
                 <p>FT% -- Free Throw Percentage</p>
                 <p>G -- Games played</p>
-                <p>GDP -- Double Plays Grounded Into</p>
                 <p>GS -- Games started as an offensive or defensive player</p>
-                <p>GWD -- Game-winning drives led by quarterback.</p>
-                <p>H -- Hits/Hits Allowed</p>
-                <p>HBP -- Times Hit by a Pitch</p>
-                <p>HR -- Home Runs Hit/Allowed</p>
-                <p>IBB -- Intentional Bases on Balls</p>
-                <p>Int -- Interceptions thrown</p>
-                <p>Int% -- Percentage of Times Intercepted when Attempting to Pass</p>
                 <p>MP -- Minutes Played Per Game</p>
-                <p>NY/A -- Net Yards gained per pass attempt</p>
-                <p>OBP -- (H + BB + HBP)/(At Bats + BB + HBP + SF)</p>
-                <p>OPS -- On-Base + Slugging Percentages</p>
-                <p>OPS+ -- OPS+</p>
                 <p>ORB -- Offensive Rebounds Per Game</p>
-                <p>PA -- Plate Appearances</p>
                 <p>PF -- Personal Fouls Per Game</p>
                 <p>PTS -- Points Per Game</p>
-                <p>QBR -- NFL Quarterback Rating</p>
-                <p>QBrec -- Team record in games started by this QB (regular season)</p>
-                <p>R -- Runs Scored/Allowed</p>
-                <p>RBI -- Runs Batted In</p>
-                <p>SB -- Stolen Bases</p>
-                <p>SF -- Sacrifice Flies</p>
-                <p>SH -- Sacrifice Hits (Sacrifice Bunts)</p>
-                <p>Sk% -- Percentage of Time Sacked when Attempting to Pass: Times Sacked / (Passes Attempted + Times Sacked)</p>
-                <p>SLG -- Total Bases/At Bats</p>
-                <p>SO -- Strikeouts</p>
-                <p>STL -- Steals Per Game</p>
-                <p>Succ% -- Passing Success Rate</p>
-                <p>TB -- Total Bases</p>
                 <p>TOV -- Turnovers Per Game</p>
                 <p>TRB -- Total Rebounds Per Game</p>
-                <p>TD% -- Percentage of Touchdowns Thrown when Attempting to Pass</p>
-                <p>Y/A -- Yards gained per pass attempt</p>
-                <p>Y/C -- Yards gained per pass completion (Passing Yards) / (Passes Completed)</p>
-                <p>Y/G -- Yards gained per game played</p>
             </div>
         </div>
     );

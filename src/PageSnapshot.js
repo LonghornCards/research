@@ -17,12 +17,17 @@ const PageSnapshot = () => {
     const [dateValues, setDateValues] = useState([]);
     const [previousYearValue, setPreviousYearValue] = useState(null);
     const [rebase, setRebase] = useState(false);
+    const [wikiSummary, setWikiSummary] = useState('');
+    const [wikiIntroduction, setWikiIntroduction] = useState('');
+    const [wikiInfobox, setWikiInfobox] = useState('');
+    const [wikiImage, setWikiImage] = useState(null);
 
     useEffect(() => {
         if (playerName) {
             fetchPlayerData(playerName);
             fetchCompositeData(playerName);
             fetchTrendData(playerName);
+            fetchWikipediaData(playerName);
         }
     }, [playerName]);
 
@@ -42,7 +47,6 @@ const PageSnapshot = () => {
             if (playerInfo) {
                 setPlayerData(playerInfo);
 
-                // Extract date columns
                 const dateColumns = Object.keys(playerInfo).filter(key => {
                     const datePattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
                     return datePattern.test(key) && new Date(key) >= new Date('12/31/2023');
@@ -76,9 +80,15 @@ const PageSnapshot = () => {
             const sheetName = workbook.SheetNames[0];
             const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-            const playerInfo = worksheet.find(row => row.Name === player);
+            const fuse = new Fuse(worksheet, {
+                keys: ['Name'],
+                threshold: 0.3
+            });
 
-            if (playerInfo) {
+            const result = fuse.search(player);
+
+            if (result.length > 0) {
+                const playerInfo = result[0].item;
                 setCompositeData(playerInfo);
             } else {
                 setCompositeData(null);
@@ -99,7 +109,6 @@ const PageSnapshot = () => {
             const sheetName = workbook.SheetNames[0];
             const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-            // Fuzzy search for player name
             const fuse = new Fuse(worksheet, {
                 keys: ['PLAYER'],
                 threshold: 0.3
@@ -110,7 +119,6 @@ const PageSnapshot = () => {
             if (result.length > 0) {
                 const playerInfo = result[0].item;
 
-                // Extract date columns starting from January 2021
                 const dateColumns = Object.keys(playerInfo).filter(key => {
                     const datePattern = /^[0-9]{2}-[A-Za-z]+$/;
                     return datePattern.test(key);
@@ -151,7 +159,6 @@ const PageSnapshot = () => {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-                // Fuzzy search for player name
                 const fuse = new Fuse(worksheet, {
                     keys: ['Name'],
                     threshold: 0.3
@@ -168,6 +175,38 @@ const PageSnapshot = () => {
             } catch (error) {
                 console.error('Error fetching sports data:', error);
             }
+        }
+    };
+
+    const fetchWikipediaData = async (player) => {
+        try {
+            const response = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(player)}`);
+            const data = response.data;
+
+            setWikiSummary(data.extract);
+            setWikiImage(data.thumbnail ? data.thumbnail.source : null);
+
+            const contentResponse = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/html/${encodeURIComponent(player)}`);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(contentResponse.data, 'text/html');
+            const infoboxElement = doc.querySelector('.infobox');
+
+            if (infoboxElement) {
+                const links = infoboxElement.querySelectorAll('a');
+                links.forEach(link => {
+                    link.replaceWith(link.textContent);
+                });
+            }
+
+            setWikiInfobox(infoboxElement ? infoboxElement.outerHTML : 'No infobox found.');
+            const introElement = doc.querySelector('.mw-parser-output > p');
+            setWikiIntroduction(introElement ? introElement.textContent : '');
+        } catch (error) {
+            console.error('Error fetching Wikipedia data:', error);
+            setWikiSummary('No Wikipedia summary found.');
+            setWikiImage(null);
+            setWikiInfobox('No infobox found.');
+            setWikiIntroduction('No introduction found.');
         }
     };
 
@@ -230,7 +269,10 @@ const PageSnapshot = () => {
 
     return (
         <div className="page-snapshot" style={{ paddingTop: '60px' }}>
-            <h1 className="page-title">{`Player Snapshot${playerName ? `: ${playerName}` : ''}`}</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h1 className="page-title">{`Player Snapshot${playerName ? `: ${playerName}` : ''}`}</h1>
+                {wikiImage && <img src={wikiImage} alt={`${playerName} profile`} style={{ maxHeight: '150px', marginLeft: '20px', objectFit: 'contain' }} />}
+            </div>
             <p className="page-description">
                 Below are the snapshots of various player statistics across different categories.
             </p>
@@ -330,8 +372,14 @@ const PageSnapshot = () => {
                                     </tr>
                                     <tr>
                                         <td style={{ border: '1px solid peru', padding: '8px' }}><strong>Sentiment Rank</strong></td>
-                                        <td style={{ border: '1px solid peru', padding: '8px', color: getTrendColor(compositeData.Trend) }}>
-                                            {compositeData.Trend}
+                                        <td style={{ border: '1px solid peru', padding: '8px', color: getRankColor(compositeData['Sentiment Rank']) }}>
+                                            {compositeData['Sentiment Rank']}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ border: '1px solid peru', padding: '8px' }}><strong>Trend</strong></td>
+                                        <td style={{ border: '1px solid peru', padding: '8px', color: getTrendColor(compositeData['Trend']) }}>
+                                            {compositeData['Trend']}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -394,11 +442,21 @@ const PageSnapshot = () => {
                     <p>No sports data found for {playerName}</p>
                 )}
             </div>
-            <div className="stat-container" style={{ backgroundColor: 'peru', padding: '20px' }}>
-                <h2 className="category-title">Detailed Statistics</h2>
+            <div className="stat-container" style={{ border: '1px solid peru', padding: '20px' }}>
+                <h2 className="category-title">Player Profile</h2>
                 <p className="page-description left-align">
-                    {/* Add your detailed statistics content here */}
+                    {wikiSummary}
                 </p>
+                <p className="page-description left-align">
+                    {wikiIntroduction}
+                </p>
+            </div>
+            <div className="stat-container" style={{ border: '1px solid peru', padding: '20px', textAlign: 'center' }}>
+                <h2 className="category-title">Infobox</h2>
+                {wikiImage && <img src={wikiImage} alt={`${playerName} profile`} style={{ maxHeight: '150px', marginBottom: '20px', objectFit: 'contain' }} />}
+                <div className="page-description" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div dangerouslySetInnerHTML={{ __html: wikiInfobox }} style={{ maxWidth: '600px', textAlign: 'left' }}></div>
+                </div>
             </div>
             <div className="stat-container">
                 <h2 className="category-title">Glossary</h2>
@@ -450,32 +508,33 @@ const PageSnapshot = () => {
                     <strong>OPS</strong> -- On-Base + Slugging Percentages<br />
                     <strong>OPS+</strong> -- OPS+<br />
                     <strong>ORB</strong> -- Offensive Rebounds Per Game<br />
-                <strong>PA</strong> -- Plate Appearances<br />
-                <strong>PF</strong> -- Personal Fouls Per Game<br />
-                <strong>PTS</strong> -- Points Per Game<br />
-                <strong>QBR</strong> -- NFL Quarterback Rating<br />
-                <strong>QBrec</strong> -- Team record in games started by this QB (regular season)<br />
-                <strong>R</strong> -- Runs Scored/Allowed<br />
-                <strong>RBI</strong> -- Runs Batted In<br />
-                <strong>SB</strong> -- Stolen Bases<br />
-                <strong>SF</strong> -- Sacrifice Flies<br />
-                <strong>SH</strong> -- Sacrifice Hits (Sacrifice Bunts)<br />
-                <strong>Sk%</strong> -- Percentage of Time Sacked when Attempting to Pass: Times Sacked / (Passes Attempted + Times Sacked)<br />
-                <strong>SLG</strong> -- Total Bases/At Bats<br />
-                <strong>SO</strong> -- Strikeouts<br />
-                <strong>STL</strong> -- Steals Per Game<br />
-                <strong>Succ%</strong> -- Passing Success Rate<br />
-                <strong>TB</strong> -- Total Bases<br />
-                <strong>TOV</strong> -- Turnovers Per Game<br />
-                <strong>TRB</strong> -- Total Rebounds Per Game<br />
-                <strong>TD%</strong> -- Percentage of Touchdowns Thrown when Attempting to Pass<br />
-                <strong>Y/A</strong> -- Yards gained per pass attempt<br />
-                <strong>Y/C</strong> -- Yards gained per pass completion (Passing Yards) / (Passes Completed)<br />
-                <strong>Y/G</strong> -- Yards gained per game played<br />
-            </p>
+                    <strong>PA</strong> -- Plate Appearances<br />
+                    <strong>PF</strong> -- Personal Fouls Per Game<br />
+                    <strong>PTS</strong> -- Points Per Game<br />
+                    <strong>QBR</strong> -- NFL Quarterback Rating<br />
+                    <strong>QBrec</strong> -- Team record in games started by this QB (regular season)<br />
+                    <strong>R</strong> -- Runs Scored/Allowed<br />
+                    <strong>RBI</strong> -- Runs Batted In<br />
+                    <strong>SB</strong> -- Stolen Bases<br />
+                    <strong>SF</strong> -- Sacrifice Flies<br />
+                    <strong>SH</strong> -- Sacrifice Hits (Sacrifice Bunts)<br />
+                    <strong>Sk%</strong> -- Percentage of Time Sacked when Attempting to Pass: Times Sacked / (Passes Attempted + Times Sacked)<br />
+                    <strong>SLG</strong> -- Total Bases/At Bats<br />
+                    <strong>SO</strong> -- Strikeouts<br />
+                    <strong>STL</strong> -- Steals Per Game<br />
+                    <strong>Succ%</strong> -- Passing Success Rate<br />
+                    <strong>TB</strong> -- Total Bases<br />
+                    <strong>TOV</strong> -- Turnovers Per Game<br />
+                    <strong>TRB</strong> -- Total Rebounds Per Game<br />
+                    <strong>TD%</strong> -- Percentage of Touchdowns Thrown when Attempting to Pass<br />
+                    <strong>Y/A</strong> -- Yards gained per pass attempt<br />
+                    <strong>Y/C</strong> -- Yards gained per pass completion (Passing Yards) / (Passes Completed)<br />
+                    <strong>Y/G</strong> -- Yards gained per game played<br />
+                </p>
+            </div>
         </div>
-        </div >
     );
 };
 
 export default PageSnapshot;
+

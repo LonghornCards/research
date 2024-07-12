@@ -4623,3 +4623,23 @@ tbody tr {
         padding: 5px;
     }
 }
+
+.leaders-table, .pivot-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sticky-header th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: peru;
+    color: white;
+    z-index: 1;
+}
+
+.scrollable-container, .scrollable-table {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
