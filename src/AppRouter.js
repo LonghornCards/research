@@ -33,6 +33,7 @@ import BlogPost16 from './blogposts/BlogPost16';
 import BlogPost17 from './blogposts/BlogPost17';
 import BlogPost18 from './blogposts/BlogPost18';
 import BlogPost19 from './blogposts/BlogPost19';
+import BlogPost20 from './blogposts/BlogPost20';
 import Dashboard from './Dashboard';
 import CustomScoreboard from './CustomScoreboard';
 import CardPrices from './CardPrices';
@@ -91,6 +92,7 @@ const AppRouter = () => {
                 <Route path="/blog_post17" element={<BlogPost17 />} />
                 <Route path="/blog_post18" element={<BlogPost18 />} />
                 <Route path="/blog_post19" element={<BlogPost19 />} />
+                <Route path="/blog_post20" element={<BlogPost20 />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/customscoreboard" element={<CustomScoreboard />} />
                 <Route path="/cardprices" element={<CardPrices />} />

@@ -1,5 +1,17 @@
 const blogEntries = [
     {
+        date: '07/12/24',
+        title: 'Card Price New Highs',
+        summary: 'Highlighted are 6 players who saw their card prices reach new highs over the past month: Bryce Harper, Caitlin Clark, Wade Boggs, Jordan Love, Jalen Brunson & Nikola Jokic.',
+        details: (
+            <span>
+                Highlighted are 6 players who saw their card prices reach new highs over the past month: Bryce Harper, Caitlin Clark, Wade Boggs, Jordan Love, Jalen Brunson & Nikola Jokic. Jalen Brunson has soared nearly 275% over the past year, while Jordan Love has rocketed 134%. Interestingly, Wade Boggs has shown surprising strength and hovering near all-time highs, while Bryce Harper, Caitlin Clark, and Nikola Jokic continue their strong trends.
+            </span>
+        ),
+        fullPostLink: '/blog_post20',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.12.24.png'
+    },
+    {
         date: '07/08/24',
         title: 'Google Trends June 2024 Update',
         summary: 'This is a summary of the top 25 players as measured by Google Trends. The scores are aggregated on a monthly basis to determine overall trend and relative ranks for different players based on their interest over time.',
