@@ -511,7 +511,7 @@ const CustomScoreboard = () => {
             <p style={{ color: 'peru', fontWeight: 'bold' }}>
                 Select your players to create a custom scoreboard of analytics
             </p>
-            <div className="watchlist-container" style={{ border: '2px solid peru', padding: '10px', margin: '20px 0' }}>
+            <div className="watchlist-container" style={{ border: 'none', padding: '10px', margin: '20px 0' }}>
                 <h2>Create Your Watchlist:</h2>
                 <div className="scoreboard-filter">
                     <label>Name</label>
@@ -542,7 +542,7 @@ const CustomScoreboard = () => {
                     title="Reset Filters"
                 />
             </div>
-            <div className="overview-container" style={{ border: '2px solid peru', padding: '10px', margin: '20px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="overview-container" style={{ border: 'none', padding: '10px', margin: '20px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div className="pie-chart-container" style={{ width: '50%', margin: 'auto' }}>
                     <Pie data={pieChartData} options={pieChartOptions} />
                 </div>
