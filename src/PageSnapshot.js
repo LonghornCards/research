@@ -14,6 +14,9 @@ const PageSnapshot = () => {
     const [compositeData, setCompositeData] = useState(null);
     const [trendData, setTrendData] = useState([]);
     const [sportsData, setSportsData] = useState(null);
+    const [detailedStats, setDetailedStats] = useState(null);
+    const [availableYears, setAvailableYears] = useState([]);
+    const [selectedYear, setSelectedYear] = useState('Career');
     const [dateValues, setDateValues] = useState([]);
     const [previousYearValue, setPreviousYearValue] = useState(null);
     const [rebase, setRebase] = useState(false);
@@ -21,6 +24,13 @@ const PageSnapshot = () => {
     const [wikiIntroduction, setWikiIntroduction] = useState('');
     const [wikiInfobox, setWikiInfobox] = useState('');
     const [wikiImage, setWikiImage] = useState(null);
+
+    useEffect(() => {
+        if (playerData && playerData.Sport) {
+            fetchSportsData(playerName, playerData.Sport);
+            fetchDetailedStats(playerName, playerData.Sport); // Add this line
+        }
+    }, [playerData]);
 
     useEffect(() => {
         if (playerName) {
@@ -178,6 +188,55 @@ const PageSnapshot = () => {
         }
     };
 
+    const fetchDetailedStats = async (player, sport, year = 'Career') => {
+        let url = '';
+        if (sport === 'Football') {
+            url = 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NFL_Season_Stats.xlsx';
+        } else if (sport === 'Basketball') {
+            url = 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NBA_Season_Stats.xlsx';
+        } else if (sport === 'Baseball') {
+            url = 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/MLB_Season_Stats.xlsx';
+        }
+
+        if (url) {
+            try {
+                const response = await axios.get(url, {
+                    responseType: 'arraybuffer',
+                });
+
+                const data = new Uint8Array(response.data);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+                let availableYears = [...new Set(worksheet.map(row => row.Year))];
+                // Separate "Career" and sort the other years
+                availableYears = availableYears.filter(year => year !== 'Career').sort((a, b) => parseInt(a) - parseInt(b));
+                availableYears.unshift('Career'); // Add "Career" back at the beginning
+                setAvailableYears(availableYears);
+
+                const yearStats = worksheet.filter(row => row.Year === year);
+                const fuse = new Fuse(yearStats, {
+                    keys: ['Name'],
+                    threshold: 0.3
+                });
+
+                const result = fuse.search(player);
+
+                if (result.length > 0) {
+                    const playerInfo = result[0].item;
+                    setDetailedStats(playerInfo);
+                } else {
+                    setDetailedStats(null);
+                }
+            } catch (error) {
+                console.error('Error fetching detailed stats:', error);
+            }
+        }
+    };
+
+
+
     const fetchWikipediaData = async (player) => {
         try {
             const response = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(player)}`);
@@ -267,11 +326,19 @@ const PageSnapshot = () => {
         }));
     };
 
+    const handleYearChange = (event) => {
+        const selectedYear = event.target.value;
+        setSelectedYear(selectedYear);
+        if (playerData && playerData.Sport) {
+            fetchDetailedStats(playerName, playerData.Sport, selectedYear);
+        }
+    };
+
     return (
         <div className="page-snapshot" style={{ paddingTop: '60px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1 className="page-title">{`Player Snapshot${playerName ? `: ${playerName}` : ''}`}</h1>
-                {wikiImage && <img src={wikiImage} alt={`${playerName} profile`} style={{ maxHeight: '150px', marginLeft: '20px', objectFit: 'contain' }} />}
+                {wikiImage && <img className="player-image" src={wikiImage} alt={`${playerName} profile`} style={{ maxHeight: '150px', marginLeft: '20px', objectFit: 'contain' }} />}
             </div>
             <p className="page-description">
                 Below are the snapshots of various player statistics across different categories.
@@ -450,6 +517,51 @@ const PageSnapshot = () => {
                 <p className="page-description left-align">
                     {wikiIntroduction}
                 </p>
+            </div>
+            <div className="page-snapshot" style={{ paddingTop: '60px' }}>
+                {/* Other containers */}
+                <div className="stat-container">
+                    <h2 className="category-title">Detailed Statistics</h2>
+                    {availableYears.length > 0 && (
+                        <div style={{ marginBottom: '10px' }}>
+                            <label htmlFor="year-select">Select Year: </label>
+                            <select id="year-select" value={selectedYear} onChange={handleYearChange}>
+                                {availableYears.map(year => (
+                                    <option key={year} value={year}>{year}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                    {playerName && detailedStats ? (
+                        <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
+                            {divideSportsData(detailedStats).map((halfData, index) => (
+                                <div key={index} style={{ flex: 1 }}>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <thead>
+                                            <tr style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>
+                                                <th style={{ border: '1px solid peru', padding: '8px' }}>Metric</th>
+                                                <th style={{ border: '1px solid peru', padding: '8px' }}>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {halfData.map(key => (
+                                                <tr key={key}>
+                                                    <td style={{ border: '1px solid peru', padding: '8px' }}><strong>{key}</strong></td>
+                                                    <td style={{ border: '1px solid peru', padding: '8px', ...getStyleForRank(key, detailedStats[key]) }}>
+                                                        {detailedStats[key]}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No detailed statistics found for {playerName}</p>
+                    )}
+                </div>
+                {/* Other containers */}
             </div>
             <div className="stat-container" style={{ border: '1px solid peru', padding: '20px', textAlign: 'center' }}>
                 <h2 className="category-title">Infobox</h2>

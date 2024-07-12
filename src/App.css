@@ -4643,3 +4643,13 @@ tbody tr {
     overflow-y: auto;
     margin-top: 20px;
 }
+
+.player-image {
+    max-height: 150px;
+    margin-left: 20px;
+    object-fit: contain;
+    position: relative;
+    top: 20px; /* Move the image lower */
+    left: -10px; /* Move the image towards the center */
+    transform: translateX(-50%); /* Further adjust to center */
+}
