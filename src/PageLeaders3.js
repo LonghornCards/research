@@ -4,6 +4,8 @@ import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
 import './App.css';
 import Select from 'react-select';
+import Fuse from 'fuse.js';
+import { Link } from 'react-router-dom';
 
 const PageLeaders3 = () => {
     const [selectedYear, setSelectedYear] = useState('2023');
@@ -22,6 +24,7 @@ const PageLeaders3 = () => {
     const [availableYears, setAvailableYears] = useState([]);
     const [startYear, setStartYear] = useState('2005');
     const [endYear, setEndYear] = useState('2023');
+    const [playerLinks, setPlayerLinks] = useState({});
 
     useEffect(() => {
         AWS.config.update({
@@ -36,7 +39,7 @@ const PageLeaders3 = () => {
             Key: 'NBA_Season_Stats.xlsx'
         };
 
-        s3.getObject(params, (err, data) => {
+        s3.getObject(params, async (err, data) => {
             if (err) {
                 console.error(err);
                 return;
@@ -80,6 +83,8 @@ const PageLeaders3 = () => {
                 return acc;
             }, {});
             setPivotData(pivotData);
+
+            await fetchCompositeData(filteredData);
         });
     }, [selectedYear]);
 
@@ -105,6 +110,34 @@ const PageLeaders3 = () => {
         }
     }, [startYear, endYear]);
 
+    const fetchCompositeData = async (fullTableData) => {
+        try {
+            const response = await fetch('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Composite_Ranks.xlsx');
+            const arrayBuffer = await response.arrayBuffer();
+            const data = new Uint8Array(arrayBuffer);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+            const fuse = new Fuse(jsonData, {
+                keys: ['Name'],
+                threshold: 0.3
+            });
+
+            const playerLinks = {};
+            fullTableData.forEach(player => {
+                const result = fuse.search(player.Name);
+                if (result.length > 0) {
+                    playerLinks[player.Name] = result[0].item.Name;
+                }
+            });
+
+            setPlayerLinks(playerLinks);
+        } catch (error) {
+            console.error('Error fetching composite data:', error);
+        }
+    };
+
     const getGradientColor = (value, min, max, reverse = false) => {
         if (value === 0 || isNaN(value) || typeof value !== 'number') return 'lightgray';
         const ratio = (value - min) / (max - min);
@@ -127,7 +160,13 @@ const PageLeaders3 = () => {
                     <tr key={rowIndex}>
                         {columns.map((column, colIndex) => (
                             <td key={colIndex}>
-                                {player[column]}
+                                {column === 'Name' && playerLinks[player.Name] ? (
+                                    <Link to={`/PageSnapshot?player=${playerLinks[player.Name]}`}>
+                                        {player.Name}
+                                    </Link>
+                                ) : (
+                                    player[column]
+                                )}
                             </td>
                         ))}
                     </tr>
@@ -171,7 +210,15 @@ const PageLeaders3 = () => {
                     <tbody>
                         {names.map(name => (
                             <tr key={name}>
-                                <td style={{ border: '1px solid peru' }}>{name}</td>
+                                <td style={{ border: '1px solid peru' }}>
+                                    {playerLinks[name] ? (
+                                        <Link to={`/PageSnapshot?player=${playerLinks[name]}`}>
+                                            {name}
+                                        </Link>
+                                    ) : (
+                                        name
+                                    )}
+                                </td>
                                 {years.map(year => {
                                     const value = pivotData[name][year]?.[selectedPivotStat];
                                     const { min, max } = minMaxValues[year];
@@ -381,6 +428,8 @@ const PageLeaders3 = () => {
             </div>
         </div>
     );
-}
+};
 
 export default PageLeaders3;
+
+

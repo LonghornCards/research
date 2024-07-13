@@ -16,7 +16,7 @@ const PageSnapshot = () => {
     const [sportsData, setSportsData] = useState(null);
     const [detailedStats, setDetailedStats] = useState(null);
     const [availableYears, setAvailableYears] = useState([]);
-    const [selectedYear, setSelectedYear] = useState('Career');
+    const [selectedYear, setSelectedYear] = useState('');
     const [dateValues, setDateValues] = useState([]);
     const [previousYearValue, setPreviousYearValue] = useState(null);
     const [rebase, setRebase] = useState(false);
@@ -28,7 +28,7 @@ const PageSnapshot = () => {
     useEffect(() => {
         if (playerData && playerData.Sport) {
             fetchSportsData(playerName, playerData.Sport);
-            fetchDetailedStats(playerName, playerData.Sport); // Add this line
+            fetchDetailedStats(playerName, playerData.Sport);
         }
     }, [playerData]);
 
@@ -188,14 +188,23 @@ const PageSnapshot = () => {
         }
     };
 
-    const fetchDetailedStats = async (player, sport, year = 'Career') => {
+    const fetchDetailedStats = async (player, sport, year) => {
         let url = '';
+        let filterColumn = 'Year';
+        let defaultFilterValue = 'Career';
+
         if (sport === 'Football') {
             url = 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NFL_Season_Stats.xlsx';
+            filterColumn = 'Year';
+            defaultFilterValue = 'Career';
         } else if (sport === 'Basketball') {
             url = 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/NBA_Season_Stats.xlsx';
+            filterColumn = 'Season';
+            defaultFilterValue = 'Career';
         } else if (sport === 'Baseball') {
             url = 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/MLB_Season_Stats.xlsx';
+            filterColumn = 'Year';
+            defaultFilterValue = '162 Game Avg.';
         }
 
         if (url) {
@@ -209,14 +218,7 @@ const PageSnapshot = () => {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-                let availableYears = [...new Set(worksheet.map(row => row.Year))];
-                // Separate "Career" and sort the other years
-                availableYears = availableYears.filter(year => year !== 'Career').sort((a, b) => parseInt(a) - parseInt(b));
-                availableYears.unshift('Career'); // Add "Career" back at the beginning
-                setAvailableYears(availableYears);
-
-                const yearStats = worksheet.filter(row => row.Year === year);
-                const fuse = new Fuse(yearStats, {
+                const fuse = new Fuse(worksheet, {
                     keys: ['Name'],
                     threshold: 0.3
                 });
@@ -225,7 +227,21 @@ const PageSnapshot = () => {
 
                 if (result.length > 0) {
                     const playerInfo = result[0].item;
-                    setDetailedStats(playerInfo);
+
+                    let availableYears = [...new Set(worksheet.filter(row => row.Name === playerInfo.Name).map(row => row[filterColumn]))];
+                    // Separate the default filter value and sort the other years
+                    availableYears = availableYears.filter(year => year !== defaultFilterValue).sort((a, b) => parseInt(a) - parseInt(b));
+                    availableYears.unshift(defaultFilterValue); // Add the default filter value back at the beginning
+                    setAvailableYears(availableYears);
+                    setSelectedYear(defaultFilterValue);
+
+                    const yearStats = worksheet.filter(row => row[filterColumn] === defaultFilterValue && row.Name === playerInfo.Name);
+
+                    if (yearStats.length > 0) {
+                        setDetailedStats(yearStats[0]);
+                    } else {
+                        setDetailedStats(null);
+                    }
                 } else {
                     setDetailedStats(null);
                 }
@@ -234,8 +250,6 @@ const PageSnapshot = () => {
             }
         }
     };
-
-
 
     const fetchWikipediaData = async (player) => {
         try {
@@ -649,4 +663,3 @@ const PageSnapshot = () => {
 };
 
 export default PageSnapshot;
-

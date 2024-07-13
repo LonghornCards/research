@@ -2,8 +2,9 @@
 import AWS from 'aws-sdk';
 import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
-import './App.css';
 import Select from 'react-select';
+import Fuse from 'fuse.js';
+import './App.css';
 
 const PageLeaders = () => {
     const [selectedYear, setSelectedYear] = useState(2024);
@@ -22,6 +23,8 @@ const PageLeaders = () => {
     const [years, setYears] = useState([]);
     const [startYear, setStartYear] = useState('2005');
     const [endYear, setEndYear] = useState('2024');
+    const [compositeData, setCompositeData] = useState([]);
+    const [fuse, setFuse] = useState(null);
 
     useEffect(() => {
         AWS.config.update({
@@ -74,7 +77,6 @@ const PageLeaders = () => {
                 .sort((a, b) => a - b);
             setYears([...new Set(validYears)]);
 
-            // Create pivot data
             const pivotData = jsonData.reduce((acc, row) => {
                 const { Year, Name, ...stats } = row;
                 if (!acc[Name]) acc[Name] = {};
@@ -102,7 +104,7 @@ const PageLeaders = () => {
         const s3 = new AWS.S3();
         const params = {
             Bucket: 'websiteapp-storage-fdb68492737c0-dev',
-            Key: 'MLB_Season_Stats.xlsx'
+            Key: 'Composite_Ranks.xlsx'
         };
 
         s3.getObject(params, (err, data) => {
@@ -113,23 +115,11 @@ const PageLeaders = () => {
             const workbook = XLSX.read(data.Body, { type: 'array' });
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-            const validYears = jsonData
-                .map(row => row.Year)
-                .filter(year => /^\d{4}$/.test(year))
-                .sort((a, b) => a - b);
-            setYears([...new Set(validYears)]);
-
-            // Create pivot data
-            const pivotData = jsonData.reduce((acc, row) => {
-                const { Year, Name, ...stats } = row;
-                if (!acc[Name]) acc[Name] = {};
-                acc[Name][Year] = stats;
-                return acc;
-            }, {});
-            setPivotData(pivotData);
+            setCompositeData(jsonData);
+            const fuseInstance = new Fuse(jsonData, { keys: ['Name'], threshold: 0.3 });
+            setFuse(fuseInstance);
         });
-    }, [startYear, endYear]);
+    }, []);
 
     const getGradientColor = (value, min, max, reverse) => {
         if (value === 0) return 'lightgray';
@@ -153,7 +143,13 @@ const PageLeaders = () => {
                     <tr key={rowIndex}>
                         {columns.map((column, colIndex) => (
                             <td key={colIndex}>
-                                {player[column]}
+                                {column === 'Name' && fuse && fuse.search(player[column]).length > 0 ? (
+                                    <a href={`/PageSnapshot?player=${encodeURIComponent(player[column])}`}>
+                                        {player[column]}
+                                    </a>
+                                ) : (
+                                    player[column]
+                                )}
                             </td>
                         ))}
                     </tr>
@@ -207,7 +203,6 @@ const PageLeaders = () => {
             </div>
         );
     };
-
     const handleYearChange = (event) => {
         setSelectedYear(parseInt(event.target.value));
     };
@@ -320,9 +315,9 @@ const PageLeaders = () => {
                         ]}
                         layout={{
                             title: `Top Players by ${selectedStat}`,
-                            xaxis: { title: '' }, // Remove "Player" title
+                            xaxis: { title: '' },
                             yaxis: { title: selectedStat },
-                            width: 1000 // Increase the width by 25%
+                            width: 1000
                         }}
                     />
                 </div>
@@ -399,7 +394,7 @@ const PageLeaders = () => {
             </div>
         </div>
     );
-}
+};
 
 export default PageLeaders;
 

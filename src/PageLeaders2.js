@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 import * as XLSX from 'xlsx';
-import Plot from 'react-plotly.js';
+import Fuse from 'fuse.js';
+import Plot from 'react-plotly.js'; // Ensure Plot is correctly imported
 import './App.css';
 import Select from 'react-select';
 
@@ -25,6 +26,7 @@ const PageLeaders2 = () => {
     const [years, setYears] = useState([]);
     const [startYear, setStartYear] = useState('2005');
     const [endYear, setEndYear] = useState('2023');
+    const [playerLinks, setPlayerLinks] = useState({});
 
     useEffect(() => {
         AWS.config.update({
@@ -140,6 +142,42 @@ const PageLeaders2 = () => {
         });
     }, [startYear, endYear]);
 
+    const loadCompositeRanks = async () => {
+        const s3 = new AWS.S3();
+        const params = {
+            Bucket: 'websiteapp-storage-fdb68492737c0-dev',
+            Key: 'Composite_Ranks.xlsx'
+        };
+
+        s3.getObject(params, (err, data) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            const workbook = XLSX.read(data.Body, { type: 'array' });
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+            const fuse = new Fuse(jsonData, {
+                keys: ['Name'],
+                threshold: 0.3
+            });
+
+            const links = {};
+            fullTableData.forEach(player => {
+                const result = fuse.search(player.Name);
+                if (result.length > 0) {
+                    links[player.Name] = `/PageSnapshot?player=${encodeURIComponent(player.Name)}`;
+                }
+            });
+            setPlayerLinks(links);
+        });
+    };
+
+    useEffect(() => {
+        loadCompositeRanks();
+    }, [fullTableData]);
+
     const getGradientColor = (value, min, max, reverse) => {
         if (value === 0 || isNaN(value)) return 'lightgray';
         const ratio = (value - min) / (max - min);
@@ -157,12 +195,23 @@ const PageLeaders2 = () => {
                     ))}
                 </tr>
             </thead>
+            <thead className="sticky-header">
+                <tr>
+                    {columns.map(column => (
+                        <th key={column}>{column}</th>
+                    ))}
+                </tr>
+            </thead>
             <tbody>
                 {data.map((player, rowIndex) => (
                     <tr key={rowIndex}>
                         {columns.map((column, colIndex) => (
                             <td key={colIndex}>
-                                {player[column]}
+                                {column === 'Name' && playerLinks[player.Name] ? (
+                                    <a href={playerLinks[player.Name]}>{player[column]}</a>
+                                ) : (
+                                    player[column]
+                                )}
                             </td>
                         ))}
                     </tr>
@@ -208,7 +257,9 @@ const PageLeaders2 = () => {
                     <tbody>
                         {names.filter(name => filteredYears.some(year => parseFloat(pivotData[name][year]?.[selectedPivotStat]) > 0)).map(name => (
                             <tr key={name}>
-                                <td style={{ border: '1px solid peru' }}>{name}</td>
+                                <td style={{ border: '1px solid peru' }}>
+                                    {playerLinks[name] ? <a href={playerLinks[name]}>{name}</a> : name}
+                                </td>
                                 {filteredYears.map((year, index) => (
                                     <td key={year} style={{ border: '1px solid peru', backgroundColor: getGradientColor(parseFloat(pivotData[name][year]?.[selectedPivotStat]) || 0, minMaxValuesByYear[index].min, minMaxValuesByYear[index].max, reverseGradient) }}>
                                         {isNaN(pivotData[name][year]?.[selectedPivotStat]) || pivotData[name][year]?.[selectedPivotStat] === 0 || isNaN(parseFloat(pivotData[name][year]?.[selectedPivotStat])) ? 'N/A' : pivotData[name][year]?.[selectedPivotStat]}
@@ -455,3 +506,5 @@ const PageLeaders2 = () => {
 }
 
 export default PageLeaders2;
+
+
