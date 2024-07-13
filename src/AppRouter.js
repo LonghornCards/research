@@ -110,7 +110,7 @@ const AppRouter = () => {
                 <Route path="/pageleaders3" element={<PageLeaders3 />} />  {/* Add the new route for PageLeaders3 */}
                 <Route path="/pagecsi" element={<PageCSI />} />
                 <Route path="/pagelonghorns" element={<PageLonghorns />} />
-                <Route path="/pagesnapshot" element={<PageSnapshot />} />
+                <Route path="/pagesnapshot" element={<PageSnapshot />} />  {/* Ensure this route is defined */}
                 <Route path="/pagepricecharts" element={<PagePriceCharts />} />
             </Routes>
         </Router>

@@ -24,16 +24,11 @@ const PageSnapshot = () => {
     const [wikiIntroduction, setWikiIntroduction] = useState('');
     const [wikiInfobox, setWikiInfobox] = useState('');
     const [wikiImage, setWikiImage] = useState(null);
-
-    useEffect(() => {
-        if (playerData && playerData.Sport) {
-            fetchSportsData(playerName, playerData.Sport);
-            fetchDetailedStats(playerName, playerData.Sport);
-        }
-    }, [playerData]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (playerName) {
+            console.log("Player name from query:", playerName);
             fetchPlayerData(playerName);
             fetchCompositeData(playerName);
             fetchTrendData(playerName);
@@ -41,8 +36,17 @@ const PageSnapshot = () => {
         }
     }, [playerName]);
 
+    useEffect(() => {
+        if (playerData && playerData.Sport) {
+            console.log("Player data:", playerData);
+            fetchSportsData(playerName, playerData.Sport);
+            fetchDetailedStats(playerName, playerData.Sport);
+        }
+    }, [playerData]);
+
     const fetchPlayerData = async (player) => {
         try {
+            console.log("Fetching player data for:", player);
             const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Player_Index_Returns.xlsx', {
                 responseType: 'arraybuffer',
             });
@@ -55,6 +59,7 @@ const PageSnapshot = () => {
             const playerInfo = worksheet.find(row => row.Player === player);
 
             if (playerInfo) {
+                console.log("Player info found:", playerInfo);
                 setPlayerData(playerInfo);
 
                 const dateColumns = Object.keys(playerInfo).filter(key => {
@@ -70,17 +75,20 @@ const PageSnapshot = () => {
                 setDateValues(values);
                 setPreviousYearValue(playerInfo['12/31/2022']);
             } else {
+                console.log("No player info found for:", player);
                 setPlayerData(null);
                 setDateValues([]);
                 setPreviousYearValue(null);
             }
         } catch (error) {
             console.error('Error fetching player data:', error);
+            setError('Error fetching player data');
         }
     };
 
     const fetchCompositeData = async (player) => {
         try {
+            console.log("Fetching composite data for:", player);
             const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Composite_Ranks.xlsx', {
                 responseType: 'arraybuffer',
             });
@@ -99,17 +107,21 @@ const PageSnapshot = () => {
 
             if (result.length > 0) {
                 const playerInfo = result[0].item;
+                console.log("Composite data found:", playerInfo);
                 setCompositeData(playerInfo);
             } else {
+                console.log("No composite data found for:", player);
                 setCompositeData(null);
             }
         } catch (error) {
             console.error('Error fetching composite data:', error);
+            setError('Error fetching composite data');
         }
     };
 
     const fetchTrendData = async (player) => {
         try {
+            console.log("Fetching trend data for:", player);
             const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_ALL.xlsx', {
                 responseType: 'arraybuffer',
             });
@@ -128,6 +140,7 @@ const PageSnapshot = () => {
 
             if (result.length > 0) {
                 const playerInfo = result[0].item;
+                console.log("Trend data found:", playerInfo);
 
                 const dateColumns = Object.keys(playerInfo).filter(key => {
                     const datePattern = /^[0-9]{2}-[A-Za-z]+$/;
@@ -141,10 +154,12 @@ const PageSnapshot = () => {
 
                 setTrendData(values);
             } else {
+                console.log("No trend data found for:", player);
                 setTrendData([]);
             }
         } catch (error) {
             console.error('Error fetching trend data:', error);
+            setError('Error fetching trend data');
         }
     };
 
@@ -160,6 +175,7 @@ const PageSnapshot = () => {
 
         if (url) {
             try {
+                console.log("Fetching sports data for:", player, "Sport:", sport);
                 const response = await axios.get(url, {
                     responseType: 'arraybuffer',
                 });
@@ -178,12 +194,15 @@ const PageSnapshot = () => {
 
                 if (result.length > 0) {
                     const playerInfo = result[0].item;
+                    console.log("Sports data found:", playerInfo);
                     setSportsData(playerInfo);
                 } else {
+                    console.log("No sports data found for:", player);
                     setSportsData(null);
                 }
             } catch (error) {
                 console.error('Error fetching sports data:', error);
+                setError('Error fetching sports data');
             }
         }
     };
@@ -209,6 +228,7 @@ const PageSnapshot = () => {
 
         if (url) {
             try {
+                console.log("Fetching detailed stats for:", player, "Sport:", sport, "Year:", year);
                 const response = await axios.get(url, {
                     responseType: 'arraybuffer',
                 });
@@ -227,11 +247,11 @@ const PageSnapshot = () => {
 
                 if (result.length > 0) {
                     const playerInfo = result[0].item;
+                    console.log("Detailed stats found:", playerInfo);
 
                     let availableYears = [...new Set(worksheet.filter(row => row.Name === playerInfo.Name).map(row => row[filterColumn]))];
-                    // Separate the default filter value and sort the other years
                     availableYears = availableYears.filter(year => year !== defaultFilterValue).sort((a, b) => parseInt(a) - parseInt(b));
-                    availableYears.unshift(defaultFilterValue); // Add the default filter value back at the beginning
+                    availableYears.unshift(defaultFilterValue);
                     setAvailableYears(availableYears);
                     setSelectedYear(defaultFilterValue);
 
@@ -243,16 +263,19 @@ const PageSnapshot = () => {
                         setDetailedStats(null);
                     }
                 } else {
+                    console.log("No detailed stats found for:", player);
                     setDetailedStats(null);
                 }
             } catch (error) {
                 console.error('Error fetching detailed stats:', error);
+                setError('Error fetching detailed stats');
             }
         }
     };
 
     const fetchWikipediaData = async (player) => {
         try {
+            console.log("Fetching Wikipedia data for:", player);
             const response = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(player)}`);
             const data = response.data;
 
@@ -276,18 +299,13 @@ const PageSnapshot = () => {
             setWikiIntroduction(introElement ? introElement.textContent : '');
         } catch (error) {
             console.error('Error fetching Wikipedia data:', error);
+            setError('Error fetching Wikipedia data');
             setWikiSummary('No Wikipedia summary found.');
             setWikiImage(null);
             setWikiInfobox('No infobox found.');
             setWikiIntroduction('No introduction found.');
         }
     };
-
-    useEffect(() => {
-        if (playerData && playerData.Sport) {
-            fetchSportsData(playerName, playerData.Sport);
-        }
-    }, [playerData]);
 
     const calculatePercentage = (current, reference) => {
         if (reference === 0) return 'N/A';
@@ -357,6 +375,7 @@ const PageSnapshot = () => {
             <p className="page-description">
                 Below are the snapshots of various player statistics across different categories.
             </p>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="stat-container">
                 {playerName && (
                     <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>

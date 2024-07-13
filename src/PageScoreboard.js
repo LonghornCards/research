@@ -324,7 +324,7 @@ const Player_Scoreboard = () => {
                                 {(sport === 'Football' ? topFootball : sport === 'Basketball' ? topBasketball : topBaseball).map((player, rowIndex) => (
                                     <tr key={rowIndex}>
                                         <td>
-                                            <a href="#" onClick={() => handlePlayerClick(player.name)}>{player.name}</a>
+                                            {player.name}
                                         </td>
                                         <td style={{ textAlign: 'center' }}>{player.rank}</td>
                                     </tr>
@@ -350,7 +350,7 @@ const Player_Scoreboard = () => {
                                 {(sport === 'Football' ? bottomFootball : sport === 'Basketball' ? bottomBasketball : bottomBaseball).map((player, rowIndex) => (
                                     <tr key={rowIndex}>
                                         <td>
-                                            <a href="#" onClick={() => handlePlayerClick(player.name)}>{player.name}</a>
+                                            {player.name}
                                         </td>
                                         <td style={{ textAlign: 'center' }}>{player.rank}</td>
                                     </tr>
@@ -596,7 +596,7 @@ const Player_Scoreboard = () => {
                                     {row.cells.map(cell => (
                                         <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
                                             {cell.column.id === 'Name' ? (
-                                                <a href="#" onClick={() => handlePlayerClick(cell.value)}>{cell.value}</a>
+                                                cell.value
                                             ) : (
                                                 cell.render('Cell')
                                             )}
