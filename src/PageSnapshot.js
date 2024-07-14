@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
@@ -8,6 +8,7 @@ import './App.css';
 
 const PageSnapshot = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const playerName = queryParams.get('player');
     const [playerData, setPlayerData] = useState(null);
@@ -24,29 +25,49 @@ const PageSnapshot = () => {
     const [wikiIntroduction, setWikiIntroduction] = useState('');
     const [wikiInfobox, setWikiInfobox] = useState('');
     const [wikiImage, setWikiImage] = useState(null);
-    const [error, setError] = useState('');
+    const [playerNames, setPlayerNames] = useState([]);
+    const [selectedPlayer, setSelectedPlayer] = useState(playerName || 'Patrick Mahomes');
 
     useEffect(() => {
-        if (playerName) {
-            console.log("Player name from query:", playerName);
-            fetchPlayerData(playerName);
-            fetchCompositeData(playerName);
-            fetchTrendData(playerName);
-            fetchWikipediaData(playerName);
+        fetchPlayerNames();
+    }, []);
+
+    useEffect(() => {
+        if (selectedPlayer) {
+            fetchPlayerData(selectedPlayer);
+            fetchCompositeData(selectedPlayer);
+            fetchTrendData(selectedPlayer);
+            fetchWikipediaData(selectedPlayer);
         }
-    }, [playerName]);
+    }, [selectedPlayer]);
 
     useEffect(() => {
         if (playerData && playerData.Sport) {
-            console.log("Player data:", playerData);
-            fetchSportsData(playerName, playerData.Sport);
-            fetchDetailedStats(playerName, playerData.Sport);
+            fetchSportsData(selectedPlayer, playerData.Sport);
+            fetchDetailedStats(selectedPlayer, playerData.Sport, selectedYear);
         }
-    }, [playerData]);
+    }, [playerData, selectedYear]);
+
+    const fetchPlayerNames = async () => {
+        try {
+            const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Composite_Ranks.xlsx', {
+                responseType: 'arraybuffer',
+            });
+
+            const data = new Uint8Array(response.data);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+            const names = worksheet.map(row => row.Name);
+            setPlayerNames(names);
+        } catch (error) {
+            console.error('Error fetching player names:', error);
+        }
+    };
 
     const fetchPlayerData = async (player) => {
         try {
-            console.log("Fetching player data for:", player);
             const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Player_Index_Returns.xlsx', {
                 responseType: 'arraybuffer',
             });
@@ -59,7 +80,6 @@ const PageSnapshot = () => {
             const playerInfo = worksheet.find(row => row.Player === player);
 
             if (playerInfo) {
-                console.log("Player info found:", playerInfo);
                 setPlayerData(playerInfo);
 
                 const dateColumns = Object.keys(playerInfo).filter(key => {
@@ -75,20 +95,17 @@ const PageSnapshot = () => {
                 setDateValues(values);
                 setPreviousYearValue(playerInfo['12/31/2022']);
             } else {
-                console.log("No player info found for:", player);
                 setPlayerData(null);
                 setDateValues([]);
                 setPreviousYearValue(null);
             }
         } catch (error) {
             console.error('Error fetching player data:', error);
-            setError('Error fetching player data');
         }
     };
 
     const fetchCompositeData = async (player) => {
         try {
-            console.log("Fetching composite data for:", player);
             const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Composite_Ranks.xlsx', {
                 responseType: 'arraybuffer',
             });
@@ -107,21 +124,17 @@ const PageSnapshot = () => {
 
             if (result.length > 0) {
                 const playerInfo = result[0].item;
-                console.log("Composite data found:", playerInfo);
                 setCompositeData(playerInfo);
             } else {
-                console.log("No composite data found for:", player);
                 setCompositeData(null);
             }
         } catch (error) {
             console.error('Error fetching composite data:', error);
-            setError('Error fetching composite data');
         }
     };
 
     const fetchTrendData = async (player) => {
         try {
-            console.log("Fetching trend data for:", player);
             const response = await axios.get('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Google_Trends_ALL.xlsx', {
                 responseType: 'arraybuffer',
             });
@@ -140,7 +153,6 @@ const PageSnapshot = () => {
 
             if (result.length > 0) {
                 const playerInfo = result[0].item;
-                console.log("Trend data found:", playerInfo);
 
                 const dateColumns = Object.keys(playerInfo).filter(key => {
                     const datePattern = /^[0-9]{2}-[A-Za-z]+$/;
@@ -154,12 +166,10 @@ const PageSnapshot = () => {
 
                 setTrendData(values);
             } else {
-                console.log("No trend data found for:", player);
                 setTrendData([]);
             }
         } catch (error) {
             console.error('Error fetching trend data:', error);
-            setError('Error fetching trend data');
         }
     };
 
@@ -175,7 +185,6 @@ const PageSnapshot = () => {
 
         if (url) {
             try {
-                console.log("Fetching sports data for:", player, "Sport:", sport);
                 const response = await axios.get(url, {
                     responseType: 'arraybuffer',
                 });
@@ -194,15 +203,12 @@ const PageSnapshot = () => {
 
                 if (result.length > 0) {
                     const playerInfo = result[0].item;
-                    console.log("Sports data found:", playerInfo);
                     setSportsData(playerInfo);
                 } else {
-                    console.log("No sports data found for:", player);
                     setSportsData(null);
                 }
             } catch (error) {
                 console.error('Error fetching sports data:', error);
-                setError('Error fetching sports data');
             }
         }
     };
@@ -228,7 +234,6 @@ const PageSnapshot = () => {
 
         if (url) {
             try {
-                console.log("Fetching detailed stats for:", player, "Sport:", sport, "Year:", year);
                 const response = await axios.get(url, {
                     responseType: 'arraybuffer',
                 });
@@ -247,7 +252,6 @@ const PageSnapshot = () => {
 
                 if (result.length > 0) {
                     const playerInfo = result[0].item;
-                    console.log("Detailed stats found:", playerInfo);
 
                     let availableYears = [...new Set(worksheet.filter(row => row.Name === playerInfo.Name).map(row => row[filterColumn]))];
                     availableYears = availableYears.filter(year => year !== defaultFilterValue).sort((a, b) => parseInt(a) - parseInt(b));
@@ -263,19 +267,16 @@ const PageSnapshot = () => {
                         setDetailedStats(null);
                     }
                 } else {
-                    console.log("No detailed stats found for:", player);
                     setDetailedStats(null);
                 }
             } catch (error) {
                 console.error('Error fetching detailed stats:', error);
-                setError('Error fetching detailed stats');
             }
         }
     };
 
     const fetchWikipediaData = async (player) => {
         try {
-            console.log("Fetching Wikipedia data for:", player);
             const response = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(player)}`);
             const data = response.data;
 
@@ -299,7 +300,6 @@ const PageSnapshot = () => {
             setWikiIntroduction(introElement ? introElement.textContent : '');
         } catch (error) {
             console.error('Error fetching Wikipedia data:', error);
-            setError('Error fetching Wikipedia data');
             setWikiSummary('No Wikipedia summary found.');
             setWikiImage(null);
             setWikiInfobox('No infobox found.');
@@ -361,26 +361,36 @@ const PageSnapshot = () => {
     const handleYearChange = (event) => {
         const selectedYear = event.target.value;
         setSelectedYear(selectedYear);
-        if (playerData && playerData.Sport) {
-            fetchDetailedStats(playerName, playerData.Sport, selectedYear);
-        }
+    };
+
+    const handlePlayerChange = (event) => {
+        const newPlayer = event.target.value;
+        setSelectedPlayer(newPlayer);
+        navigate(`?player=${newPlayer}`);
     };
 
     return (
         <div className="page-snapshot" style={{ paddingTop: '60px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h1 className="page-title">{`Player Snapshot${playerName ? `: ${playerName}` : ''}`}</h1>
-                {wikiImage && <img className="player-image" src={wikiImage} alt={`${playerName} profile`} style={{ maxHeight: '150px', marginLeft: '20px', objectFit: 'contain' }} />}
+                <h1 className="page-title">{`Player Snapshot${selectedPlayer ? `: ${selectedPlayer}` : ''}`}</h1>
+                {wikiImage && <img className="player-image" src={wikiImage} alt={`${selectedPlayer} profile`} style={{ maxHeight: '150px', marginLeft: '20px', objectFit: 'contain' }} />}
+            </div>
+            <div style={{ marginBottom: '20px' }}>
+                <label htmlFor="player-select">Select Player: </label>
+                <select id="player-select" value={selectedPlayer} onChange={handlePlayerChange}>
+                    {playerNames.map(name => (
+                        <option key={name} value={name}>{name}</option>
+                    ))}
+                </select>
             </div>
             <p className="page-description">
                 Below are the snapshots of various player statistics across different categories.
             </p>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="stat-container">
-                {playerName && (
+                {selectedPlayer && (
                     <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
                         <div style={{ flex: 1 }}>
-                            <h2 className="category-title">{playerName}</h2>
+                            <h2 className="category-title">{selectedPlayer}</h2>
                             {playerData ? (
                                 <div className="player-data" style={{ display: 'flex' }}>
                                     <div style={{ flex: 1 }}>
@@ -407,7 +417,7 @@ const PageSnapshot = () => {
                                     </div>
                                 </div>
                             ) : (
-                                <p>No data found for {playerName}</p>
+                                <p>No data found for {selectedPlayer}</p>
                             )}
                         </div>
                         <div style={{ flex: 1 }}>
@@ -441,7 +451,7 @@ const PageSnapshot = () => {
             </div>
             <div className="stat-container">
                 <h2 className="category-title">Composite Ranks</h2>
-                {playerName && compositeData ? (
+                {selectedPlayer && compositeData ? (
                     <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
                         <div style={{ flex: 1 }}>
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -508,12 +518,12 @@ const PageSnapshot = () => {
                         </div>
                     </div>
                 ) : (
-                    <p>No composite rank data found for {playerName}</p>
+                    <p>No composite rank data found for {selectedPlayer}</p>
                 )}
             </div>
             <div className="stat-container">
                 <h2 className="category-title">Sport Statistics</h2>
-                {playerName && sportsData ? (
+                {selectedPlayer && sportsData ? (
                     <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
                         {divideSportsData(sportsData).map((halfData, index) => (
                             <div key={index} style={{ flex: 1 }}>
@@ -539,7 +549,7 @@ const PageSnapshot = () => {
                         ))}
                     </div>
                 ) : (
-                    <p>No sports data found for {playerName}</p>
+                    <p>No sports data found for {selectedPlayer}</p>
                 )}
             </div>
             <div className="stat-container" style={{ border: '1px solid peru', padding: '20px' }}>
@@ -565,7 +575,7 @@ const PageSnapshot = () => {
                             </select>
                         </div>
                     )}
-                    {playerName && detailedStats ? (
+                    {selectedPlayer && detailedStats ? (
                         <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
                             {divideSportsData(detailedStats).map((halfData, index) => (
                                 <div key={index} style={{ flex: 1 }}>
@@ -591,14 +601,14 @@ const PageSnapshot = () => {
                             ))}
                         </div>
                     ) : (
-                        <p>No detailed statistics found for {playerName}</p>
+                        <p>No detailed statistics found for {selectedPlayer}</p>
                     )}
                 </div>
                 {/* Other containers */}
             </div>
             <div className="stat-container" style={{ border: '1px solid peru', padding: '20px', textAlign: 'center' }}>
                 <h2 className="category-title">Infobox</h2>
-                {wikiImage && <img src={wikiImage} alt={`${playerName} profile`} style={{ maxHeight: '150px', marginBottom: '20px', objectFit: 'contain' }} />}
+                {wikiImage && <img src={wikiImage} alt={`${selectedPlayer} profile`} style={{ maxHeight: '150px', marginBottom: '20px', objectFit: 'contain' }} />}
                 <div className="page-description" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div dangerouslySetInnerHTML={{ __html: wikiInfobox }} style={{ maxWidth: '600px', textAlign: 'left' }}></div>
                 </div>

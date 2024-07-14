@@ -315,6 +315,9 @@ const Navbar = () => {
                             <NavLink to="/pagestats" onClick={() => setIsOpen(false)}>
                                 Player Statistics
                             </NavLink>
+                            <NavLink to="/pagesnapshot" onClick={() => setIsOpen(false)}>
+                                Player Snapshot
+                            </NavLink>
                             <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
                                 Player Returns
                             </NavLink>
