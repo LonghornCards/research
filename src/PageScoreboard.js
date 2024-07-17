@@ -33,6 +33,14 @@ const statusOptions = [
     { value: 'Retired', label: 'Retired' }
 ];
 
+const trendOptions = [
+    { value: 'All', label: 'All' },
+    { value: 'Strong Downtrend', label: 'Strong Downtrend' },
+    { value: 'Downtrend', label: 'Downtrend' },
+    { value: 'Uptrend', label: 'Uptrend' },
+    { value: 'Strong Uptrend', label: 'Strong Uptrend' }
+];
+
 const Option = (props) => (
     <components.Option {...props}>
         <input type="checkbox" checked={props.isSelected} onChange={() => null} />{' '}
@@ -53,8 +61,8 @@ const Player_Scoreboard = () => {
     const [yAxis, setYAxis] = useState(columnOptions[3]); // Default to Sentiment Rank
     const [selectedSport, setSelectedSport] = useState(sportOptions[0]); // Default to All Sports
     const [filteredData, setFilteredData] = useState([]);
-    const [selectedName, setSelectedName] = useState(sportOptions[0]); // Default to All Sports
-    const [selectedTrend, setSelectedTrend] = useState(statusOptions[0]); // Default to All
+    const [selectedName, setSelectedName] = useState(null);
+    const [selectedTrend, setSelectedTrend] = useState(trendOptions[0]); // Default to All
     const [bubbleSize, setBubbleSize] = useState(columnOptions[1]); // Default to Fundamental Rank
     const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]); // Default to All
     const [topFootball, setTopFootball] = useState([]);
@@ -108,6 +116,21 @@ const Player_Scoreboard = () => {
         const r = Math.floor(255 * (1 - ratio));
         const g = Math.floor(255 * ratio);
         return `rgb(${r}, ${g}, 0)`;
+    };
+
+    const getBackgroundColor = (value, max) => {
+        const ratio = value / max;
+        const r = Math.floor(255 * (1 - ratio));
+        const g = Math.floor(255 * ratio);
+        return `rgba(${r}, ${g}, 0, 0.5)`;
+    };
+
+    const getTrendColor = (value) => {
+        if (value === 'Strong Downtrend') return 'red';
+        if (value === 'Downtrend') return 'indianred';
+        if (value === 'Uptrend') return 'green';
+        if (value === 'Strong Uptrend') return 'limegreen';
+        return 'transparent';
     };
 
     const updateChartData = (data, xAxis, yAxis, sport, bubbleSize) => {
@@ -165,6 +188,7 @@ const Player_Scoreboard = () => {
     const handleSportChange = selectedOption => {
         if (selectedOption) {
             setSelectedSport(selectedOption);
+            filterTableData(data, selectedName, selectedOption, selectedTrend, selectedStatus);
             updateChartData(data, xAxis.value, yAxis.value, selectedOption.value, bubbleSize.value);
         }
     };
@@ -177,48 +201,41 @@ const Player_Scoreboard = () => {
     };
 
     const handleNameChange = selectedOption => {
-        if (selectedOption) {
-            setSelectedName(selectedOption);
-            filterTableData(data, selectedOption, selectedSport, selectedTrend, selectedStatus);
-        }
+        setSelectedName(selectedOption);
+        filterTableData(data, selectedOption, selectedSport, selectedTrend, selectedStatus);
     };
 
     const handleTrendChange = selectedOption => {
-        if (selectedOption) {
-            setSelectedTrend(selectedOption);
-            filterTableData(data, selectedName, selectedSport, selectedOption, selectedStatus);
-        }
+        setSelectedTrend(selectedOption);
+        filterTableData(data, selectedName, selectedSport, selectedOption, selectedStatus);
     };
 
     const handleStatusChange = selectedOption => {
-        if (selectedOption) {
-            setSelectedStatus(selectedOption);
-            filterTableData(data, selectedName, selectedSport, selectedTrend, selectedOption);
-        }
+        setSelectedStatus(selectedOption);
+        filterTableData(data, selectedName, selectedSport, selectedTrend, selectedOption);
     };
 
     const filterTableData = (data, names, sport, trends, statuses) => {
-        let filtered = filterDataBySport(data, sport.value);
+        let filtered = data;
 
-        if (names.value === 'All Sports') {
-            filtered = filtered.filter(row => true);
-        } else if (names.value) {
+        if (names && names.value && names.value !== 'All Players') {
             filtered = filtered.filter(row => row.Name === names.value);
         }
 
-        if (trends.value === 'All') {
-            filtered = filtered.filter(row => true);
-        } else if (trends.value) {
+        if (sport && sport.value && sport.value !== 'All Sports') {
+            filtered = filtered.filter(row => row.Sport === sport.value);
+        }
+
+        if (trends && trends.value && trends.value !== 'All') {
             filtered = filtered.filter(row => row.Trend === trends.value);
         }
 
-        if (statuses.value === 'All') {
-            filtered = filtered.filter(row => true);
-        } else if (statuses.value) {
+        if (statuses && statuses.value && statuses.value !== 'All') {
             filtered = filtered.filter(row => row.Status === statuses.value);
         }
 
         setFilteredData(filtered);
+        updateChartData(filtered, xAxis.value, yAxis.value, sport ? sport.value : 'All Sports', bubbleSize.value);
     };
 
     const getUniqueOptions = key => {
@@ -229,17 +246,7 @@ const Player_Scoreboard = () => {
 
     const getUniquePlayerOptions = () => {
         const uniqueOptions = getUniqueOptions('Name');
-        return [{ value: 'All Sports', label: 'All Sports' }, ...uniqueOptions];
-    };
-
-    const getUniqueTrendOptions = () => {
-        const uniqueOptions = getUniqueOptions('Trend');
-        return [{ value: 'All', label: 'All' }, ...uniqueOptions];
-    };
-
-    const getUniqueStatusOptions = () => {
-        const uniqueOptions = getUniqueOptions('Status');
-        return [{ value: 'All', label: 'All' }, ...uniqueOptions];
+        return [{ value: 'All Players', label: 'All Players' }, ...uniqueOptions];
     };
 
     const columns = React.useMemo(
@@ -555,7 +562,7 @@ const Player_Scoreboard = () => {
                 <div className="scoreboard-filter">
                     <label>Trend</label>
                     <Select
-                        options={getUniqueTrendOptions()}
+                        options={trendOptions}
                         value={selectedTrend}
                         onChange={handleTrendChange}
                         closeMenuOnSelect={true}
@@ -566,7 +573,7 @@ const Player_Scoreboard = () => {
                 <div className="scoreboard-filter">
                     <label>Status</label>
                     <Select
-                        options={getUniqueStatusOptions()}
+                        options={statusOptions}
                         value={selectedStatus}
                         onChange={handleStatusChange}
                         closeMenuOnSelect={true}
@@ -594,7 +601,14 @@ const Player_Scoreboard = () => {
                             return (
                                 <div {...row.getRowProps()} className="tr" id={`row-${row.original.Name.replace(/\s+/g, '-').toLowerCase()}`}>
                                     {row.cells.map(cell => (
-                                        <div {...cell.getCellProps()} className={`td ${cell.column.sticky ? 'sticky' : ''}`}>
+                                        <div
+                                            {...cell.getCellProps()}
+                                            className={`td ${cell.column.sticky ? 'sticky' : ''}`}
+                                            style={{
+                                                backgroundColor: cell.column.id !== 'Name' && cell.column.id !== 'Sport' && cell.column.id !== 'Status' && cell.column.id !== 'Trend' && cell.column.id !== '% from Low' && cell.column.id !== '% from High' ? getBackgroundColor(cell.value, Math.max(...data.map(row => row[cell.column.id]))) : cell.column.id === 'Trend' ? getTrendColor(cell.value) : 'transparent',
+                                                color: cell.column.id === '% from Low' || cell.column.id === '% from High' ? (cell.value >= 0 ? 'green' : 'red') : 'inherit'
+                                            }}
+                                        >
                                             {cell.column.id === 'Name' ? (
                                                 cell.value
                                             ) : (
