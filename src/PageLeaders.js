@@ -143,7 +143,7 @@ const PageLeaders = () => {
                     <tr key={rowIndex}>
                         {columns.map((column, colIndex) => (
                             <td key={colIndex}>
-                                {column === 'Name' && fuse && fuse.search(player[column]).length > 0 ? (
+                                {column === 'Name' && fuse ? (
                                     <a href={`/PageSnapshot?player=${encodeURIComponent(player[column])}`}>
                                         {player[column]}
                                     </a>
@@ -203,6 +203,7 @@ const PageLeaders = () => {
             </div>
         );
     };
+
     const handleYearChange = (event) => {
         setSelectedYear(parseInt(event.target.value));
     };
@@ -397,4 +398,3 @@ const PageLeaders = () => {
 };
 
 export default PageLeaders;
-
