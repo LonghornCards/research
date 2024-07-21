@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 const glossaryData = [
@@ -73,11 +73,27 @@ const glossaryData = [
 ];
 
 const PageGlossary = () => {
+    const [selectedTerm, setSelectedTerm] = useState('');
+
+    const handleTermChange = (event) => {
+        setSelectedTerm(event.target.value);
+    };
+
+    const filteredGlossary = selectedTerm
+        ? glossaryData.filter(item => item.term === selectedTerm)
+        : glossaryData;
+
     return (
         <div className="glossary-container">
             <h1 className="glossary-title">Sports Trading Card Glossary</h1>
-            <div className="glossary-content">
+            <select onChange={handleTermChange} value={selectedTerm} className="term-dropdown">
+                <option value="">All Terms</option>
                 {glossaryData.map((item, index) => (
+                    <option key={index} value={item.term}>{item.term}</option>
+                ))}
+            </select>
+            <div className="glossary-content">
+                {filteredGlossary.map((item, index) => (
                     <div key={index} className="glossary-item">
                         <h3 className="glossary-term">{item.term}</h3>
                         <p className="glossary-definition">{item.definition}</p>
