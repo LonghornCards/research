@@ -51,8 +51,9 @@ import PageCSI from './PageCSI';
 import PageLonghorns from './PageLonghorns';
 import PageSnapshot from './PageSnapshot';
 import PagePriceCharts from './PagePriceCharts';
-import PageLeaders2 from './PageLeaders2';  // Import the new PageLeaders2 component
-import PageLeaders3 from './PageLeaders3';  // Import the new PageLeaders3 component
+import PageLeaders2 from './PageLeaders2';
+import PageLeaders3 from './PageLeaders3';
+import PageHistory from './PageHistory'; // Import the new PageHistory component
 import './App.css';
 
 const AppRouter = () => {
@@ -106,12 +107,13 @@ const AppRouter = () => {
                 <Route path="/pageplayers" element={<PagePlayers />} />
                 <Route path="/pagepodcasts" element={<PagePodcasts />} />
                 <Route path="/pageleaders" element={<PageLeaders />} />
-                <Route path="/pageleaders2" element={<PageLeaders2 />} />  {/* Add the new route for PageLeaders2 */}
-                <Route path="/pageleaders3" element={<PageLeaders3 />} />  {/* Add the new route for PageLeaders3 */}
+                <Route path="/pageleaders2" element={<PageLeaders2 />} />
+                <Route path="/pageleaders3" element={<PageLeaders3 />} />
                 <Route path="/pagecsi" element={<PageCSI />} />
                 <Route path="/pagelonghorns" element={<PageLonghorns />} />
-                <Route path="/pagesnapshot" element={<PageSnapshot />} />  {/* Ensure this route is defined */}
+                <Route path="/pagesnapshot" element={<PageSnapshot />} />
                 <Route path="/pagepricecharts" element={<PagePriceCharts />} />
+                <Route path="/pagehistory" element={<PageHistory />} /> {/* Add the new route for PageHistory */}
             </Routes>
         </Router>
     );

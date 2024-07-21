@@ -327,6 +327,9 @@ const Navbar = () => {
                             <NavLink to="/pagecardsearch" onClick={() => setIsOpen(false)}>
                                 eBay Card Sales
                             </NavLink>
+                            <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>
+                                History of Trading Cards
+                            </NavLink>
                         </DropdownContent>
                     </Dropdown>
                     <Dropdown>

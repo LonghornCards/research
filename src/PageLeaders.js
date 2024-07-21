@@ -170,9 +170,14 @@ const PageLeaders = () => {
             .filter(name => selectedNames.length === 0 || selectedNames.includes(name))
             .filter(name => filteredYears.some(year => pivotData[name][year]?.[selectedPivotStat] > 0));
 
-        const allValues = names.flatMap(name => filteredYears.map(year => pivotData[name][year]?.[selectedPivotStat] || 0));
-        const minValue = Math.min(...allValues);
-        const maxValue = Math.max(...allValues);
+        const allValuesByYear = filteredYears.map(year =>
+            names.map(name => parseFloat(pivotData[name][year]?.[selectedPivotStat]) || 0)
+        );
+
+        const minMaxValuesByYear = allValuesByYear.map(values => ({
+            min: Math.min(...values),
+            max: Math.max(...values),
+        }));
 
         const reverseGradient = selectedPivotStat === 'CS' || selectedPivotStat === 'SO';
 
@@ -191,9 +196,9 @@ const PageLeaders = () => {
                         {names.map(name => (
                             <tr key={name}>
                                 <td style={{ border: '1px solid peru' }}>{name}</td>
-                                {filteredYears.map(year => (
-                                    <td key={year} style={{ border: '1px solid peru', backgroundColor: getGradientColor(pivotData[name][year]?.[selectedPivotStat] || 0, minValue, maxValue, reverseGradient) }}>
-                                        {pivotData[name][year]?.[selectedPivotStat] || 0}
+                                {filteredYears.map((year, index) => (
+                                    <td key={year} style={{ border: '1px solid peru', backgroundColor: pivotData[name][year]?.[selectedPivotStat] === 0 ? 'lightgray' : getGradientColor(parseFloat(pivotData[name][year]?.[selectedPivotStat]) || 0, minMaxValuesByYear[index].min, minMaxValuesByYear[index].max, reverseGradient) }}>
+                                        {isNaN(pivotData[name][year]?.[selectedPivotStat]) || pivotData[name][year]?.[selectedPivotStat] === 0 ? 'N/A' : pivotData[name][year]?.[selectedPivotStat]}
                                     </td>
                                 ))}
                             </tr>

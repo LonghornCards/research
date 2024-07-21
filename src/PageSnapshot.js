@@ -236,6 +236,7 @@ const PageSnapshot = () => {
             try {
                 const response = await axios.get(url, {
                     responseType: 'arraybuffer',
+
                 });
 
                 const data = new Uint8Array(response.data);
@@ -259,7 +260,7 @@ const PageSnapshot = () => {
                     setAvailableYears(availableYears);
                     setSelectedYear(defaultFilterValue);
 
-                    const yearStats = worksheet.filter(row => row[filterColumn] === defaultFilterValue && row.Name === playerInfo.Name);
+                    const yearStats = worksheet.filter(row => row[filterColumn] === (year || defaultFilterValue) && row.Name === playerInfo.Name);
 
                     if (yearStats.length > 0) {
                         setDetailedStats(yearStats[0]);
@@ -358,9 +359,12 @@ const PageSnapshot = () => {
         }));
     };
 
-    const handleYearChange = (event) => {
+    const handleYearChange = async (event) => {
         const selectedYear = event.target.value;
         setSelectedYear(selectedYear);
+        if (playerData && playerData.Sport) {
+            await fetchDetailedStats(selectedPlayer, playerData.Sport, selectedYear);
+        }
     };
 
     const handlePlayerChange = (event) => {
@@ -561,50 +565,46 @@ const PageSnapshot = () => {
                     {wikiIntroduction}
                 </p>
             </div>
-            <div className="page-snapshot" style={{ paddingTop: '60px' }}>
-                {/* Other containers */}
-                <div className="stat-container">
-                    <h2 className="category-title">Detailed Statistics</h2>
-                    {availableYears.length > 0 && (
-                        <div style={{ marginBottom: '10px' }}>
-                            <label htmlFor="year-select">Select Year: </label>
-                            <select id="year-select" value={selectedYear} onChange={handleYearChange}>
-                                {availableYears.map(year => (
-                                    <option key={year} value={year}>{year}</option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
-                    {selectedPlayer && detailedStats ? (
-                        <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
-                            {divideSportsData(detailedStats).map((halfData, index) => (
-                                <div key={index} style={{ flex: 1 }}>
-                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                        <thead>
-                                            <tr style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>
-                                                <th style={{ border: '1px solid peru', padding: '8px' }}>Metric</th>
-                                                <th style={{ border: '1px solid peru', padding: '8px' }}>Value</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {halfData.map(key => (
-                                                <tr key={key}>
-                                                    <td style={{ border: '1px solid peru', padding: '8px' }}><strong>{key}</strong></td>
-                                                    <td style={{ border: '1px solid peru', padding: '8px', ...getStyleForRank(key, detailedStats[key]) }}>
-                                                        {detailedStats[key]}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+            <div className="stat-container">
+                <h2 className="category-title">Detailed Statistics</h2>
+                {availableYears.length > 0 && (
+                    <div style={{ marginBottom: '10px' }}>
+                        <label htmlFor="year-select">Select Year: </label>
+                        <select id="year-select" value={selectedYear} onChange={handleYearChange}>
+                            {availableYears.map(year => (
+                                <option key={year} value={year}>{year}</option>
                             ))}
-                        </div>
-                    ) : (
-                        <p>No detailed statistics found for {selectedPlayer}</p>
-                    )}
-                </div>
-                {/* Other containers */}
+                        </select>
+                    </div>
+                )}
+                {selectedPlayer && detailedStats ? (
+                    <div className="stat-category" style={{ display: 'flex', flexDirection: 'row' }}>
+                        {divideSportsData(detailedStats).map((halfData, index) => (
+                            <div key={index} style={{ flex: 1 }}>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead>
+                                        <tr style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>
+                                            <th style={{ border: '1px solid peru', padding: '8px' }}>Metric</th>
+                                            <th style={{ border: '1px solid peru', padding: '8px' }}>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {halfData.map(key => (
+                                            <tr key={key}>
+                                                <td style={{ border: '1px solid peru', padding: '8px' }}><strong>{key}</strong></td>
+                                                <td style={{ border: '1px solid peru', padding: '8px', ...getStyleForRank(key, detailedStats[key]) }}>
+                                                    {detailedStats[key]}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No detailed statistics found for {selectedPlayer}</p>
+                )}
             </div>
             <div className="stat-container" style={{ border: '1px solid peru', padding: '20px', textAlign: 'center' }}>
                 <h2 className="category-title">Infobox</h2>
@@ -692,3 +692,7 @@ const PageSnapshot = () => {
 };
 
 export default PageSnapshot;
+
+
+
+

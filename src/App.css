@@ -4653,3 +4653,91 @@ tbody tr {
     left: -10px; /* Move the image towards the center */
     transform: translateX(-50%); /* Further adjust to center */
 }
+
+.history-container {
+    padding: 20px;
+    margin: auto;
+    max-width: 1200px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.text-container {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+}
+
+.image-container {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+}
+
+.content-section h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.content-section p {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.expandable-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+    max-height: 300px; /* Adjust as necessary to fit the design */
+    object-fit: contain; /* Ensures the images maintain aspect ratio */
+}
+
+    .expandable-image:hover {
+        transform: scale(1.05);
+    }
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .text-container, .image-container {
+        min-width: 100%;
+    }
+
+    .page-title {
+        font-size: 1.5em;
+    }
+
+    .content-section h2 {
+        font-size: 1.2em;
+    }
+
+    .content-section p {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.2em;
+    }
+
+    .content-section h2 {
+        font-size: 1em;
+    }
+
+    .content-section p {
+        font-size: 0.8em;
+    }
+}
