@@ -1,5 +1,17 @@
 const blogEntries = [
     {
+        date: '07/21/24',
+        title: 'History of Sports Trading Cards',
+        summary: 'Sports Trading Cards have a long and storied history that spans more than 150 years.',
+        details: (
+            <span>
+                Sports Trading Cards have a long and storied history that spans more than 150 years. The global sports trading cards market size was valued at $9.69 billion in 2022 and is projected to reach $20.48 billion by 2030, growing at a CAGR of 9.01% from 2023 to 2030. Trading cards overall are still recovering from the unprecedented boom in popularity during the pandemic. Since their humble beginning, sports cards have evolved from simple advertising tools to multi-million dollar investments, but the present-day overabundance of "rare" cards due to artificial scarcity increases risks of entering a new "junk wax era".
+            </span>
+        ),
+        fullPostLink: '/PageHistory',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.21.24.png'
+    },
+    {
         date: '07/12/24',
         title: 'Card Price New Highs',
         summary: 'Highlighted are 6 players who saw their card prices reach new highs over the past month: Bryce Harper, Caitlin Clark, Wade Boggs, Jordan Love, Jalen Brunson & Nikola Jokic.',
