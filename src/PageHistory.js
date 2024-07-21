@@ -23,6 +23,7 @@ const PageHistory = () => {
                     <li><a href="#card-varieties">Understanding Card Varieties</a></li>
                     <li><a href="#grading-companies">Sports Card Grading Companies</a></li>
                 </ul>
+                <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/History_Of_Trading_Cards.pdf" target="_blank" rel="noopener noreferrer" className="download-link">Download PDF</a>
             </div>
             <div className="content-wrapper">
                 <div className="text-container">
