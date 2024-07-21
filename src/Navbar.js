@@ -315,6 +315,9 @@ const Navbar = () => {
                             <NavLink to="/pagestats" onClick={() => setIsOpen(false)}>
                                 Player Statistics
                             </NavLink>
+                            <NavLink to="/pagesnapshot" onClick={() => setIsOpen(false)}>
+                                Player Snapshot
+                            </NavLink>
                             <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
                                 Player Returns
                             </NavLink>
@@ -329,6 +332,9 @@ const Navbar = () => {
                             </NavLink>
                             <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>
                                 History of Trading Cards
+                            </NavLink>
+                            <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
+                                Sports Card Glossary
                             </NavLink>
                         </DropdownContent>
                     </Dropdown>

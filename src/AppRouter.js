@@ -53,7 +53,8 @@ import PageSnapshot from './PageSnapshot';
 import PagePriceCharts from './PagePriceCharts';
 import PageLeaders2 from './PageLeaders2';
 import PageLeaders3 from './PageLeaders3';
-import PageHistory from './PageHistory'; // Import the new PageHistory component
+import PageHistory from './PageHistory';
+import PageGlossary from './PageGlossary'; // Import the new PageGlossary component
 import './App.css';
 
 const AppRouter = () => {
@@ -113,7 +114,8 @@ const AppRouter = () => {
                 <Route path="/pagelonghorns" element={<PageLonghorns />} />
                 <Route path="/pagesnapshot" element={<PageSnapshot />} />
                 <Route path="/pagepricecharts" element={<PagePriceCharts />} />
-                <Route path="/pagehistory" element={<PageHistory />} /> {/* Add the new route for PageHistory */}
+                <Route path="/pagehistory" element={<PageHistory />} />
+                <Route path="/pageglossary" element={<PageGlossary />} /> {/* Add the new route for PageGlossary */}
             </Routes>
         </Router>
     );
