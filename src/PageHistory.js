@@ -9,9 +9,24 @@ const PageHistory = () => {
                 <title>History of Sports Trading Cards</title>
             </Helmet>
             <h1 className="page-title">The History of Sports Trading Cards</h1>
+            <div className="toc-wrapper">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#overview-summary">Overview Summary</a></li>
+                    <li><a href="#how-it-started">How it Started</a></li>
+                    <li><a href="#pre-ww2">Pre-World War II Era</a></li>
+                    <li><a href="#post-war-boom">Post-War Boom Era</a></li>
+                    <li><a href="#junk-wax-era">Junk Wax Era</a></li>
+                    <li><a href="#modern-evolutions">Modern Evolutions & Creation of Scarcity</a></li>
+                    <li><a href="#future-trends">Trends of the Future</a></li>
+                    <li><a href="#retail-vs-hobby">Retail vs. Hobby Box Products</a></li>
+                    <li><a href="#card-varieties">Understanding Card Varieties</a></li>
+                    <li><a href="#grading-companies">Sports Card Grading Companies</a></li>
+                </ul>
+            </div>
             <div className="content-wrapper">
                 <div className="text-container">
-                    <section className="content-section">
+                    <section id="overview-summary" className="content-section">
                         <h2>Overview Summary</h2>
                         <p>
                             Sports Trading Cards have a long and storied history that spans more than 150 years. According to Kings Research, the global sports trading cards market size was valued at $9.69 billion in 2022 and is projected to reach $20.48 billion by 2030 growing at a CAGR of 9.01% from 2023 to 2030.  (See Figure 1)
@@ -23,7 +38,7 @@ const PageHistory = () => {
                             Popularity of trading cards is determined by the subject represented on the card, their real-life accomplishments and short-term news coverage, as well as the specifics of the card. While vintage cards are truly a scarce commodity, modern-day manufacturers must artificially add value to their products to make them scarce. This is accomplished by including serial-numbered parallel sets, cards with game-worn memorabilia, autographs and more. Time can also increase scarcity because cards may be lost or destroyed.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="how-it-started" className="content-section">
                         <h2>How it Started</h2>
                         <p>
                             The entire concept of collecting cards emerged from Victorian-era sentimentality and a fascination with new-fangled color printing. In the 1870s and early 1900s, the popularization of "color lithography" or multi-color printing led to the increased popularity of the "trade card." The original "trade cards" were advertising cards that were packaged with cigarettes for the purpose of stiffening the packaging. Valued for their vibrant full-color imagery, the public began to collect these cards, storing their collections in scrapbooks and albums. The designs on the cards were often not product-related but were humorous or beautiful, depending on the perceived tastes of the consumer. People would often trade with each other to obtain a complete set, hence the origin of their name.
@@ -35,7 +50,7 @@ const PageHistory = () => {
                             By 1900 there were thousands of tobacco card sets manufactured by 300 different companies. The T206 set distributed by the American Tobacco Company in 1909 is considered by collectors to be the most popular set of all time. In 1933 the Goudey Gum Company of Boston issued baseball cards with players' biographies on the backs and was the first to put baseball cards in bubble gum. The 1933 Goudey set remains one of the most popular and affordable vintage sets to this day. World War II put an end to cigarette card production due to limited paper resources and after the war, cigarette cards never really made a comeback. Collectors in the US subsequently moved to collecting bubble gum cards.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="pre-ww2" className="content-section">
                         <h2>Pre-World War II Era</h2>
                         <p>
                             Baseball was the dominant sport in the U.S. for the bulk of the 20th century and baseball cards make up nearly all pre-WWII cards. These cards were less for collectors than they were tools of advertising. Prior to the early 1930s, there were not many cards made because complete sets were not produced every year. It is difficult to find cards from the early part of the century and even harder to find cards in good condition -- as a result, even poorly graded cards can be relatively valuable. In the early 1930s, a card production boom occurred with the famous 1933 Goudey set leading the way.  (See Figures 10 & 11) There are still a relatively high number of cards in good condition nearly 100 years later from this time period.
@@ -77,7 +92,7 @@ const PageHistory = () => {
                             The Pre-World War II era was a transformative period for sports cards, marked by a shift towards a younger audience, the inclusion of statistical and biographical information, and a broadening in the types of sports represented.  These changes made sports cards more informative, engaging, and reflective of the growing cultural significance of professional sports in America.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="post-war-boom" className="content-section">
                         <h2>Post-War Boom Era</h2>
                         <p>
                             After World War II, the Leaf Candy Company, Bowman Gum Company and Topps Gum Company got into the sports card business, leading to a golden era of cards in the 1950s.  In 1948, Bowman released the first official basketball set (See Figure 16), and in 1950 they introduced bubble gum into the packaging of sports cards. The Fleer Corporation, founded by Frank H. Fleer in 1885, was the first company to successfully manufacture bubble gum; it remained a family-owned enterprise until 1989.  Fleer became known as a maker of sports cards, starting in 1923 with the production of baseball cards. Fleer also released American football (1960) and basketball (1986) card sets through its history.  The introduction of bubble gum into the packaging of sports cards in the early 1950s by Bowman Gum Company represented a significant milestone in the history of sports cards, both in terms of marketing and cultural impact.
@@ -107,7 +122,7 @@ const PageHistory = () => {
                             The 1960s and 1970s saw the hobby of card collecting start to be taken more seriously. It wasn't just a child's pastime anymore; adults were also actively participating.   This shift was partly due to the growing nostalgia for cards and the realization that cards could be valuable collectibles.  There was a growth in the secondary market for sports cards, with more trade shows and conventions being organized.  These events provided platforms for collectors to buy, sell, and trade cards, and helped to cultivate a community around the hobby.  The 1960s and 1970s were critical in shaping the sports card industry.  Advances in technology, diversification of content, a focus on photography, the emergence of special editions and rookie cards, and the rise of a more serious collecting community all contributed to the evolution and increased sophistication of sports cards during this period.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="junk-wax-era" className="content-section">
                         <h2>Junk Wax Era</h2>
                         <p>
                             The 1980s marked a significant era in the history of sports cards, characterized by a surge in popularity and the introduction of various innovations.  Companies began experimenting with new technologies and materials to make cards more attractive and unique.  This included the introduction of holographic cards, which had a shimmering, three-dimensional appearance, and foil-stamped cards, which featured metallic accents for a more premium look.
@@ -149,7 +164,7 @@ const PageHistory = () => {
                             As the internet became more accessible in the late 90s, it began to influence the sports card industry.  Online forums and marketplaces emerged, allowing collectors to connect, trade, and sell cards more easily on a global scale.  Towards the end of the 1990s, the sports card market experienced a significant correction.  The oversupply of cards, along with waning interest, led to a decline in both the value of cards and the number of active collectors.  While the era introduced exciting innovations and expanded the sports card market, it also faced challenges that led to significant changes in the industry.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="modern-evolutions" className="content-section">
                         <h2>Modern Evolutions & Creation of Scarcity</h2>
                         <p>
                             Starting in 1997, companies responded by introducing "insert" cards with limited print runs, and eventually those cards - often with autographs and/or game-used memorabilia - became highly sought after.  Inserts offer an artificial scarcity because of their limited print runs.  This led to demand for the rarest cards, some of which are now among the most valuable sports cards overall.  During this time, basketball cards became higher in demand as baseball cards fell in popularity, riding the growing popularity of the NBA and a relative decline in baseball attendance.
@@ -209,7 +224,7 @@ const PageHistory = () => {
                             Finally, the completist is the most dedicated and ambitious collector type. The completist collector is driven to possess every card of a particular set, year, team, player, or category. If they collect 2021 Topps Chrome Baseball, the Completist will hunt down every card from that Checklist -- including every Base Card, Parallel, Auto, etc. Common Cards from a given set will have little value for many collectors, but for a Completist, whose aim is to complete each set, the Common Cards will have significant value since they cannot complete the set without them.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="future-trends" className="content-section">
                         <h2>Trends of the Future</h2>
                         <p>
                             What does the future hold for trading cards? Virtual basketball cards have recently appeared on the scene and have been well received by fans. These digital cards feature "moments," or floating digital cubes that feature a video highlight of a specific player. These are made possible by a technology called "blockchain," which assigns each clip a certificate of ownership which cannot be copied or deleted. These moments sell for around $10-$20 each.
@@ -221,7 +236,7 @@ const PageHistory = () => {
                             In essence, sports cards are more than just collectibles; they are a celebration of sports heritage, a testament to human creativity and innovation, and a cherished part of popular culture that will continue to captivate and inspire for generations to come.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="retail-vs-hobby" className="content-section">
                         <h2>Retail vs. Hobby Box Products</h2>
                         <p>
                             Hobby boxes are higher-end boxes of sports cards that will often include more chase cards than retail boxes. Hobby boxes also tend to have higher price tags on them since they will give you a better chance to pull sports cards that could be more valuable than those found in retail boxes.  You'll also find special releases of hobby products, including 1st Off The Line products, Sapphire products, Jumbo products, Super Jumbo products, HTA products, Choice products, among others.
@@ -233,13 +248,13 @@ const PageHistory = () => {
                             Hobby boxes are targeted for the hardcore collector, and generally focus on the premium aspects of a product like autographs and memorabilia cards. Odds of finding rare cards are typically higher.  Most hobby products guarantee one signature or relic per box whereas retail blaster boxes do not carry such minimum guarantees. Plus, often hobby boxes are the only product that contain certain card varieties and parallels.  Typically, high-end products are hobby-exclusive and will not be available in a retail format.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="card-varieties" className="content-section">
                         <h2>Understanding Card Varieties</h2>
                         <p>
                             The introduction and popularity of parallel, variants, and refractor cards have had a significant influence on the sports card market. The rarity and uniqueness of these cards have added a new dimension to card valuations. The price of a card is no longer determined solely by the player it represents or its condition. The type of parallel or refractor, the scarcity, and even the aesthetic appeal can significantly impact a card's market value.
                         </p>
                         <p>
-                            Base cards are the building blocks of any sports card collection, and they make up the set's numbering scheme and sometimes reference how many are in the set.  Insert cards, sometimes called "chase cards" are tucked within sports card packs that were introduced in the 1990s. These cards are not typically part of a base set numbering system and often showcase unique themes, different designs, or other special features to make them distinct from the set with which they are packed.  They include autographed cards, relic cards, parallel cards, and special edition cards. 
+                            Base cards are the building blocks of any sports card collection, and they make up the set's numbering scheme and sometimes reference how many are in the set.  Insert cards, sometimes called "chase cards" are tucked within sports card packs that were introduced in the 1990s. These cards are not typically part of a base set numbering system and often showcase unique themes, different designs, or other special features to make them distinct from the set with which they are packed.  They include autographed cards, relic cards, parallel cards, and special edition cards.
                         </p>
                         <p>
                             Parallel cards offer an intriguing twist to base cards. These cards will mirror the design and layout of a base card, but with distinguishing features that may be minor or could significantly change the look of the card. Common parallel variations include color schemes, borders, or foil accents.  Refractors are parallel cards with a reflective layer that can reflect light in a rainbow pattern at the proper angle that have been produced by various trading card companies for more than 25 years. These cards often appear in their own numbering scheme and are further divided by difference in color or another factor that allows the publisher to make more variants for a card set.
@@ -260,7 +275,7 @@ const PageHistory = () => {
                             Finally, booklet cards are unique, fold-out cards that resemble a small book. They often feature a combination of elements, such as autographs, game-used memorabilia, and player photos or artwork. Booklet cards are produced for special events in limited quantities and usually numbered to indicate their scarcity.  The value of booklet cards is influenced by factors such as the featured players, the overall design, and the rarity of the card.
                         </p>
                     </section>
-                    <section className="content-section">
+                    <section id="grading-companies" className="content-section">
                         <h2>Sports Card Grading Companies</h2>
                         <p>
                             During the pandemic, there was a massive increase of new collectors and grading baseball cards exploded.  Grading has become an essential aspect of the collectibles market, providing authenticity and value to cards.  There are many grading companies to choose from, but just a handful that have strong reputations in the industry:  Professional Sports Authenticator (PSA), Beckett Grading Services (BGS), Sportscard Guaranty Corporation (SGC), Certified Guaranty Corporation (CGC), and Hybrid Grading Approach (HGA).
@@ -450,6 +465,6 @@ const PageHistory = () => {
             </div>
         </div>
     );
-}
+};
 
 export default PageHistory;
