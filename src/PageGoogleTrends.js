@@ -119,7 +119,7 @@ const Page_GoogleTrends = () => {
     const columnNames = ["Player", "Sport", "24-Jun", "Average", "3-Mo Average", "12-Mo Average", "Google Trend"];
 
     return (
-        <div style={{ paddingTop: '100px', padding: '20px' }}>
+        <div style={{ paddingTop: '150px', padding: '20px' }}>
             <Helmet>
                 <title>Player Google Trends</title>
             </Helmet>
