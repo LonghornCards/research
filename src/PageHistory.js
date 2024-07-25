@@ -278,6 +278,7 @@ const PageHistory = () => {
                     </section>
                     <section id="grading-companies" className="content-section">
                         <h2>Sports Card Grading Companies</h2>
+                        <a href="/pagegrading" className="grading-overview-link">See Card Grading Companies Overview</a>
                         <p>
                             During the pandemic, there was a massive increase of new collectors and grading baseball cards exploded.  Grading has become an essential aspect of the collectibles market, providing authenticity and value to cards.  There are many grading companies to choose from, but just a handful that have strong reputations in the industry:  Professional Sports Authenticator (PSA), Beckett Grading Services (BGS), Sportscard Guaranty Corporation (SGC), Certified Guaranty Corporation (CGC), and Hybrid Grading Approach (HGA).
                         </p>
