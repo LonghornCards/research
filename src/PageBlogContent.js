@@ -1,5 +1,17 @@
 const blogEntries = [
     {
+        date: '07/25/24',
+        title: 'Sports Trading Card Grading Companies',
+        summary: 'Card grading has exploded in popularity, and there are now many companies to choose from - although a few key grading companies dominate the industry.',
+        details: (
+            <span>
+                Card grading has exploded in popularity, and there are now many companies to choose from - although a few key grading companies dominate the industry.  Card grading is a meticulous process conducted by professional grading companies or organizations specializing in the evaluation of collectible cards.  The cost of card grading varies between companies and is typically based on a number of factors including desired turnaround time and estimated card value.  There are currently over 25 card grading companies in the United States alone. The 10 widely regarded as the most trusted based on grading accuracy are Professional Sports Authenticator (PSA), Beckett Grading Services (BGS), Sportscard Guaranty Corporation (SGC), Certified Sports Guaranty (CSG), International Sports Authentication (ISA), Hybrid Grading Approach (HGA), Technical Authentication & Grading (TAG), Arena Club, Rare Edition, and Edge Grading.
+            </span>
+        ),
+        fullPostLink: '/PageGrading',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image73.jpeg'
+    },
+    {
         date: '07/21/24',
         title: 'History of Sports Trading Cards',
         summary: 'Sports Trading Cards have a long and storied history that spans more than 150 years.',

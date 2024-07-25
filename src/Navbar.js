@@ -331,7 +331,10 @@ const Navbar = () => {
                                 eBay Card Sales
                             </NavLink>
                             <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>
-                                History of Trading Cards
+                                History of Sports Trading Cards
+                            </NavLink>
+                            <NavLink to="/pagegrading" onClick={() => setIsOpen(false)}>
+                                Card Grading Companies
                             </NavLink>
                             <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
                                 Sports Card Glossary

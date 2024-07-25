@@ -4775,3 +4775,78 @@ tbody tr {
     font-size: 1em;
     color: #666;
 }
+
+.page-grading {
+    padding-top: 80px; /* Adjust this value based on your navigation bar height */
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5rem; /* Match with existing styles */
+    color: #333;
+}
+
+.intro-paragraph {
+    background-color: #f9f9f9; /* Background color to match existing style */
+    font-size: 1rem;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.centered-image {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .centered-image img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+.company-section {
+    margin-bottom: 40px;
+    background-color: #fff; /* Background color for sections */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .company-section img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 20px;
+    }
+
+    .company-section h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .company-section p {
+        font-size: 1rem;
+        color: #333;
+        text-align: justify;
+    }
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .intro-paragraph, .company-section p {
+        font-size: 0.9rem;
+    }
+
+    .company-section {
+        padding: 15px;
+    }
+}
