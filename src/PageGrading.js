@@ -221,6 +221,14 @@ const PageGrading = () => {
                     />
                 </a>
             </div>
+            <div className="centered-image">
+                <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image80.png" target="_blank" rel="noopener noreferrer">
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image80.png"
+                        alt="Card Grading Process"
+                    />
+                </a>
+            </div>
             {gradingCompanies.map((company, index) => (
                 <div key={index} className="company-section">
                     <h2>{company.name}</h2>
