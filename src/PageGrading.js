@@ -152,10 +152,20 @@ const PageGrading = () => {
                 Having trading cards graded by a reputable grading company can potentially add value to the cards, but it depends on several factors, including the card's rarity, condition, and the grading company's reputation. There are many examples of Gem Mint-graded cards that have sold for over 10x the value of an identical ungraded (raw) card. During the pandemic, there was a massive increase of new collectors and grading baseball cards exploded. There are currently over 25 card grading companies in the United States alone. The 10 widely regarded as the most trusted based on grading accuracy are Professional Sports Authenticator (PSA), Beckett Grading Services (BGS), Sportscard Guaranty Corporation (SGC), Certified Sports Guaranty (CSG), International Sports Authentication (ISA), Hybrid Grading Approach (HGA), Technical Authentication & Grading (TAG), Arena Club, Rare Edition, and Edge Grading.
             </p>
             <div className="centered-image">
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image71.png" alt="Card Grading Process" />
+                <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image71.png" target="_blank" rel="noopener noreferrer">
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image71.png"
+                        alt="Card Grading Process"
+                    />
+                </a>
             </div>
             <div className="centered-image">
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image72.png" alt="Card Grading Process" />
+                <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image72.png" target="_blank" rel="noopener noreferrer">
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image72.png"
+                        alt="Card Grading Process"
+                    />
+                </a>
             </div>
             {gradingCompanies.map((company, index) => (
                 <div key={index} className="company-section">

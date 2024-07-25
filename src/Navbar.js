@@ -330,15 +330,6 @@ const Navbar = () => {
                             <NavLink to="/pagecardsearch" onClick={() => setIsOpen(false)}>
                                 eBay Card Sales
                             </NavLink>
-                            <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>
-                                History of Sports Trading Cards
-                            </NavLink>
-                            <NavLink to="/pagegrading" onClick={() => setIsOpen(false)}>
-                                Card Grading Companies
-                            </NavLink>
-                            <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
-                                Sports Card Glossary
-                            </NavLink>
                         </DropdownContent>
                     </Dropdown>
                     <Dropdown>
@@ -352,6 +343,15 @@ const Navbar = () => {
                             </NavLink>
                             <NavLink to="/pagepodcasts" onClick={() => setIsOpen(false)}>
                                 Podcasts
+                            </NavLink>
+                            <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>
+                                History of Sports Trading Cards
+                            </NavLink>
+                            <NavLink to="/pagegrading" onClick={() => setIsOpen(false)}>
+                                Card Grading Companies
+                            </NavLink>
+                            <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
+                                Sports Card Glossary
                             </NavLink>
                         </DropdownContent>
                     </Dropdown>
