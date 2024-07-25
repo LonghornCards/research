@@ -213,13 +213,38 @@ const PageGrading = () => {
                     />
                 </a>
             </div>
+            <div className="centered-image">
+                <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image49.png" target="_blank" rel="noopener noreferrer">
+                    <img
+                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image49.png"
+                        alt="Card Grading Process"
+                    />
+                </a>
+            </div>
             {gradingCompanies.map((company, index) => (
                 <div key={index} className="company-section">
                     <h2>{company.name}</h2>
-                    <img src={company.image} alt={`${company.name} logo`} />
+                    <div className="company-images">
+                        <img src={company.image} alt={`${company.name} logo`} />
+                        {company.name === "Arena Club" && (
+                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image79.png" alt="Additional Arena Club Image" />
+                        )}
+                    </div>
                     {company.content.split('\n').map((paragraph, i) => (
                         <p key={i}>{paragraph.trim()}</p>
                     ))}
+                    {company.name === "ISA" && (
+                        <>
+                            <h2 className="subtitle">Slab Comparison: PSA, BGS, SGC, CGC, ISA</h2>
+                            <div className="image-row">
+                                <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image74.jpg" alt="PSA Slab" />
+                                <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image75.png" alt="BGS Slab" />
+                                <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image76.jpg" alt="SGC Slab" />
+                                <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image77.png" alt="CGC Slab" />
+                                <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image78.png" alt="ISA Slab" />
+                            </div>
+                        </>
+                    )}
                 </div>
             ))}
         </div>

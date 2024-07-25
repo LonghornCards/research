@@ -4860,3 +4860,18 @@ tbody tr {
     max-width: 100%;
     height: auto;
 }
+
+.image-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.comparison-image {
+    max-height: 200px; /* Adjust height as needed */
+    max-width: 150px; /* Adjust width as needed */
+    object-fit: contain;
+    margin: 0 10px;
+}
