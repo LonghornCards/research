@@ -4850,3 +4850,13 @@ tbody tr {
         padding: 15px;
     }
 }
+
+.company-content {
+    margin-bottom: 20px; /* Adjust the value as needed */
+    line-height: 1.6; /* Adjust the value as needed */
+}
+
+.page-grading img {
+    max-width: 100%;
+    height: auto;
+}
