@@ -388,6 +388,13 @@ const PageGrading = () => {
                             </div>
                         </>
                     )}
+                    {company.name === "DCI" && (
+                        <div className="psa-section">
+                            <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image121.png" target="_blank" rel="noopener noreferrer">
+                                <img className="resized-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image121.png" alt="PSA Process" />
+                            </a>
+                        </div>
+                    )}
                 </div>
             ))}
             <h2 id="scatterplot">Scatterplot</h2>
