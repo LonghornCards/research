@@ -377,15 +377,14 @@ const PageGrading = () => {
                             </a>
                         </div>
                     )}
-                    {company.name === "ISA" && (
+                    {company.name === "CGC" && (
                         <>
-                            <h2 className="subtitle">Slab Comparison: PSA, BGS, SGC, CGC, ISA</h2>
+                            <h2 className="subtitle">Slab Comparison: PSA, BGS, SGC, CGC</h2>
                             <div className="image-row">
                                 <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image74.jpg" alt="PSA Slab" />
                                 <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image75.png" alt="BGS Slab" />
                                 <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image76.jpg" alt="SGC Slab" />
                                 <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image77.png" alt="CGC Slab" />
-                                <img className="comparison-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image78.png" alt="ISA Slab" />
                             </div>
                         </>
                     )}
