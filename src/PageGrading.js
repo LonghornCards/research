@@ -332,6 +332,11 @@ const PageGrading = () => {
                     <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image80.png" alt="Card Grading Process" />
                 </a>
             </div>
+            <div className="centered-image">
+                <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image119.png" target="_blank" rel="noopener noreferrer">
+                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image119.png" alt="Card Grading Process" />
+                </a>
+            </div>
             {/* Grading Companies */}
             {gradingCompanies.map((company, index) => (
                 <div key={index} id={company.name.replace(/\s+/g, '-')} className="company-section">
