@@ -1,3 +1,4 @@
+/// <reference path="pagecardsearch.js" />
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import './App.css';
@@ -92,7 +93,9 @@ const gradingCompanies = [
 
         Each card graded at their facility receives a comprehensive overall grade derived from data, formulas, and specific rules. The overall grade of a card is not merely an average of its sub-grades. Instead, it's determined by a blend of rules and formulas, where the objective aspects of condition and visual appeal converge with the subjective art of grading. Their grading technology, along with our human graders, reviews every card and works together to assign consistent and accurate grades. The graders review high-resolution imaging of each card while holding the card in front of them. The scans and CV results are compared against the card itself, after which our graders categorize and update any condition deviations in the system. This approach leads to the detailed grading report, where you can see exactly why your card got the grade it did.
 
-        Everything is shown in the card's grading report. Every card is then encased after grading, and security features are added. The label is printed, and it is encased within a crystal-clear polycarbonate with Corning Gorilla Glass. The high frequency vibrations of their ultrasonic welder melt both pieces of polycarbonate together, creating a bond without the need for glue or adhesive. Once the pieces have been welded together, Corning Gorilla Glass is placed on the front and the back to provide superior scratch resistance and a premium feel.`,
+        Everything is shown in the card's grading report. Every card is then encased after grading, and security features are added. The label is printed, and it is encased within a crystal-clear polycarbonate with Corning Gorilla Glass. The high frequency vibrations of their ultrasonic welder melt both pieces of polycarbonate together, creating a bond without the need for glue or adhesive. Once the pieces have been welded together, Corning Gorilla Glass is placed on the front and the back to provide superior scratch resistance and a premium feel.
+
+        A unique aspect of Rare Edition is their Rare Moments feature that combines NFC technology in the Rare Edition Graded holder with content creation and video attachments to create a one-of-a-kind collectible.  With the Rare Edition graded card, you can attach your own videos creating a unique collecting experience.  Parents can gift graded cards to their children with personal videos attached, along with other experiences from third party content creation services.`,
         image: "https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image64.png"
     },
     {
@@ -120,7 +123,7 @@ const gradingCompanies = [
     {
         name: "AGS",
         content: `
-        Automated Grading Systems (AGS) was launched in 2021 and provides an approach that uses 100% Artificial Intelligence (AI) and machine learning to grade cards. Their RoboGrading technology guarantees an unbiased, consistent, and fast grading process. To the robot, the card is just a variation of pixels, and it learns from expert graders and applies it. Without human subjectivity, AGS claims to provide a more reliable and consistent approach. AGS provides 8 subgrades per card, plus free HD photos and AI scans for every grade. They provide details for the grade rationale along with scans and scores for corners, edges, centering, and surfaces. Their technology looks for scratches, print lines, surface composition, and other microscopic details that can easily be missed by the human eye. They also offer an app to pre-grade cards using their proprietary technology so you can get an idea of whether it's cost effective to grade certain cards based on the projected grade and value.`,
+        Automated Grading Systems (AGS) was launched in 2021 and provides an approach that uses 100% Artificial Intelligence (AI) and machine learning to grade cards. Their RoboGrading technology guarantees an unbiased, consistent, and fast grading process. To the robot, the card is just a variation of pixels, and it learns from expert graders and applies it. Without human subjectivity, AGS claims to provide a more reliable and consistent approach. AGS provides 8 subgrades per card, plus free HD photos and AI scans for every grade. They provide details for the grade rationale along with scans and scores for corners, edges, centering, and surfaces. Their technology looks for scratches, print lines, surface composition, and other microscopic details that can easily be missed by the human eye. They also offer an app to pre-grade cards using their proprietary technology so you can get an idea of whether it's cost effective to grade certain cards based on the projected grade and value.  Interestingly, Master P is an investor and on their Board of Directors.  They note significant investments in their technology and seek to differentiate themselves with cutting edge grading technology.`,
         image: "https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image61.png"
     },
     {
@@ -192,55 +195,92 @@ const PageGrading = () => {
                 <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Card+Grading+Companies.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a>
             </div>
             <p className="intro-paragraph">
-                Card grading is a meticulous process conducted by professional grading companies or organizations specializing in the evaluation of collectible cards. The exact details of the grading process can vary slightly between grading companies. Grading has become an essential aspect of the collectibles market, providing authenticity and value to cards. According to Edge Grading, in the first half of 2023 alone PSA graded over 6.4 million cards out of an industry total of roughly 8 million. Plus, SGC showed to be growing in popularity and has increased to 7% market share. Their survey showed an overwhelming majority of respondents choosing PSA.
-                The cost of card grading varies between companies and is typically based on a number of factors including desired turnaround time and estimated card value. The base grading fee ranges from around $10 to $39 per card for standard service. However, for high-value cards or expedited services, the fee can be significantly higher. Some grading companies adjust their fees based on the estimated value of the card. For example, if you submit a card that is expected to be worth hundreds or thousands of dollars, you might pay a higher grading fee as a percentage of the card's value. Faster services, such as "express" or "super express," usually cost more than standard or economy services. Prices for expedited services can range from $50 to several hundred dollars or more per card.
-                Starting in 1984 when Accugrade Sportscard Authentication (ASA) introduced the process of grading sports cards centering has been a key factor in the final grade of every card authenticated and slabbed ever since. Centering specifications vary between grading companies. Professional Sports Authenticator (PSA) is the most lenient - 60/40 centering on the front and 75/25 on the back are the general guidelines for what could be considered a Gem Mint 10. Beckett Grading Services (BGS) is the strictest - requiring 50/50 on both the front and back to be eligible for a grade of 10.
-                Having trading cards graded by a reputable grading company can potentially add value to the cards, but it depends on several factors, including the card's rarity, condition, and the grading company's reputation. There are many examples of Gem Mint-graded cards that have sold for over 10x the value of an identical ungraded (raw) card. During the pandemic, there was a massive increase of new collectors and grading baseball cards exploded. There are currently over 25 card grading companies in the United States alone. The 10 widely regarded as the most trusted based on grading accuracy are Professional Sports Authenticator (PSA), Beckett Grading Services (BGS), Sportscard Guaranty Corporation (SGC), Certified Sports Guaranty (CSG), International Sports Authentication (ISA), Hybrid Grading Approach (HGA), Technical Authentication & Grading (TAG), Arena Club, Rare Edition, and Edge Grading.
+                <p>
+                    Card grading is a meticulous process conducted by professional grading companies or organizations specializing in the evaluation of collectible cards.  The exact details of the grading process can vary slightly between grading companies.  Grading has become an essential aspect of the collectibles market, providing authenticity and value to cards.  According to Edge Grading, in the first half of 2023 alone PSA graded over 6.4 million cards out of an industry total of roughly 8 million. Plus, SGC showed to be growing in popularity and has increased to 7% market share.  Their survey showed an overwhelming majority of respondents choosing PSA.
+                </p>
+                <p>
+                    The cost of card grading varies between companies and is typically based on a number of factors including desired turnaround time and estimated card value. The base grading fee ranges from around $10 to $39 per card for standard service. However, for high-value cards or expedited services, the fee can be significantly higher.  Some grading companies adjust their fees based on the estimated value of the card. For example, if you submit a card that is expected to be worth hundreds or thousands of dollars, you might pay a higher grading fee as a percentage of the card's value.  Faster services, such as "express" or "super express," usually cost more than standard or economy services. Prices for expedited services can range from $50 to several hundred dollars or more per card.
+                </p>
+                <p>
+                    Starting in 1984 when Accugrade Sportscard Authentication (ASA) introduced the process of grading sports cards centering has been a key factor in the final grade of every card authenticated and slabbed ever since.  Centering specifications vary between grading companies. Professional Sports Authenticator (PSA) is the most lenient - 60/40 centering on the front and 75/25 on the back are the general guidelines for what could be considered a Gem Mint 10. Beckett Grading Services (BGS) is the strictest - requiring 50/50 on both the front and back to be eligible for a grade of 10.
+                </p>
+                <p>
+                    Having trading cards graded by a reputable grading company can potentially add value to the cards, but it depends on several factors, including the card's rarity, condition, and the grading company's reputation. There are many examples of Gem Mint-graded cards that have sold for over 10x the value of an identical ungraded (raw) card.  During the pandemic, there was a massive increase of new collectors and grading baseball cards exploded.  There are currently over 25 card grading companies in the United States alone. The 10 widely regarded as the most trusted based on grading accuracy are Professional Sports Authenticator (PSA), Beckett Grading Services (BGS), Sportscard Guaranty Corporation (SGC), Certified Sports Guaranty (CSG), International Sports Authentication (ISA), Hybrid Grading Approach (HGA), Technical Authentication & Grading (TAG), Arena Club, Rare Edition, and Edge Grading.  However, the top 4 grading companies by far dominate the market, currently.
+                </p>
             </p>
+
+            {/* Table of Contents */}
+            <div className="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    {gradingCompanies.map((company, index) => (
+                        <li key={index}>
+                            <a href={`#${company.name.replace(/\s+/g, '-')}`}>{company.name}</a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
             <div className="centered-image">
                 <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image71.png" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image71.png"
-                        alt="Card Grading Process"
-                    />
+                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image71.png" alt="Card Grading Process" />
                 </a>
             </div>
             <div className="centered-image">
                 <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image72.png" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image72.png"
-                        alt="Card Grading Process"
-                    />
+                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image72.png" alt="Card Grading Process" />
                 </a>
             </div>
             <div className="centered-image">
                 <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image49.png" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image49.png"
-                        alt="Card Grading Process"
-                    />
+                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image49.png" alt="Card Grading Process" />
                 </a>
             </div>
             <div className="centered-image">
                 <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image80.png" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image80.png"
-                        alt="Card Grading Process"
-                    />
+                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image80.png" alt="Card Grading Process" />
                 </a>
             </div>
+            {/* Grading Companies */}
             {gradingCompanies.map((company, index) => (
-                <div key={index} className="company-section">
+                <div key={index} id={company.name.replace(/\s+/g, '-')} className="company-section">
                     <h2>{company.name}</h2>
                     <div className="company-images">
                         <img src={company.image} alt={`${company.name} logo`} />
                         {company.name === "Arena Club" && (
-                            <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image79.png" alt="Additional Arena Club Image" />
+                            <img className="additional-arena-club-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image106.jpeg" alt="Additional Arena Club Image" />
+                        )}
+                        {company.name === "AGS" && (
+                            <img className="additional-arena-club-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image107.jpeg" alt="Additional Arena Club Image" />
                         )}
                     </div>
                     {company.content.split('\n').map((paragraph, i) => (
                         <p key={i}>{paragraph.trim()}</p>
                     ))}
+                    {company.name === "PSA" && (
+                        <div className="psa-section">
+                            <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image50.png" target="_blank" rel="noopener noreferrer">
+                                <img className="resized-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image50.png" alt="PSA Process" />
+                            </a>
+                            <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image86.png" target="_blank" rel="noopener noreferrer">
+                                <img className="resized-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image86.png" alt="PSA Process" />
+                            </a>
+                        </div>
+                    )}
+                    {company.name === "BGS" && (
+                        <div className="psa-section">
+                            <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image105.png" target="_blank" rel="noopener noreferrer">
+                                <img className="resized-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image105.png" alt="PSA Process" />
+                            </a>
+                        </div>
+                    )}
+                    {company.name === "SGC" && (
+                        <div className="psa-section">
+                            <a href="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image87.png" target="_blank" rel="noopener noreferrer">
+                                <img className="resized-image" src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Trading+Card+History/History_Image87.png" alt="PSA Process" />
+                            </a>
+                        </div>
+                    )}
                     {company.name === "ISA" && (
                         <>
                             <h2 className="subtitle">Slab Comparison: PSA, BGS, SGC, CGC, ISA</h2>

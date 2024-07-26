@@ -4875,3 +4875,84 @@ tbody tr {
     object-fit: contain;
     margin: 0 10px;
 }
+
+/* Add this section to the existing CSS file */
+
+/* Styles for resizing and centering the PSA images */
+.psa-section .resized-image {
+    max-width: 50%; /* Adjust the percentage as needed */
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Styles for the PageGrading table of contents and sections */
+.page-grading .intro-paragraph {
+    margin: 20px 0;
+    padding: 10px;
+    font-size: 1em;
+    line-height: 1.5em;
+    text-align: justify;
+}
+
+.page-grading .table-of-contents {
+    margin: 20px 0;
+}
+
+    .page-grading .table-of-contents h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .page-grading .table-of-contents ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .page-grading .table-of-contents li {
+        margin: 5px 0;
+    }
+
+    .page-grading .table-of-contents a {
+        text-decoration: none;
+        color: #007BFF;
+    }
+
+        .page-grading .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+
+.page-grading .company-section {
+    margin-bottom: 20px;
+}
+
+    .page-grading .company-section h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+.page-grading .company-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+    .page-grading .company-images img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+.additional-arena-club-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: block; /* Ensures the image is a block element */
+    margin: 0 auto; /* Centers the image horizontally */
+}
+
+
