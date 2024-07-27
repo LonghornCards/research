@@ -47,7 +47,8 @@ const RangeContainer = styled.div`
 
 const TableContainer = styled.div`
   width: 100%;
-  overflow-x: auto;
+  max-height: 400px; /* Set the desired height */
+  overflow-y: scroll;
 `;
 
 const Table = styled.table`
@@ -82,6 +83,15 @@ const ResetButton = styled.img`
   height: 30px;
   cursor: pointer;
   align-self: center;
+`;
+
+const Image = styled.img`
+  margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const PageBrands = () => {
@@ -219,7 +229,7 @@ const PageBrands = () => {
                 <Plot
                     data={scatterData}
                     layout={{
-                        title: `${selectedSport} Brand vs Hobby Box Price`,
+                        title: `${selectedSport}`,
                         xaxis: { title: 'Brand' },
                         yaxis: { title: 'Hobby Box Price', type: 'log' },
                         width: chartWidth,
@@ -304,6 +314,10 @@ const PageBrands = () => {
                         </tbody>
                     </Table>
                 </TableContainer>
+                <Image
+                    src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Card+Brand+Tiers.png"
+                    alt="Card Brand Tiers"
+                />
             </Content>
         </Container>
     );

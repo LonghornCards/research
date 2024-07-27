@@ -1,5 +1,17 @@
 const blogEntries = [
     {
+        date: '07/27/24',
+        title: 'Sports Trading Card Brands',
+        summary: 'This summary as of July 2024 provides an overview of sports card manufacturers, brands, estimated hobby box prices, and respective sport.',
+        details: (
+            <span>
+                This summary as of July 2024 provides an overview of sports card manufacturers, brand, estimated hobby box prices, and respective sport.  Further information is provided by price tier with the ability to sort and filter by different brands and sports to find different hobby box options that fit your budget.
+            </span>
+        ),
+        fullPostLink: '/PageBrands',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.27.24.png'
+    },
+    {
         date: '07/25/24',
         title: 'Sports Trading Card Grading Companies',
         summary: 'Card grading has exploded in popularity, and there are now many companies to choose from - although a few key grading companies dominate the industry.',
