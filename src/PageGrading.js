@@ -1,5 +1,5 @@
 /// <reference path="pagecardsearch.js" />
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Plotly from 'plotly.js-dist';
 import { Helmet } from 'react-helmet';
 import * as XLSX from 'xlsx';
@@ -183,6 +183,8 @@ const gradingCompanies = [
 ];
 
 const PageGrading = () => {
+    const [gradingCompanyWebsites, setGradingCompanyWebsites] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Card_Grade_Price_Data.xlsx');
@@ -195,7 +197,6 @@ const PageGrading = () => {
             const prices = jsonData.map(row => row['Min Price']);
             const turnaround = jsonData.map(row => row.Turnaround);
 
-            // Adjust the text positions to avoid overlap
             const textpositions = companies.map((_, index) => {
                 if (index % 2 === 0) return 'top right';
                 else return 'bottom left';
@@ -267,7 +268,17 @@ const PageGrading = () => {
             Plotly.newPlot('scatterPlot', [trace], layout);
         };
 
+        const fetchGradingCompanyWebsites = async () => {
+            const response = await fetch('https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Grading+Company+Websites.xlsx');
+            const data = await response.arrayBuffer();
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
+            setGradingCompanyWebsites(jsonData);
+        };
+
         fetchData();
+        fetchGradingCompanyWebsites();
     }, []);
     return (
         <div className="page-grading">
@@ -399,6 +410,25 @@ const PageGrading = () => {
             ))}
             <h2 id="scatterplot">Scatterplot</h2>
             <div id="scatterPlot" style={{ width: '100%', height: '500px' }}></div>
+            <h2>Conclusion</h2>
+            <p className="conclusion-paragraph">
+                Cards graded by a reputable grading company can potentially add value to the cards, but it depends on several factors, including the card's rarity, condition, and the grading company's reputation. During the pandemic, there was a massive increase of new collectors and grading cards exploded. There are now over 25 card grading companies in the United States, but 4 companies currently dominate the market -- with PSA being the clear leader in the industry.
+                As new entrants have joined the industry, marketplace titans PSA, SGC, BGS, and CGC still hold a commanding market-share. However, innovative technology is leading to advanced grading methods, lower costs, faster turnaround times, and superior case design & quality. As more cards get graded and the reputations of these new companies grow, the concentrated card grading industry could become more diverse with a variety of players providing niche specialties and options away from the big 4 industry leaders.
+            </p>
+            <h2>Appendix</h2>
+            <div className="appendix">
+                {gradingCompanyWebsites.length > 0 ? (
+                    <ul>
+                        {gradingCompanyWebsites.map((company, index) => (
+                            <li key={index}>
+                                <strong>{company['Grading Company']}</strong>: <a href={company['Website Address']} target="_blank" rel="noopener noreferrer">{company['Website Address']}</a>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </div>
         </div>
     );
 };
