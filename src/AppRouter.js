@@ -55,7 +55,8 @@ import PageLeaders2 from './PageLeaders2';
 import PageLeaders3 from './PageLeaders3';
 import PageHistory from './PageHistory';
 import PageGlossary from './PageGlossary';
-import PageGrading from './PageGrading'; // Import the new PageGrading component
+import PageGrading from './PageGrading';
+import PageBrands from './PageBrands'; // Import the new PageBrands component
 import './App.css';
 
 const AppRouter = () => {
@@ -117,7 +118,8 @@ const AppRouter = () => {
                 <Route path="/pagepricecharts" element={<PagePriceCharts />} />
                 <Route path="/pagehistory" element={<PageHistory />} />
                 <Route path="/pageglossary" element={<PageGlossary />} />
-                <Route path="/pagegrading" element={<PageGrading />} /> {/* Add the new route for PageGrading */}
+                <Route path="/pagegrading" element={<PageGrading />} />
+                <Route path="/pagebrands" element={<PageBrands />} /> {/* Add the new route for PageBrands */}
             </Routes>
         </Router>
     );

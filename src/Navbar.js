@@ -350,6 +350,9 @@ const Navbar = () => {
                             <NavLink to="/pagegrading" onClick={() => setIsOpen(false)}>
                                 Card Grading Companies
                             </NavLink>
+                            <NavLink to="/pagebrands" onClick={() => setIsOpen(false)}>
+                                Sports Trading Card Brands
+                            </NavLink>
                             <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
                                 Sports Card Glossary
                             </NavLink>
@@ -395,3 +398,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
