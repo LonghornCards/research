@@ -5,6 +5,8 @@ import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
 import Fuse from 'fuse.js';
 import './App.css';
+import { Helmet } from 'react-helmet';
+
 
 const PageSnapshot = () => {
     const location = useLocation();
@@ -376,6 +378,9 @@ const PageSnapshot = () => {
     return (
         <div className="page-snapshot" style={{ paddingTop: '60px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Helmet>
+                    <title>Player Snapshot</title>
+                </Helmet>
                 <h1 className="page-title">{`Player Snapshot${selectedPlayer ? `: ${selectedPlayer}` : ''}`}</h1>
                 {wikiImage && <img className="player-image" src={wikiImage} alt={`${selectedPlayer} profile`} style={{ maxHeight: '150px', marginLeft: '20px', objectFit: 'contain' }} />}
             </div>

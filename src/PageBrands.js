@@ -4,6 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Plot from 'react-plotly.js';
 import Select from 'react-select';
+import { Helmet } from 'react-helmet';
 
 const Container = styled.div`
   display: flex;
@@ -213,6 +214,9 @@ const PageBrands = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Sports Card Brands</title>
+            </Helmet>
             <Content>
                 <h1>Sports Trading Card Brands</h1>
                 <p>Below are various sports trading card brands along with their respective manufacturers, current estimated hobby box prices, and sports. Data as of July 2024.</p>

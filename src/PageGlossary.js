@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { Helmet } from 'react-helmet';
 
 const glossaryData = [
     { term: "1st Bowman", definition: "A player's 1st Bowman card is their first professional baseball card, released before their official RC." },
@@ -85,6 +86,9 @@ const PageGlossary = () => {
 
     return (
         <div className="glossary-container">
+            <Helmet>
+                <title>Sports Card Glossary</title>
+            </Helmet>
             <h1 className="glossary-title">Sports Trading Card Glossary</h1>
             <select onChange={handleTermChange} value={selectedTerm} className="term-dropdown">
                 <option value="">All Terms</option>

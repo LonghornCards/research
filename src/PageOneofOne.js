@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
 import moment from 'moment';
 import Select from 'react-select';
+import { Helmet } from 'react-helmet'; // Import Helmet
 import './App.css'; // Ensure this is imported if not already
 
 const LazyImage = ({ src, alt }) => {
@@ -121,12 +122,15 @@ const PageOneofOne = () => {
 
     return (
         <div className="page-one-of-one" style={{ marginTop: '80px' }}>
+            <Helmet>
+                <title>One-of-One Gallery</title>
+            </Helmet>
             <h1>Sports Trading Card One-of-One (1/1) Gallery</h1>
             <p>
                 Welcome to the gallery of one-of-one ("1/1") sports trading cards recently sold across different major platforms.
             </p>
             <p>
-                This list only includes Football, Basketball, and Baseball cards with sales prices greater than $1000 (excluding printing plates).
+                This list only includes Football, Basketball, and Baseball cards with sales prices greater than $1000.
             </p>
             <p>
                 Data is through July 2024 and sourced from 17 different platforms including eBay, Goldin, Heritage, My Slabs, Fanatics, ALT, and Pristine Auctions. </p>
