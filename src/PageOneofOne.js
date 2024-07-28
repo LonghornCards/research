@@ -6,6 +6,30 @@ import moment from 'moment';
 import Select from 'react-select';
 import './App.css'; // Ensure this is imported if not already
 
+const LazyImage = ({ src, alt }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const imgRef = useRef();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            });
+        });
+
+        observer.observe(imgRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
+
+    return <img ref={imgRef} src={isVisible ? src : ''} alt={alt} className="card-image" />;
+};
+
 const PageOneofOne = () => {
     const [cardData, setCardData] = useState([]);
     const [filteredCardData, setFilteredCardData] = useState([]);
@@ -207,7 +231,7 @@ const PageOneofOne = () => {
                 {filteredDisplayData.map((card, index) => (
                     <div key={index} className="card-item" ref={el => cardRefs.current[index] = el}>
                         <a href={card['Image']} target="_blank" rel="noopener noreferrer">
-                            <img src={card['Image']} alt={card['Card Title']} className="card-image" />
+                            <LazyImage src={card['Image']} alt={card['Card Title']} />
                         </a>
                         <div className="card-details">
                             <h2>{card['Card Title']}</h2>
