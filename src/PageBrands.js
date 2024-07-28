@@ -47,7 +47,7 @@ const RangeContainer = styled.div`
 
 const TableContainer = styled.div`
   width: 100%;
-  max-height: 400px; /* Set the desired height */
+  max-height: 400px;
   overflow-y: scroll;
 `;
 
@@ -122,7 +122,6 @@ const PageBrands = () => {
 
         fetchData();
 
-        // Update chart width when the component mounts
         const updateChartWidth = () => {
             if (tableContainerRef.current) {
                 setChartWidth(tableContainerRef.current.offsetWidth);
@@ -199,9 +198,9 @@ const PageBrands = () => {
         handleFilterChange();
     }, [selectedManufacturers, selectedBrands, selectedSports, priceRange, data]);
 
-    const uniqueManufacturers = [...new Set(filteredData.map(item => item.Manufacturer))];
-    const uniqueBrands = [...new Set(filteredData.map(item => item.Brand))];
-    const uniqueSports = [...new Set(filteredData.map(item => item.Sport))];
+    const uniqueManufacturers = [...new Set(data.map(item => item.Manufacturer))];
+    const uniqueBrands = [...new Set(data.map(item => item.Brand))];
+    const uniqueSports = [...new Set(data.map(item => item.Sport))];
 
     const handleResetFilters = () => {
         setSelectedManufacturers([]);
@@ -209,6 +208,7 @@ const PageBrands = () => {
         setSelectedSports([]);
         setPriceRange([0, 10000]);
         setSelectedSport('All Sports');
+        setFilteredData(data);
     };
 
     return (
@@ -233,7 +233,7 @@ const PageBrands = () => {
                         xaxis: { title: 'Brand' },
                         yaxis: { title: 'Hobby Box Price', type: 'log' },
                         width: chartWidth,
-                        margin: { b: 200 } // Increase bottom margin to avoid cutting off x-axis labels
+                        margin: { b: 200 }
                     }}
                 />
                 <FiltersContainer>
@@ -245,7 +245,8 @@ const PageBrands = () => {
                             className="basic-multi-select"
                             classNamePrefix="select"
                             placeholder="Select Manufacturers"
-                            onChange={(selected) => setSelectedManufacturers(selected.map(option => option.value))}
+                            value={selectedManufacturers.map(value => ({ value, label: value }))}
+                            onChange={(selected) => setSelectedManufacturers(selected ? selected.map(option => option.value) : [])}
                         />
                         <Select
                             isMulti
@@ -254,7 +255,8 @@ const PageBrands = () => {
                             className="basic-multi-select"
                             classNamePrefix="select"
                             placeholder="Select Brands"
-                            onChange={(selected) => setSelectedBrands(selected.map(option => option.value))}
+                            value={selectedBrands.map(value => ({ value, label: value }))}
+                            onChange={(selected) => setSelectedBrands(selected ? selected.map(option => option.value) : [])}
                         />
                         <Select
                             isMulti
@@ -263,7 +265,8 @@ const PageBrands = () => {
                             className="basic-multi-select"
                             classNamePrefix="select"
                             placeholder="Select Sports"
-                            onChange={(selected) => setSelectedSports(selected.map(option => option.value))}
+                            value={selectedSports.map(value => ({ value, label: value }))}
+                            onChange={(selected) => setSelectedSports(selected ? selected.map(option => option.value) : [])}
                         />
                         <RangeContainer>
                             <label>Hobby Box Price Range:</label>
