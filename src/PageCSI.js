@@ -49,52 +49,56 @@ const PageCSI = () => {
     const columns = ['Year-to-Date', '1-Month', '3-Months', '1-Year', '3-Years*', '5-Years*', '10-Years*', '20-Years*'];
 
     return (
-        <div className="page-csi">
+        <div className="page-csi" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <Helmet>
                 <title>Card Price Index Returns</title>
             </Helmet>
-            <div className="content-wrapper" style={{ textAlign: 'center', padding: '0 10px' }}>
-                <h1>Card Price Index Returns</h1>
-                <p>These index returns reflect average card prices for different subsets across football, basketball, and baseball.</p>
+            <div className="content-wrapper" style={{ maxWidth: '1200px', textAlign: 'center', padding: '0 10px' }}>
+                <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                    <h1 style={{ margin: 0 }}>Card Price Index Returns</h1>
+                    <p>These index returns reflect average card prices for different subsets across football, basketball, and baseball.</p>
+                </div>
 
-                <table style={{ margin: '0 auto', width: '100%', maxWidth: '600px', border: '1px solid peru' }}>
-                    <thead>
-                        <tr>
-                            {csvData.length > 0 && Object.keys(csvData[0]).map((key) => (
-                                <th key={key} style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>{key}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {csvData.map((row, index) => (
-                            <tr key={index}>
-                                {Object.entries(row).map(([key, value], i) => (
-                                    formatValue(value, key)
+                <div style={{ textAlign: 'center' }}>
+                    <table style={{ margin: '0 auto', width: '100%', maxWidth: '100%', border: '1px solid peru', marginTop: '20px' }}>
+                        <thead>
+                            <tr>
+                                {csvData.length > 0 && Object.keys(csvData[0]).map((key) => (
+                                    <th key={key} style={{ backgroundColor: 'peru', color: 'white', fontWeight: 'bold' }}>{key}</th>
                                 ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {csvData.map((row, index) => (
+                                <tr key={index}>
+                                    {Object.entries(row).map(([key, value], i) => (
+                                        formatValue(value, key)
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
-                {csvData.length > 0 && columns.map(column => (
-                    <div key={column} style={{ margin: '20px 0' }}>
-                        <Plot
-                            data={[
-                                {
-                                    x: csvData.map(row => row.Index),
-                                    y: csvData.map(row => getValueForChart(row[column])),
-                                    type: 'bar',
-                                    marker: {
-                                        color: csvData.map(row => getValueForChart(row[column]) >= 0 ? 'green' : 'red')
+                    {csvData.length > 0 && columns.map(column => (
+                        <div key={column} style={{ margin: '20px auto', width: '100%', maxWidth: '100%' }}>
+                            <Plot
+                                data={[
+                                    {
+                                        x: csvData.map(row => row.Index),
+                                        y: csvData.map(row => getValueForChart(row[column])),
+                                        type: 'bar',
+                                        marker: {
+                                            color: csvData.map(row => getValueForChart(row[column]) >= 0 ? 'green' : 'red')
+                                        },
                                     },
-                                },
-                            ]}
-                            layout={{ title: `${column} Returns by Index`, autosize: true }}
-                            useResizeHandler={true}
-                            style={{ width: '100%', height: '100%' }}
-                        />
-                    </div>
-                ))}
+                                ]}
+                                layout={{ title: `${column} Returns by Index`, autosize: true }}
+                                useResizeHandler={true}
+                                style={{ width: '100%', height: '100%' }}
+                            />
+                        </div>
+                    ))}
+                </div>
 
                 <p>*Annualized Return. Data Source: Card Ladder as of 06/30/2024. Calculations performed by Longhorn Cards & Collectibles.</p>
             </div>
