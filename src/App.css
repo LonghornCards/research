@@ -4955,3 +4955,104 @@ tbody tr {
     margin: 0 auto; /* Centers the image horizontally */
 }
 
+/* Add this to your App.css */
+
+.page-one-of-one {
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+}
+
+p {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.search-and-select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.multi-select {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+.reset-button {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    background: none; /* Remove background color */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+}
+
+.card-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .card-item a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+.card-image {
+    width: 100%;
+    height: auto;
+}
+
+.card-details {
+    padding: 10px;
+    text-align: center;
+}
+
+    .card-details h2 {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .card-details p {
+        font-size: 14px;
+        margin: 5px 0;
+    }
+
+@media (min-width: 600px) {
+    .search-and-select-container {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .search-box,
+    .multi-select {
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+}

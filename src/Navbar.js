@@ -328,7 +328,10 @@ const Navbar = () => {
                                 Index Returns
                             </NavLink>
                             <NavLink to="/pagecardsearch" onClick={() => setIsOpen(false)}>
-                                eBay Card Sales
+                                eBay Card Sale Search
+                            </NavLink>
+                            <NavLink to="/pageoneofone" onClick={() => setIsOpen(false)}>
+                                One of One Gallery
                             </NavLink>
                         </DropdownContent>
                     </Dropdown>

@@ -38,7 +38,7 @@
     "os-browserify": "^0.3.0",
     "papaparse": "^5.4.1",
     "path-browserify": "^1.0.1",
-    "plotly.js": "^2.33.0",
+    "plotly.js": "^2.34.0",
     "plotly.js-dist": "^2.34.0",
     "rc-slider": "^10.6.2",
     "rc-tooltip": "^6.2.0",

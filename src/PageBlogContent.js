@@ -1,5 +1,17 @@
 const blogEntries = [
     {
+        date: '07/28/24',
+        title: 'One-of-One (1/1) Gallery',
+        summary: 'This One-of-One (1/1) Gallery shows recent card sales for 1/1 cards across platforms.',
+        details: (
+            <span>
+                This One-of-One (1/1) Gallery shows recent card sales across major platforms.  Included are Football, Basketball, and Baseball cards with sales prices greater than $1000 (excluding printing plates).
+            </span>
+        ),
+        fullPostLink: '/PageOneofOne',
+        imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.28.24.png'
+    },
+    {
         date: '07/27/24',
         title: 'Sports Trading Card Brands',
         summary: 'This summary as of July 2024 provides an overview of sports card manufacturers, brands, estimated hobby box prices, and respective sport.',
