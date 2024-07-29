@@ -36,6 +36,8 @@ const PageOneofOne = () => {
     const [filteredCardData, setFilteredCardData] = useState([]);
     const [selectedCards, setSelectedCards] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 20;
     const cardRefs = useRef([]);
 
     useEffect(() => {
@@ -107,13 +109,17 @@ const PageOneofOne = () => {
         setFilteredCardData(cardData);
     };
 
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
     const cardOptions = cardData.map(card => ({
         value: card['Card Title'],
         label: card['Card Title']
     }));
 
     const filteredDisplayData = selectedCards.length === 0
-        ? sortedCardData
+        ? sortedCardData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
         : sortedCardData.filter(card => selectedCards.some(selected => selected.value === card['Card Title']));
 
     const hobbyBoxPrices = sortedCardData.map(card => card['Price Sold']);
@@ -121,7 +127,7 @@ const PageOneofOne = () => {
     const medianPrice = hobbyBoxPrices.sort((a, b) => a - b)[Math.floor(hobbyBoxPrices.length / 2)];
 
     return (
-        <div className="page-one-of-one" style={{ marginTop: '80px' }}>
+        <div className="page-one-of-one">
             <Helmet>
                 <title>One-of-One Gallery</title>
             </Helmet>
@@ -250,6 +256,13 @@ const PageOneofOne = () => {
                             <p><strong>Price Sold:</strong> ${card['Price Sold'].toLocaleString()}</p>
                         </div>
                     </div>
+                ))}
+            </div>
+            <div className="pagination">
+                {[...Array(Math.ceil(filteredCardData.length / itemsPerPage)).keys()].map(page => (
+                    <button key={page} onClick={() => handlePageChange(page + 1)}>
+                        {page + 1}
+                    </button>
                 ))}
             </div>
         </div>

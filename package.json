@@ -77,7 +77,6 @@
   "scripts": {
     "start": "set NODE_OPTIONS=--max_old_space_size=32768 && react-scripts start",
     "build": "set GENERATE_SOURCEMAP=false && set NODE_OPTIONS=--max_old_space_size=32768 && react-scripts build",
-    "analyze": "react-scripts build && webpack-bundle-analyzer build/static/js/*.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
