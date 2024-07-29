@@ -97,5 +97,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-methods": "^7.24.7",
+    "@babel/plugin-transform-unicode-property-regex": "^7.24.7"
   }
 }
