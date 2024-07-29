@@ -60,7 +60,7 @@ const DataTable = ({ data, selectedNames, compositeRanks }) => {
     };
 
     return (
-        <div className="scoreboard-table-container">
+        <div className="table-wrapper">
             <div {...getTableProps()} className="scoreboard-table">
                 <div>
                     {headerGroups.map(headerGroup => (
@@ -129,7 +129,7 @@ const MultiValue = (props) => (
     </components.MultiValue>
 );
 
-const Page_Stats = () => {
+const PageStats = () => {
     const [nflData, setNflData] = useState([]);
     const [nbaData, setNbaData] = useState([]);
     const [mlbData, setMlbData] = useState([]);
@@ -186,10 +186,8 @@ const Page_Stats = () => {
                 Use the filters below to narrow down the data based on your player selections. Data sourced from Sports-Reference.com.
 
                 See the bottom of the page for a full glossary of the different statistics provided.
-
             </p>
 
-            {/* New container with title and images */}
             <div style={{ border: '2px solid peru', padding: '10px', margin: '20px 0' }}>
                 <h2>Current Leaderboards & Detailed Statistics</h2>
                 <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -245,6 +243,7 @@ const Page_Stats = () => {
                 </div>
             </div>
             <DataTable data={nflData} selectedNames={selectedNflNames} compositeRanks={compositeRanks} />
+
             <h2>NBA Statistics Ranks</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
@@ -261,6 +260,7 @@ const Page_Stats = () => {
                 </div>
             </div>
             <DataTable data={nbaData} selectedNames={selectedNbaNames} compositeRanks={compositeRanks} />
+
             <h2>MLB Statistics Ranks</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">
@@ -277,6 +277,7 @@ const Page_Stats = () => {
                 </div>
             </div>
             <DataTable data={mlbData} selectedNames={selectedMlbNames} compositeRanks={compositeRanks} />
+
             <div className="stats-paragraph-section">
                 <p>
                     The tables above provide comprehensive statistics for NFL, NBA, and MLB players. These statistics are sourced from Sports-Reference.com as of April 2024.
@@ -356,4 +357,4 @@ const Page_Stats = () => {
     );
 };
 
-export default Page_Stats;
+export default PageStats;

@@ -34,6 +34,8 @@ const PageRawCards = () => {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [fuse, setFuse] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 20;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -122,6 +124,13 @@ const PageRawCards = () => {
         setSelectedTags(newTags);
     };
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -203,8 +212,8 @@ const PageRawCards = () => {
                 <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
             </div>
             <div className="products-grid">
-                {filteredProducts.length > 0 ? (
-                    filteredProducts.map((product, index) => (
+                {paginatedProducts.length > 0 ? (
+                    paginatedProducts.map((product, index) => (
                         <div key={index} className="product-card">
                             <LazyLoadImage
                                 src={product.Image_url}
@@ -223,6 +232,41 @@ const PageRawCards = () => {
                     <p>No products available.</p>
                 )}
             </div>
+            {filteredProducts.length > itemsPerPage && (
+                <div className="pagination">
+                    <button
+                        onClick={() => handlePageChange(1)}
+                        disabled={currentPage === 1}
+                        className="page-number"
+                    >
+                        First
+                    </button>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="page-number"
+                    >
+                        Previous
+                    </button>
+                    <span className="page-info">
+                        {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="page-number"
+                    >
+                        Next
+                    </button>
+                    <button
+                        onClick={() => handlePageChange(totalPages)}
+                        disabled={currentPage === totalPages}
+                        className="page-number"
+                    >
+                        Last
+                    </button>
+                </div>
+            )}
             {selectedImage && (
                 <div className="modal" onClick={() => setSelectedImage(null)}>
                     <span className="close">&times;</span>

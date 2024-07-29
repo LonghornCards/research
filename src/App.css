@@ -5169,3 +5169,145 @@ p {
         font-size: 14px;
     }
 }
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.page-number {
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+    .page-number:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .page-number.active {
+        font-weight: bold;
+        background-color: #d0d0d0;
+    }
+
+.page-info {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.filter-wrapper, .products-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filter-container, .image-filters, .search-box, .price-filter, .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+    .search-box input, .price-filter input, .reset-button {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 200px;
+        max-width: 100%;
+    }
+
+.filter-image {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.product-title, .product-price {
+    margin: 10px 0;
+}
+
+.product-link {
+    text-decoration: none;
+    color: #007bff;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Add these styles at the bottom of App.css */
+
+/* Table Wrapper for Scrollable Tables */
+.table-wrapper {
+    height: 500px; /* Set a fixed height for the table container */
+    overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.scoreboard-table {
+    width: 100%; /* Ensure the table takes the full width */
+    border-collapse: collapse; /* Ensure table borders collapse */
+}
+
+.th, .td {
+    padding: 8px; /* Add padding for table cells */
+    border: 1px solid #ddd; /* Add border for table cells */
+}
+
+.tr:nth-child(even) {
+    background-color: #f2f2f2; /* Add background color for even rows */
+}
+
+.th.sticky, .td.sticky {
+    position: sticky;
+    left: 0;
+    background: white; /* Set background color for sticky cells */
+    z-index: 1; /* Ensure sticky cells are on top */
+}

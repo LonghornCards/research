@@ -126,6 +126,8 @@ const PageOneofOne = () => {
     const averagePrice = hobbyBoxPrices.reduce((acc, price) => acc + price, 0) / hobbyBoxPrices.length;
     const medianPrice = hobbyBoxPrices.sort((a, b) => a - b)[Math.floor(hobbyBoxPrices.length / 2)];
 
+    const totalPages = Math.ceil(filteredCardData.length / itemsPerPage);
+
     return (
         <div className="page-one-of-one">
             <Helmet>
@@ -139,7 +141,8 @@ const PageOneofOne = () => {
                 This list only includes Football, Basketball, and Baseball cards with sales prices greater than $1000.
             </p>
             <p>
-                Data is through July 2024 and sourced from 17 different platforms including eBay, Goldin, Heritage, My Slabs, Fanatics, ALT, and Pristine Auctions. </p>
+                Data is through July 2024 and sourced from 17 different platforms including eBay, Goldin, Heritage, My Slabs, Fanatics, ALT, and Pristine Auctions.
+            </p>
             {sortedCardData.length > 0 && (
                 <Plot
                     data={[
@@ -258,13 +261,41 @@ const PageOneofOne = () => {
                     </div>
                 ))}
             </div>
-            <div className="pagination">
-                {[...Array(Math.ceil(filteredCardData.length / itemsPerPage)).keys()].map(page => (
-                    <button key={page} onClick={() => handlePageChange(page + 1)}>
-                        {page + 1}
+            {filteredCardData.length > itemsPerPage && (
+                <div className="pagination">
+                    <button
+                        onClick={() => handlePageChange(1)}
+                        disabled={currentPage === 1}
+                        className="page-number"
+                    >
+                        First
                     </button>
-                ))}
-            </div>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="page-number"
+                    >
+                        Previous
+                    </button>
+                    <span className="page-info">
+                        {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="page-number"
+                    >
+                        Next
+                    </button>
+                    <button
+                        onClick={() => handlePageChange(totalPages)}
+                        disabled={currentPage === totalPages}
+                        className="page-number"
+                    >
+                        Last
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
