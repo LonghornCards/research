@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import Plot from 'react-plotly.js';
 import moment from 'moment';
 import Select from 'react-select';
-import { Helmet } from 'react-helmet'; // Import Helmet
-import './App.css'; // Ensure this is imported if not already
+import { Helmet } from 'react-helmet';
+import './App.css';
 
 const LazyImage = ({ src, alt }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -69,7 +69,9 @@ const PageOneofOne = () => {
         return moment(date).format('MMMM YYYY');
     };
 
-    const sortedCardData = [...filteredCardData].sort((a, b) => b['Price Sold'] - a['Price Sold']);
+    const sortedCardData = useMemo(() => {
+        return [...filteredCardData].sort((a, b) => b['Price Sold'] - a['Price Sold']);
+    }, [filteredCardData]);
 
     const handleBarClick = (data) => {
         const cardTitle = data.points[0].x;
@@ -118,9 +120,11 @@ const PageOneofOne = () => {
         label: card['Card Title']
     }));
 
-    const filteredDisplayData = selectedCards.length === 0
-        ? sortedCardData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-        : sortedCardData.filter(card => selectedCards.some(selected => selected.value === card['Card Title']));
+    const filteredDisplayData = useMemo(() => {
+        return selectedCards.length === 0
+            ? sortedCardData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+            : sortedCardData.filter(card => selectedCards.some(selected => selected.value === card['Card Title']));
+    }, [sortedCardData, selectedCards, currentPage]);
 
     const hobbyBoxPrices = sortedCardData.map(card => card['Price Sold']);
     const averagePrice = hobbyBoxPrices.reduce((acc, price) => acc + price, 0) / hobbyBoxPrices.length;
@@ -148,23 +152,23 @@ const PageOneofOne = () => {
                     data={[
                         {
                             type: 'bar',
-                            x: sortedCardData.map(card => card['Card Title']),
-                            y: sortedCardData.map(card => card['Price Sold']),
+                            x: sortedCardData.slice(0, 100).map(card => card['Card Title']), // Only show top 100 items
+                            y: sortedCardData.slice(0, 100).map(card => card['Price Sold']),
                             marker: { color: 'peru' },
                             name: 'Price Sold',
                         },
                         {
                             type: 'scatter',
-                            x: sortedCardData.map(card => card['Card Title']),
-                            y: Array(sortedCardData.length).fill(averagePrice),
+                            x: sortedCardData.slice(0, 100).map(card => card['Card Title']),
+                            y: Array(100).fill(averagePrice),
                             mode: 'lines',
                             name: 'Average Price',
                             line: { color: 'blue', dash: 'dash' },
                         },
                         {
                             type: 'scatter',
-                            x: sortedCardData.map(card => card['Card Title']),
-                            y: Array(sortedCardData.length).fill(medianPrice),
+                            x: sortedCardData.slice(0, 100).map(card => card['Card Title']),
+                            y: Array(100).fill(medianPrice),
                             mode: 'lines',
                             name: 'Median Price',
                             line: { color: 'red', dash: 'dot' },
