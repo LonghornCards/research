@@ -17,7 +17,7 @@ const blogEntries = [
         summary: 'This summary as of July 2024 provides an overview of sports card manufacturers, brands, estimated hobby box prices, and respective sport.',
         details: (
             <span>
-                This summary as of July 2024 provides an overview of sports card manufacturers, brand, estimated hobby box prices, and respective sport.  Further information is provided by price tier with the ability to sort and filter by different brands and sports to find different hobby box options that fit your budget.
+                This summary as of July 2024 provides an overview of sports card manufacturers, brands, estimated hobby box prices, and respective sport.  Further information is provided by price tier with the ability to sort and filter by different brands and sports to find different hobby box options that fit your budget.
             </span>
         ),
         fullPostLink: '/PageBrands',
