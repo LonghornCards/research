@@ -57,7 +57,6 @@ import PageHistory from './PageHistory';
 import PageGlossary from './PageGlossary';
 import PageGrading from './PageGrading';
 import PageBrands from './PageBrands';
-import PageOneofOne from './PageOneofOne'; // Import the new PageOneofOne component
 import './App.css';
 
 const AppRouter = () => {
@@ -121,7 +120,6 @@ const AppRouter = () => {
                 <Route path="/pageglossary" element={<PageGlossary />} />
                 <Route path="/pagegrading" element={<PageGrading />} />
                 <Route path="/pagebrands" element={<PageBrands />} />
-                <Route path="/pageoneofone" element={<PageOneofOne />} /> {/* Add the new route for PageOneofOne */}
             </Routes>
         </Router>
     );
