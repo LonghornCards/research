@@ -43,7 +43,6 @@ import PagePSA from './PagePSA';
 import PageRSS from './PageRSS';
 import PageCardHedge from './PageCardHedge';
 import PageProfile from './PageProfile';
-import PageWheel from './PageWheel';
 import PagePlayers from './PagePlayers';
 import PagePodcasts from './PagePodcasts';
 import PageLeaders from './PageLeaders';
@@ -106,7 +105,6 @@ const AppRouter = () => {
                 <Route path="/pagerss" element={<PageRSS />} />
                 <Route path="/pagecardhedge" element={<PageCardHedge />} />
                 <Route path="/pageprofile" element={<PageProfile />} />
-                <Route path="/pagewheel" element={<PageWheel />} />
                 <Route path="/pageplayers" element={<PagePlayers />} />
                 <Route path="/pagepodcasts" element={<PagePodcasts />} />
                 <Route path="/pageleaders" element={<PageLeaders />} />

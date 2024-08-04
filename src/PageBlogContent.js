@@ -8,7 +8,7 @@ const blogEntries = [
                 This One-of-One (1/1) Gallery shows recent card sales across major platforms.  Included are Football, Basketball, and Baseball cards with sales prices greater than $1000 (excluding printing plates).
             </span>
         ),
-        fullPostLink: '/PageOneofOne',
+        fullPostLink: '/PageBlog',
         imageUrl: 'https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/Blog/Blog_Post_7.28.24.png'
     },
     {

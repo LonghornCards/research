@@ -298,9 +298,6 @@ const Navbar = () => {
               <NavLink to="/pagelonghorns" onClick={() => setIsOpen(false)}>
                 Longhorn Cards
               </NavLink>
-              <NavLink to="/pagewheel" onClick={() => setIsOpen(false)}>
-                Discount Wheel
-              </NavLink>
             </DropdownContent>
           </Dropdown>
           <Dropdown>
