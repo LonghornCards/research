@@ -188,45 +188,6 @@ const PageStats = () => {
                 See the bottom of the page for a full glossary of the different statistics provided.
             </p>
 
-            <div style={{ border: '2px solid peru', padding: '10px', margin: '20px 0' }}>
-                <h2>Current Leaderboards & Detailed Statistics</h2>
-                <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-                    <div style={{ textAlign: 'right', marginRight: '10px' }}>
-                        <p>Baseball Leaders:</p>
-                        <Link to="/PageLeaders">
-                            <img
-                                src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/baseball-solid.svg"
-                                alt="Baseball"
-                                style={{ width: '100px', height: '100px' }}
-                                title="Baseball Season Stats"
-                            />
-                        </Link>
-                    </div>
-                    <div style={{ textAlign: 'right', marginRight: '10px' }}>
-                        <p>Football Leaders:</p>
-                        <Link to="/PageLeaders2">
-                            <img
-                                src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/football-solid.svg"
-                                alt="Football"
-                                style={{ width: '100px', height: '100px' }}
-                                title="Football Season Stats"
-                            />
-                        </Link>
-                    </div>
-                    <div style={{ textAlign: 'right', marginRight: '10px' }}>
-                        <p>Basketball Leaders:</p>
-                        <Link to="/PageLeaders3">
-                            <img
-                                src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/basketball-solid.svg"
-                                alt="Basketball"
-                                style={{ width: '100px', height: '100px' }}
-                                title="Basketball Season Stats"
-                            />
-                        </Link>
-                    </div>
-                </div>
-            </div>
-
             <h2>NFL Statistics Ranks</h2>
             <div className="scoreboard-filters center-filters">
                 <div className="scoreboard-filter">

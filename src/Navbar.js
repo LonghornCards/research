@@ -350,6 +350,9 @@ const Navbar = () => {
               <NavLink to="/pagebrands" onClick={() => setIsOpen(false)}>
                 Sports Trading Card Brands
               </NavLink>
+              <NavLink to="/holygrail" onClick={() => setIsOpen(false)}>
+                Holy Grail Gallery
+              </NavLink>
               <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
                 Sports Card Glossary
               </NavLink>

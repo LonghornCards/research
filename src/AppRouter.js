@@ -45,17 +45,15 @@ import PageCardHedge from './PageCardHedge';
 import PageProfile from './PageProfile';
 import PagePlayers from './PagePlayers';
 import PagePodcasts from './PagePodcasts';
-import PageLeaders from './PageLeaders';
 import PageCSI from './PageCSI';
 import PageLonghorns from './PageLonghorns';
 import PageSnapshot from './PageSnapshot';
 import PagePriceCharts from './PagePriceCharts';
-import PageLeaders2 from './PageLeaders2';
-import PageLeaders3 from './PageLeaders3';
 import PageHistory from './PageHistory';
 import PageGlossary from './PageGlossary';
 import PageGrading from './PageGrading';
 import PageBrands from './PageBrands';
+import HolyGrail from './HolyGrail'; // New import
 import './App.css';
 
 const AppRouter = () => {
@@ -107,9 +105,6 @@ const AppRouter = () => {
                 <Route path="/pageprofile" element={<PageProfile />} />
                 <Route path="/pageplayers" element={<PagePlayers />} />
                 <Route path="/pagepodcasts" element={<PagePodcasts />} />
-                <Route path="/pageleaders" element={<PageLeaders />} />
-                <Route path="/pageleaders2" element={<PageLeaders2 />} />
-                <Route path="/pageleaders3" element={<PageLeaders3 />} />
                 <Route path="/pagecsi" element={<PageCSI />} />
                 <Route path="/pagelonghorns" element={<PageLonghorns />} />
                 <Route path="/pagesnapshot" element={<PageSnapshot />} />
@@ -118,6 +113,7 @@ const AppRouter = () => {
                 <Route path="/pageglossary" element={<PageGlossary />} />
                 <Route path="/pagegrading" element={<PageGrading />} />
                 <Route path="/pagebrands" element={<PageBrands />} />
+                <Route path="/holygrail" element={<HolyGrail />} /> {/* New route */}
             </Routes>
         </Router>
     );
