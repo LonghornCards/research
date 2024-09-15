@@ -53,7 +53,6 @@ import PageHistory from './PageHistory';
 import PageGlossary from './PageGlossary';
 import PageGrading from './PageGrading';
 import PageBrands from './PageBrands';
-import HolyGrail from './HolyGrail'; // New import
 import './App.css';
 
 const AppRouter = () => {
@@ -113,7 +112,6 @@ const AppRouter = () => {
                 <Route path="/pageglossary" element={<PageGlossary />} />
                 <Route path="/pagegrading" element={<PageGrading />} />
                 <Route path="/pagebrands" element={<PageBrands />} />
-                <Route path="/holygrail" element={<HolyGrail />} /> {/* New route */}
             </Routes>
         </Router>
     );
