@@ -28,7 +28,7 @@ const PageStore = () => {
             <div className="store-content">
                 <h1>Welcome to our Store!</h1>
                 <p>
-                    Please visit our secure{' '}
+                    Please visit our{' '}
                     <a
                         href="https://www.ebay.com/str/longhorncardsandcollectibles?mkcid=16&mkevt=1&mkrid=711-127632-2357-0&ssspo=5vDCbFbgQti&sssrc=3418065&ssuid=5vDCbFbgQti&widget_ver=artemis&media=COPY"
                         target="_blank"
