@@ -280,58 +280,32 @@ const Navbar = () => {
           <div />
         </Hamburger>
         <NavMenu isOpen={isOpen}>
-          <NavLink to="/" onClick={() => setIsOpen(false)}>
-            Home
-          </NavLink>
-          <NavLink to="/pagestore" onClick={() => setIsOpen(false)}>
-            Store
-          </NavLink>
+          <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+          <NavLink to="/pagestore" onClick={() => setIsOpen(false)}>Store</NavLink>
           <Dropdown>
             <span>Research</span>
             <DropdownContent className="dropdown-content">
-              <NavLink to="/pagescoreboard" onClick={() => setIsOpen(false)}>
-                Scoreboard
-              </NavLink>
-              <NavLink to="/pagegoogletrends" onClick={() => setIsOpen(false)}>
-                Google Trends
-              </NavLink>
-              <NavLink to="/pagestats" onClick={() => setIsOpen(false)}>
-                Player Statistics
-              </NavLink>
-              <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
-                Player Returns
-              </NavLink>
+              <NavLink to="/pagescoreboard" onClick={() => setIsOpen(false)}>Scoreboard</NavLink>
+              <NavLink to="/pagegoogletrends" onClick={() => setIsOpen(false)}>Google Trends</NavLink>
+              <NavLink to="/pagestats" onClick={() => setIsOpen(false)}>Player Statistics</NavLink>
+              <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>Player Returns</NavLink>
+              <NavLink to="/pagepricecharts" onClick={() => setIsOpen(false)}>Price Charts</NavLink>
+              <NavLink to="/pageindexreturns" onClick={() => setIsOpen(false)}>Index Returns</NavLink>
             </DropdownContent>
           </Dropdown>
           <Dropdown>
             <span>Blog</span>
             <DropdownContent className="dropdown-content">
-              <NavLink to="/pageblog" onClick={() => setIsOpen(false)}>
-                Blog
-              </NavLink>
-              <NavLink to="/pagerss" onClick={() => setIsOpen(false)}>
-                RSS Feeds
-              </NavLink>
-              <NavLink to="/pagepodcasts" onClick={() => setIsOpen(false)}>
-                Podcasts
-              </NavLink>
-              <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>
-                History of Sports Trading Cards
-              </NavLink>
-              <NavLink to="/pagegrading" onClick={() => setIsOpen(false)}>
-                Card Grading Companies
-              </NavLink>
-              <NavLink to="/pagebrands" onClick={() => setIsOpen(false)}>
-                Sports Trading Card Brands
-              </NavLink>
-              <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>
-                Sports Card Glossary
-              </NavLink>
+              <NavLink to="/pageblog" onClick={() => setIsOpen(false)}>Blog</NavLink>
+              <NavLink to="/pagerss" onClick={() => setIsOpen(false)}>RSS Feeds</NavLink>
+              <NavLink to="/pagepodcasts" onClick={() => setIsOpen(false)}>Podcasts</NavLink>
+              <NavLink to="/pagehistory" onClick={() => setIsOpen(false)}>History of Sports Trading Cards</NavLink>
+              <NavLink to="/pagegrading" onClick={() => setIsOpen(false)}>Card Grading Companies</NavLink>
+              <NavLink to="/pagebrands" onClick={() => setIsOpen(false)}>Sports Trading Card Brands</NavLink>
+              <NavLink to="/pageglossary" onClick={() => setIsOpen(false)}>Sports Card Glossary</NavLink>
             </DropdownContent>
           </Dropdown>
-          <NavLink to="/about" onClick={() => setIsOpen(false)}>
-            About
-          </NavLink>
+          <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
         </NavMenu>
         <SearchBar onSubmit={handleSearchSubmit} className="search-bar">
           <input
