@@ -45,7 +45,6 @@
     "react": "^18.3.1",
     "react-aws-s3": "^1.5.0",
     "react-chartjs-2": "^5.2.0",
-    "react-custom-wheel-of-fortune": "^1.0.5",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
@@ -103,6 +102,8 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-private-methods": "^7.24.7",
     "@babel/plugin-transform-unicode-property-regex": "^7.24.7",
+    "ajv": "^6.12.6",
+    "ajv-keywords": "^3.5.2",
     "webpack-bundle-analyzer": "^4.10.2"
   }
 }

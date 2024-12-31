@@ -86,7 +86,7 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-shrink: 0; /* Prevent the container from shrinking */
+  flex-shrink: 0;
 `;
 
 const LoginLink = styled(Link)`
@@ -283,23 +283,9 @@ const Navbar = () => {
           <NavLink to="/" onClick={() => setIsOpen(false)}>
             Home
           </NavLink>
-          <Dropdown>
-            <span>Store</span>
-            <DropdownContent className="dropdown-content">
-              <NavLink to="/pageproducts" onClick={() => setIsOpen(false)}>
-                All Products
-              </NavLink>
-              <NavLink to="/pagegradedcards" onClick={() => setIsOpen(false)}>
-                Graded Cards
-              </NavLink>
-              <NavLink to="/pagerawcards" onClick={() => setIsOpen(false)}>
-                Raw Cards
-              </NavLink>
-              <NavLink to="/pagelonghorns" onClick={() => setIsOpen(false)}>
-                Longhorn Cards
-              </NavLink>
-            </DropdownContent>
-          </Dropdown>
+          <NavLink to="/pagestore" onClick={() => setIsOpen(false)}>
+            Store
+          </NavLink>
           <Dropdown>
             <span>Research</span>
             <DropdownContent className="dropdown-content">
@@ -312,20 +298,8 @@ const Navbar = () => {
               <NavLink to="/pagestats" onClick={() => setIsOpen(false)}>
                 Player Statistics
               </NavLink>
-              <NavLink to="/pagesnapshot" onClick={() => setIsOpen(false)}>
-                Player Snapshot
-              </NavLink>
               <NavLink to="/pagereturns" onClick={() => setIsOpen(false)}>
                 Player Returns
-              </NavLink>
-              <NavLink to="/pagepricecharts" onClick={() => setIsOpen(false)}>
-                Price Charts
-              </NavLink>
-              <NavLink to="/pagecsi" onClick={() => setIsOpen(false)}>
-                Index Returns
-              </NavLink>
-              <NavLink to="/pagecardsearch" onClick={() => setIsOpen(false)}>
-                eBay Card Sale Search
               </NavLink>
             </DropdownContent>
           </Dropdown>

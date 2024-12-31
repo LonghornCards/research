@@ -6,14 +6,11 @@ import PageScoreboard from './PageScoreboard';
 import PageBlog from './PageBlog';
 import About from './About';
 import PageGoogleTrends from './PageGoogleTrends';
-import PageCardSearch from './PageCardSearch';
 import PageStats from './PageStats';
 import Login from './Login';
 import PrivacyPolicy from './PrivacyPolicy';
-import PageProducts from './PageProducts';
-import PageGradedCards from './PageGradedCards';
-import PageRawCards from './PageRawCards';
 import PageReturns from './PageReturns';
+import PageStore from './PageStore';
 import BlogPost1 from './blogposts/BlogPost1';
 import BlogPost2 from './blogposts/BlogPost2';
 import BlogPost3 from './blogposts/BlogPost3';
@@ -46,7 +43,6 @@ import PageProfile from './PageProfile';
 import PagePlayers from './PagePlayers';
 import PagePodcasts from './PagePodcasts';
 import PageCSI from './PageCSI';
-import PageLonghorns from './PageLonghorns';
 import PageSnapshot from './PageSnapshot';
 import PagePriceCharts from './PagePriceCharts';
 import PageHistory from './PageHistory';
@@ -64,12 +60,9 @@ const AppRouter = () => {
                 <Route path="/pagescoreboard" element={<PageScoreboard />} />
                 <Route path="/pagegoogletrends" element={<PageGoogleTrends />} />
                 <Route path="/pagestats" element={<PageStats />} />
-                <Route path="/pagecardsearch" element={<PageCardSearch />} />
                 <Route path="/pageblog" element={<PageBlog />} />
-                <Route path="/pageproducts" element={<PageProducts />} />
-                <Route path="/pagegradedcards" element={<PageGradedCards />} />
-                <Route path="/pagerawcards" element={<PageRawCards />} />
                 <Route path="/pagereturns" element={<PageReturns />} />
+                <Route path="/pagestore" element={<PageStore />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/login" element={<Login />} />
@@ -105,7 +98,6 @@ const AppRouter = () => {
                 <Route path="/pageplayers" element={<PagePlayers />} />
                 <Route path="/pagepodcasts" element={<PagePodcasts />} />
                 <Route path="/pagecsi" element={<PageCSI />} />
-                <Route path="/pagelonghorns" element={<PageLonghorns />} />
                 <Route path="/pagesnapshot" element={<PageSnapshot />} />
                 <Route path="/pagepricecharts" element={<PagePriceCharts />} />
                 <Route path="/pagehistory" element={<PageHistory />} />

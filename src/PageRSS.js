@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import cheerio from 'cheerio';
-import Select from 'react-select';
 import { sortBy } from 'lodash';
-import { Helmet } from 'react-helmet'; // Import react-helmet for the title
+import Select from 'react-select';
+import { Helmet } from 'react-helmet';
 import './App.css'; // Reference App.css for styling
 
 const RSS_FEEDS = [
@@ -60,82 +59,55 @@ const PageRSS = () => {
         try {
             for (const feed of RSS_FEEDS) {
                 try {
-                    const res = await axios.get(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
-                    const articlesWithSource = await Promise.all(res.data.items.map(async item => {
-                        const content = await fetchArticleContent(item.link);
-                        return { ...item, source: feed.name, content };
+                    const res = await axios.get(
+                        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`
+                    );
+                    const articlesWithSource = res.data.items.map(item => ({
+                        ...item,
+                        source: feed.name,
                     }));
                     allArticles.push(...articlesWithSource);
                 } catch (error) {
-                    console.error(`Error fetching RSS feed from ${feed.name}:`, error.response ? error.response.data : error.message);
+                    console.error(`Error fetching RSS feed from ${feed.name}:`, error.message);
                 }
             }
             setArticles(reset ? allArticles : [...articles, ...allArticles]);
         } catch (error) {
-            console.error("Error fetching RSS feeds:", error);
+            console.error('Error fetching RSS feeds:', error.message);
         }
         setLoading(false);
     };
 
-    const fetchArticleContent = async (url) => {
-        try {
-            const res = await axios.get(url);
-            const $ = cheerio.load(res.data);
-            return $('body').text();
-        } catch (error) {
-            console.error(`Error fetching article content from ${url}:`, error.message);
-            return '';
-        }
-    };
-
     useEffect(() => {
         fetchRSS(true);
-        const interval = setInterval(() => fetchRSS(true), 3600000); // 3600000 ms = 1 hour
-
-        return () => clearInterval(interval); // Cleanup interval on component unmount
+        const interval = setInterval(() => fetchRSS(true), 3600000); // Refresh every hour
+        return () => clearInterval(interval);
     }, []);
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
+    const handleSearchChange = (e) => setSearchTerm(e.target.value);
     const handleSortChange = (field) => {
         const order = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
         setSortField(field);
         setSortOrder(order);
     };
-
-    const handleSourceChange = (selectedOptions) => {
+    const handleSourceChange = (selectedOptions) =>
         setSelectedSources(selectedOptions ? selectedOptions.map(option => option.value) : []);
-    };
+    const handleLoadMore = () => fetchRSS();
+    const handleResetSearch = () => setSearchTerm('');
 
-    const handleLoadMore = () => {
-        fetchRSS();
-    };
-
-    const handleResetSearch = () => {
-        setSearchTerm('');
-    };
-
-    const filteredArticles = articles.filter(article =>
-        (article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            article.content.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (selectedSources.length === 0 || selectedSources.includes(article.source))
+    const filteredArticles = articles.filter(
+        article =>
+            (article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                article.content.toLowerCase().includes(searchTerm.toLowerCase())) &&
+            (selectedSources.length === 0 || selectedSources.includes(article.source))
     );
 
     const sortedArticles = sortBy(filteredArticles, [sortField]);
-    if (sortOrder === 'desc') {
-        sortedArticles.reverse();
-    }
-
-    const articleCountBySource = articles.reduce((acc, article) => {
-        acc[article.source] = (acc[article.source] || 0) + 1;
-        return acc;
-    }, {});
+    if (sortOrder === 'desc') sortedArticles.reverse();
 
     const sourceOptions = RSS_FEEDS.map(feed => ({
         value: feed.name,
-        label: `${feed.name} (${articleCountBySource[feed.name] || 0})`
+        label: `${feed.name} (${articles.filter(a => a.source === feed.name).length})`,
     }));
 
     return (
@@ -144,62 +116,40 @@ const PageRSS = () => {
                 <title>Sports RSS Feeds</title>
             </Helmet>
             <div className="header-custom">
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/espn.jpeg" alt="ESPN RSS" className="header-image-custom" />
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/fox.png" alt="Fox RSS" className="header-image-custom" />
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/cbs.jpeg" alt="CBS RSS" className="header-image-custom" />
                 <h1>Sports RSS Feeds</h1>
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/texas.png" alt="Texas RSS" className="header-image-custom" />
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/ncaa.png" alt="NCAA RSS" className="header-image-custom" />
-                <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/yahoo.jpeg" alt="Yahoo RSS" className="header-image-custom" />
             </div>
             <div className="search-sort-custom">
-                <div className="search-input-container">
-                    <input
-                        type="text"
-                        placeholder="Search articles"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        className="search-input-custom"
-                    />
-                    <img
-                        src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/reset.svg"
-                        alt="Reset Search"
-                        title="Reset Search"
-                        className="sort-icon"
-                        onClick={handleResetSearch}
-                    />
-                </div>
+                <input
+                    type="text"
+                    placeholder="Search articles"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
                 <Select
                     options={sourceOptions}
                     isMulti
                     placeholder="Filter by Source"
                     onChange={handleSourceChange}
-                    className="source-select-custom"
                 />
-                <div className="sort-images-custom">
-                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/sort.svg" alt="Sort by Title" title="Sort by Title" className="sort-icon" onClick={() => handleSortChange('title')} />
-                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/calendar.svg" alt="Sort by Date" title="Sort by Date" className="sort-icon" onClick={() => handleSortChange('pubDate')} />
-                    <img src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/source.svg" alt="Sort by Source" title="Sort by Source" className="sort-icon" onClick={() => handleSortChange('source')} />
-                </div>
+                <button onClick={() => handleSortChange('title')}>Sort by Title</button>
+                <button onClick={() => handleSortChange('pubDate')}>Sort by Date</button>
+                <button onClick={() => handleSortChange('source')}>Sort by Source</button>
+                <button onClick={handleResetSearch}>Reset Search</button>
             </div>
             <div className="articles-custom">
                 {sortedArticles.map((article, index) => (
                     <div key={index} className="article-custom">
                         <h2>{article.title}</h2>
-                        <p>{article.source}</p>
+                        <p>Source: {article.source}</p>
                         <p>{new Date(article.pubDate).toLocaleString()}</p>
-                        <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
+                        <a href={article.link} target="_blank" rel="noopener noreferrer">
+                            Read more
+                        </a>
                     </div>
                 ))}
             </div>
-            {loading && <div>Loading...</div>}
-            <img
-                src="https://websiteapp-storage-fdb68492737c0-dev.s3.us-east-2.amazonaws.com/download.svg"
-                alt="Load More"
-                title="Load More"
-                onClick={handleLoadMore}
-                className="load-more-image"
-            />
+            {loading && <p>Loading...</p>}
+            <button onClick={handleLoadMore}>Load More</button>
         </div>
     );
 };

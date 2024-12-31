@@ -5425,3 +5425,50 @@ p {
     max-width: none; /* Allow image to exceed original container size */
     object-fit: contain; /* Ensures clarity while resizing */
 }
+
+.store-video-background-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.store-video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.store-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.store-content h1 {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.store-content p {
+    font-size: 1.25rem;
+}
+
+.store-content a {
+    color: #ffdd57;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.store-content a:hover {
+    text-decoration: underline;
+}
+
